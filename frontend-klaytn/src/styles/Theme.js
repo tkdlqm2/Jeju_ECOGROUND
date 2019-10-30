@@ -4,6 +4,7 @@ const BORDER_RADIUS = "4px";
 export default {
   maxWidth: "935px",
   maxCardWidth: "600px",
+  minPageWidth: "320px",
   bgColor: "#FAFAFA",
   borderGrey: "#eaeaea",
   lightGrey: "#e1e1e1",

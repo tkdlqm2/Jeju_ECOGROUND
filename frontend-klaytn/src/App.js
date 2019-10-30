@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `;
 
 export default () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <ThemeProvider theme={Theme}>
