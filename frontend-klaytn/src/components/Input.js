@@ -39,7 +39,8 @@ const Input = ({
   err,
   readOnly,
   label,
-  name
+  name,
+  className
 }) => (
   <div>
     {label && <Label htmlFor={name}>{label}</Label>}
@@ -52,6 +53,7 @@ const Input = ({
       type={type}
       autoComplete="off"
       readOnly={readOnly}
+      className={className}
     />
     {err && <Err>{err}</Err>}
   </div>

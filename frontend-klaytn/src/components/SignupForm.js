@@ -8,21 +8,12 @@ import useInput from "../hooks/useInput";
 const Wrapper = styled.div``;
 
 const SignupInput = styled(Input)`
-  margin-bottom: 16px;
-  input {
-    padding-left: 48px;
-    background: 16px center / 24px no-repeat
-      url("../../static/images/icon-lock.png");
-  }
+  margin-bottom: 20px;
 `;
 
 const SignupButton = styled(Button)`
-  margin-bottom: 80px;
-  background-color: white;
-
-  /* @include breakpoint("max-card") {
-  margin-bottom: 30px;
-} */
+  margin-top: 30px;
+  background-color: ${props => props.theme.darkGreen};
 `;
 
 export default () => {
@@ -58,11 +49,8 @@ export default () => {
           label="Private key"
           readOnly
         />
-        <SignupButton
-          title="Generate Private key"
-          onClick={generatePrivateKey}
-        />
-        <Button title={"Sign up"} />
+        <Button onClick={generatePrivateKey}>Generate Private Key</Button>
+        <SignupButton>Sign Up</SignupButton>
       </form>
     </Wrapper>
   );

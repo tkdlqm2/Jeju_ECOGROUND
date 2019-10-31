@@ -8,35 +8,7 @@ const Container = styled.div`
   max-width: ${props => props.theme.maxCardWidth};
   padding: 72px 60px 83px;
   margin-top: 100px;
-  ${props =>
-    props.theme
-      .whiteBox} /* @include cardBox();
-  @include absolute-center();
-  @include breakpoint("max-card") {
-    background-color: unset;
-    border: unset;
-    padding: 40px 40px 20px;
-  } */
-`;
-
-const H2 = styled.h2`
-  display: inline-block;
-  font-size: 18px;
-  font-weight: normal;
-  color: ${props => props.theme.brownGrey};
-  line-height: 1.4;
-  margin-bottom: 100px;
-
-  &::after {
-    content: "";
-    display: inline-block;
-    margin-bottom: -18px;
-    margin-left: -100%;
-    transform: translateX(100%);
-    width: 16px;
-    height: 2px;
-    background-color: ${props => props.theme.lightGrey};
-  }
+  ${props => props.theme.whiteBox}
 `;
 
 const Message = styled.p`
@@ -66,11 +38,6 @@ export default () => {
 
   return (
     <Container>
-      <H2>
-        Klaytn-based
-        <br />
-        Eco friendly e-commerce
-      </H2>
       {loginForm ? <LoginForm /> : <SignupForm />}
       <Message>
         {loginForm ? "Don't have an account? " : "Have an account? "}

@@ -15,16 +15,11 @@ const Container = styled.div`
 
 const LoginInput = styled(Input)`
   margin-bottom: 30px;
-  /* & input {
-    padding-left: 48px;
-    background: 16px center / 24px no-repeat
-      url("../../static/images/icon-lock.png");
-  } */
 `;
 
 const LoginButton = styled(Button)`
-  margin-top: 80px;
-  color: black;
+  margin-top: 10px;
+  color: white;
   /* @include breakpoint("max-card") {
   margin-bottom: 30px;
   }; */
@@ -80,7 +75,7 @@ const LoginForm = ({ login }) => {
         onChange={privateKey.onChange}
         err={warningMessage}
       />
-      <LoginButton title="Log in" onClick={handleLogin} />
+      <LoginButton onClick={handleLogin}>Log in</LoginButton>
     </Container>
   );
 };

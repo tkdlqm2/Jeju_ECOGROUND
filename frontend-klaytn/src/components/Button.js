@@ -16,12 +16,4 @@ const Container = styled.button`
   cursor: pointer;
 `;
 
-const Button = ({ title, onClick }) => (
-  <Container onClick={onClick}>{title}</Container>
-);
-
-Button.propTypes = {
-  title: PropTypes.string.isRequired
-};
-
-export default Button;
+export default Container;

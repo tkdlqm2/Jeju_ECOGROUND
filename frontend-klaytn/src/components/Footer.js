@@ -17,14 +17,6 @@ const FooterInner = styled.div`
   font-weight: bold;
   text-transform: uppercase;
   color: ${props => props.theme.middleGrey};
-
-  /* @include breakpoint("max-page") {
-    max-width: ${props => props.theme.maxCardWidth};
-    padding-left: 60px;
-  }
-  @include breakpoint("max-card") {
-    padding-left: 40px;
-  } */
 `;
 
 const LinkBox = styled.ul`
@@ -35,20 +27,14 @@ const Link = styled.li`
   display: inline-block;
   margin-right: 16px;
   line-height: 104px;
+  color: ${props => props.theme.black};
   cursor: pointer;
-  /* @include breakpoint("max-page") {
-    line-height: 2;
-  } */
 `;
 
 const Copyright = styled.div`
   float: right;
   line-height: 104px;
   font-weight: normal;
-  /* @include breakpoint("max-page") {
-    width: 100%;
-    line-height: 3;
-  } */
 `;
 
 const footerLinks = [
