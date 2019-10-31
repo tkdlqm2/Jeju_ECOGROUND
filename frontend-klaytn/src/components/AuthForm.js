@@ -7,7 +7,10 @@ const Container = styled.div`
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
   padding: 72px 60px 83px;
-  /* @include cardBox();
+  margin-top: 100px;
+  ${props =>
+    props.theme
+      .whiteBox} /* @include cardBox();
   @include absolute-center();
   @include breakpoint("max-card") {
     background-color: unset;
@@ -22,7 +25,7 @@ const H2 = styled.h2`
   font-weight: normal;
   color: ${props => props.theme.brownGrey};
   line-height: 1.4;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
 
   &::after {
     content: "";
@@ -39,6 +42,7 @@ const H2 = styled.h2`
 const Message = styled.p`
   color: ${props => props.theme.brownGrey};
   font-size: 12px;
+  margin-top: 50px;
 `;
 
 const Link = styled.span`

@@ -18,13 +18,13 @@ const FooterInner = styled.div`
   text-transform: uppercase;
   color: ${props => props.theme.middleGrey};
 
-  @include breakpoint("max-page") {
+  /* @include breakpoint("max-page") {
     max-width: ${props => props.theme.maxCardWidth};
     padding-left: 60px;
   }
   @include breakpoint("max-card") {
     padding-left: 40px;
-  }
+  } */
 `;
 
 const LinkBox = styled.ul`
@@ -36,19 +36,19 @@ const Link = styled.li`
   margin-right: 16px;
   line-height: 104px;
   cursor: pointer;
-  @include breakpoint("max-page") {
+  /* @include breakpoint("max-page") {
     line-height: 2;
-  }
+  } */
 `;
 
 const Copyright = styled.div`
   float: right;
   line-height: 104px;
   font-weight: normal;
-  @include breakpoint("max-page") {
+  /* @include breakpoint("max-page") {
     width: 100%;
     line-height: 3;
-  }
+  } */
 `;
 
 const footerLinks = [

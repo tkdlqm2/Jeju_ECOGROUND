@@ -12,6 +12,8 @@ export default {
   brownGrey: "#999999",
   brownishGrey: "#707070",
   darkBrown: "#4f473e",
+  lightGreen: "#03a87c",
+  darkGreen: "#41734E",
   black: "#2c2c2c",
   white: "#ffffff",
   boxBorder: "1px solid #eaeaea",

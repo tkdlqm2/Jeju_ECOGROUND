@@ -10,6 +10,9 @@ const Container = styled.div`
   min-width: ${props => props.theme.minPageWidth};
   max-width: ${props => props.theme.maxPageWidth};
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const AuthPage = () => (

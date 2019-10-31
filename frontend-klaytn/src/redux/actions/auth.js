@@ -2,6 +2,7 @@ import caver from "../../klaytn/caver";
 import { LOGIN, LOGOUT, INTEGRATE_WALLET, REMOVE_WALLET } from "./actionTypes";
 
 export const integrateWallet = privateKey => dispatch => {
+  console.log(privateKey);
   const walletInstance = caver.klay.accounts.privateKeyToAccount(privateKey);
   caver.klay.accounts.wallet.add(walletInstance);
   sessionStorage.setItem("walletInstance", JSON.stringify(walletInstance));

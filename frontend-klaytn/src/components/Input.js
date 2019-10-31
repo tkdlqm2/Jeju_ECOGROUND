@@ -7,9 +7,27 @@ const Container = styled.input`
   border: ${props => props.theme.boxBorder};
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.bgColor};
-  height: 35px;
+  height: 50px;
   font-size: 12px;
   padding: 0px 15px;
+  width: 100%;
+  margin-bottom: 15px;
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: ${props => props.theme.brownGrey};
+  margin-bottom: 8px;
+`;
+
+const Err = styled.p`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 12px;
+  color: red;
 `;
 
 const Input = ({
@@ -18,16 +36,25 @@ const Input = ({
   value,
   onChange,
   type = "text",
-  className
+  err,
+  readOnly,
+  label,
+  name
 }) => (
-  <Container
-    className={className}
-    placeholder={placeholder}
-    required={required}
-    value={value}
-    onChange={onChange}
-    type={type}
-  />
+  <div>
+    {label && <Label htmlFor={name}>{label}</Label>}
+    <Container
+      id={name}
+      placeholder={placeholder}
+      required={required}
+      value={value}
+      onChange={onChange}
+      type={type}
+      autoComplete="off"
+      readOnly={readOnly}
+    />
+    {err && <Err>{err}</Err>}
+  </div>
 );
 
 Input.propTypes = {
