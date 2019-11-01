@@ -14,6 +14,10 @@ const Container = styled.div`
 `;
 
 const LoginInput = styled(Input)`
+  margin-bottom: 10px;
+`;
+
+const PwdInput = styled(Input)`
   margin-bottom: 30px;
 `;
 
@@ -60,7 +64,7 @@ const LoginForm = ({ login }) => {
         onChange={username.onChange}
         err={warningMessage}
       />
-      <LoginInput
+      <PwdInput
         type="password"
         name="password"
         placeholder="password"

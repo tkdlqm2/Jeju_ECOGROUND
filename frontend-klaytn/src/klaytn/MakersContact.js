@@ -1,4 +1,4 @@
-import caver from 'klaytn/caver'
+import caver from "./caver";
 
 /**
  * 1. Create contract instance
@@ -7,8 +7,9 @@ import caver from 'klaytn/caver'
  * Now you can access the instance by `this.countContract` variable.
  */
 
-const MakersContract = DEPLOYED_ABI
-    && DEPLOYED_ADDRESS
-    && new caver.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS)
+const MakersContract =
+  DEPLOYED_ABI &&
+  DEPLOYED_ADDRESS &&
+  new caver.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS);
 
-export default MakersContract
+export default MakersContract;
