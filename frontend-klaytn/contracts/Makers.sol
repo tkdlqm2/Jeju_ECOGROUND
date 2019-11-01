@@ -92,7 +92,7 @@ contract MakersToken is ERC721, ERC721Enumerable {
         require(_MakersList[tokenId].D_day, "기간이 지남"); // 날짜 유효성 판단을 어떻게 할 지 아직 못정함.
         require(_MakersList[tokenId].targetKlay > _totalKlayList[tokenId],"모금 금액을 모두 달성함");
 
-        address MakersOwner = ownerof(tokenId);
+        address MakersOwner = ownerOf(tokenId);
         address payable payableTokenSeller = address(uint160(MakersOwner));
         payableTokenSeller.transfer(msg.value); // 메이커스 Token의 owner 계정으로 klay 송금
 
