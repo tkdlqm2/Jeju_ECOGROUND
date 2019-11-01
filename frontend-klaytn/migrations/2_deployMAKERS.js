@@ -1,4 +1,4 @@
-const MAKERS = artifacts.require('./MAKERS.sol')
+const MAKERS = artifacts.require('./MakersToken.sol')
 const fs = require('fs')
 
 module.exports = function (deployer) {
