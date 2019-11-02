@@ -26,10 +26,11 @@ contract MakersToken is ERC721Full {
         string D_day;
         uint256 status;
         uint256 timestamp;
+        uint256 count;
     }
 
     function uploadMakers
-    (string memory photo, string memory title, string memory description, int targetKlay, string memory D_day) public {
+    (string memory photo, string memory title, string memory description, int targetKlay,  string memory D_day) public {
         uint256 tokenId = totalSupply() + 1;
 
         _mint(msg.sender, tokenId);
@@ -45,6 +46,7 @@ contract MakersToken is ERC721Full {
             targetKlay : targetKlay, // 목표 금액
             D_day : D_day, // 마감일
             status : 1, // 투자 상태 -> 0 이면 종료 / 1 이면 진행 / 2 이면 목표금액 달성된 메이커스.
+            count : 0,
             timestamp : now
         });
 
@@ -72,16 +74,17 @@ contract MakersToken is ERC721Full {
         );
     }
     // 메이커스 투자하기.
+    // 중복 투자 예외처리하기.
     function investMakers(uint256 tokenId) public payable {
-        //
+        //중복 투자 예외처리
         require(msg.sender != ownerOf(tokenId), "메이커스 당사자는 투자못함.");
         // require(_MakersList[tokenId].D_day, "기간이 지남"); // 날짜 유효성 판단을 어떻게 할 지 아직 못정함.
         require(_MakersList[tokenId].targetKlay >= _totalKlayList[tokenId],"모금 금액을 모두 달성함");
-
+        _MakersList[tokenId].count += 1;
         address MakersOwner = ownerOf(tokenId);
         address payable payableTokenSeller = address(uint160(MakersOwner));
         payableTokenSeller.transfer(msg.value); // 메이커스 Token의 owner 계정으로 klay 송금
-        _totalKlayList[tokenId] += uint248(msg.value); // 메이커스 목표 금액을 다루는 list에 klay 추가
+        _totalKlayList[tokenId] += 1; // 메이커스 목표 금액을 다루는 list에 klay 추가
         _MakersList[tokenId].buyer.push(msg.sender); // 메이커스 투자자들 push
         //
     }
@@ -94,5 +97,17 @@ contract MakersToken is ERC721Full {
     // 투자자 확인 함수.
     function showInvestor(uint256 _tokenId) public view returns(address[] memory) {
         return _MakersList[_tokenId].buyer;
+    }
+
+    // 중복 투자 true false
+    function overlappingInvestment(uint256 _tokenId, address _investor) public view returns(bool) {
+        address[] memory investors = _MakersList[_tokenId].buyer;
+        uint256 len = _MakersList[_tokenId].count;
+        for (uint256 i=0; i<len; i++){
+            if(_investor == investors[i]){
+                return false;
+            }
+        }
+        return true;
     }
 }
