@@ -8,6 +8,7 @@ const Container = styled.div`
   max-width: ${props => props.theme.maxCardWidth};
   padding: 72px 60px 83px;
   margin-top: 100px;
+  margin-bottom: 100px;
   ${props => props.theme.whiteBox}
 `;
 

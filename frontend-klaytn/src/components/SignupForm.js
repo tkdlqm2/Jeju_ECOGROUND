@@ -8,12 +8,15 @@ import useInput from "../hooks/useInput";
 const Wrapper = styled.div``;
 
 const SignupInput = styled(Input)`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+`;
+
+const PKButton = styled(Button)`
+  background-color: #17202e;
 `;
 
 const SignupButton = styled(Button)`
-  margin-top: 30px;
-  background-color: ${props => props.theme.darkGreen};
+  margin-top: 50px;
 `;
 
 export default () => {
@@ -40,16 +43,22 @@ export default () => {
   return (
     <Wrapper>
       <form onSubmit={onSubmit}>
-        <Input placeholder={"Username"} {...username} />
+        <Input
+          label="Create new account"
+          placeholder={"Username"}
+          {...username}
+        />
         <Input placeholder={"Password"} {...password} type="password" />
         <Input placeholder={"Email"} {...email} type="email" />
+        <br />
+        <br />
         <SignupInput
           placeholder="Generate Private Key to Sign up"
           value={privateKey || ""}
           label="Private key"
           readOnly
         />
-        <Button onClick={generatePrivateKey}>Generate Private Key</Button>
+        <PKButton onClick={generatePrivateKey}>Generate Private Key</PKButton>
         <SignupButton>Sign Up</SignupButton>
       </form>
     </Wrapper>
