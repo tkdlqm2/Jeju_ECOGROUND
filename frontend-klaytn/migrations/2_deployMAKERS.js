@@ -24,5 +24,5 @@ module.exports = function (deployer) {
                     if (err) throw err
                     console.log("파일에 주소 입력 성공");
                 })
-        })
+        });
 }
