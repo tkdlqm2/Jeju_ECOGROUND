@@ -40,31 +40,103 @@ const FeedContainer = styled.div`
   align-items: center;
 `;
 
+const data = [
+  {
+    tokenId: 1,
+    buyer: "buyer",
+    photo: "",
+    title: "Bamboo Keyboard",
+    description: "a keyboard made of bamboo material",
+    targetKlay: 59900,
+    D_day: "191130",
+    status: 0,
+    timestamp: "191101"
+  },
+  {
+    tokenId: 2,
+    buyer: "buyer",
+    photo: "",
+    title: "Bamboo Umbrella",
+    description: "an umbrella made of bamboo material",
+    targetKlay: 29900,
+    D_day: "191130",
+    status: 0,
+    timestamp: "191101"
+  },
+  {
+    tokenId: 3,
+    buyer: "buyer",
+    photo: "",
+    title: "Hardwood Speaker",
+    description: "a speaker made of hardwood material",
+    targetKlay: 199000,
+    D_day: "191130",
+    status: 0,
+    timestamp: "191101"
+  },
+  {
+    tokenId: 4,
+    buyer: "buyer",
+    photo: "",
+    title: "Solar Cooker",
+    description: "an oven that uses solar heat",
+    targetKlay: 599000,
+    D_day: "191130",
+    status: 0,
+    timestamp: "191101"
+  },
+  {
+    tokenId: 5,
+    buyer: "buyer",
+    photo: "",
+    title: "Eco Crayons",
+    description: "crayons made of eco-friendly materials",
+    targetKlay: 9900,
+    D_day: "191130",
+    status: 0,
+    timestamp: "191101"
+  }
+];
+
 const MakersFeed = props => {
   const { feed } = props;
   console.log(feed);
   return (
     <FeedContainer>
-      {feed !== null ? (
-        feed.map(({ id, data, name, caption, timestamp }) => {
-          const imageUrl = drawImageFromBytes(data);
-          //   const issueDate = moment(timestamp * 1000).fromNow();
-          return (
-            <FeedProduct key={id}>
-              <ImageContainer>
-                <img src={imageUrl} alt={name} />
-              </ImageContainer>
-              <InfoContainer>
-                info
-                {/* <ProductInfo
+      {data !== null ? (
+        data.map(
+          ({
+            tokenId,
+            buyer,
+            photo,
+            title,
+            description,
+            targetKlay,
+            D_day,
+            status,
+            timestamp
+          }) => {
+            // const imageUrl = drawImageFromBytes(data);
+            //   const issueDate = moment(timestamp * 1000).fromNow();
+            return (
+              <FeedProduct key={tokenId}>
+                <ImageContainer>
+                  {/* <img src={imageUrl} alt={title} /> */}
+                </ImageContainer>
+                <InfoContainer>
+                  {buyer} / {title} / {description} / {targetKlay} / {D_day} /{" "}
+                  {status}
+                  {timestamp}/
+                  {/* <ProductInfo
                   name={name}
                   issueDate={issueDate}
                   caption={caption}
                 /> */}
-              </InfoContainer>
-            </FeedProduct>
-          );
-        })
+                </InfoContainer>
+              </FeedProduct>
+            );
+          }
+        )
       ) : (
         <FeedEmpty>No Product :D</FeedEmpty>
       )}
