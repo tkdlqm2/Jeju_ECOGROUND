@@ -108,6 +108,18 @@ contract MakersToken is ERC721Full {
                 return false;
             }
         }
+
+    }
+
+    // 환불 함수
+
+    function returnklay(uint256 _tokenId) public payable returns (bool) {
+        address[] memory investors = _MakersList[_tokenId].buyer;
+        uint256 len = _MakersList[_tokenId].count;
+        for (uint256 i=0; i<len; i++){
+            address payable payableTokenSeller = address(uint160(investors[i]));
+            payableTokenSeller.transfer(msg.value);
+        }
         return true;
     }
 }
