@@ -122,4 +122,15 @@ contract MakersToken is ERC721Full {
         }
         return true;
     }
+
+    // Klay 송금  (제품 구매 로직)
+
+    // param1 : 판매자 지갑 주소
+    // param2 : 상품 가격(klay)
+
+    function purchaseToken(address walletAddress, uint256 price) public payable {
+        require(msg.value >= price, "caller sent klay lower than price");
+        address payable payableTokenSeller = address(uint160(walletAddress));
+        payableTokenSeller.transfer(msg.value);
+     }
 }
