@@ -1,5 +1,5 @@
 import React from "react";
-import * as URL from "../constants/url";
+import * as URL from "constants/url";
 import styled from "styled-components";
 
 const Container = styled.footer`
