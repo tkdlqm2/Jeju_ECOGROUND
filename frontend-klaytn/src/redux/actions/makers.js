@@ -12,18 +12,18 @@ const setFeed = feed => ({
   payload: { feed }
 });
 
-// const updateFeed = tokenId => (dispatch, getState) => {
-//   Makers.methods
-//     .getMakers(tokenId)
-//     .call()
-//     .then(newMakers => {
-//       const {
-//         makers: { feed }
-//       } = getState();
-//       const newFeed = [feedParser(newMakers), ...feed];
-//       dispatch(setFeed(newFeed));
-//     });
-// };
+const updateFeed = tokenId => (dispatch, getState) => {
+  Makers.methods
+    .getMakers(tokenId)
+    .call()
+    .then(newMakers => {
+      const {
+        makers: { feed }
+      } = getState();
+      const newFeed = [feedParser(newMakers), ...feed];
+      dispatch(setFeed(newFeed));
+    });
+};
 
 // API functions
 
@@ -43,44 +43,44 @@ export const getFeed = () => dispatch => {
     .then(feed => dispatch(setFeed(feedParser(feed))));
 };
 
-// export const uploadPhoto = (file, fileName, location, caption) => dispatch => {
-//   const reader = new window.FileReader();
-//   reader.readAsArrayBuffer(file);
-//   reader.onloadend = () => {
-//     const buffer = Buffer.from(reader.result);
-//     /**
-//      * Add prefix `0x` to hexString
-//      * to recognize hexString as bytes by contract
-//      */
-//     const hexString = "0x" + buffer.toString("hex");
-//     MakersContract.methods
-//       .uploadPhoto(hexString, fileName, location, caption)
-//       .send({
-//         from: getWallet().address,
-//         gas: "200000000"
-//       })
-//       .once("transactionHash", txHash => {
-//         ui.showToast({
-//           status: "pending",
-//           message: `Sending a transaction... (uploadPhoto)`,
-//           txHash
-//         });
-//       })
-//       .once("receipt", receipt => {
-//         ui.showToast({
-//           status: receipt.status ? "success" : "fail",
-//           message: `Received receipt! It means your transaction is
-//           in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-//           link: receipt.transactionHash
-//         });
-//         const tokenId = receipt.events.PhotoUploaded.returnValues[0];
-//         dispatch(updateFeed(tokenId));
-//       })
-//       .once("error", error => {
-//         ui.showToast({
-//           status: "error",
-//           message: error.toString()
-//         });
-//       });
-//   };
-// };
+export const uploadPhoto = (file, title, description, targetKlay, D_day) => dispatch => {
+  const reader = new window.FileReader();
+  reader.readAsArrayBuffer(file);
+  reader.onloadend = () => {
+    const buffer = Buffer.from(reader.result);
+    /**
+     * Add prefix `0x` to hexString
+     * to recognize hexString as bytes by contract
+     */
+    const hexString = "0x" + buffer.toString("hex");
+    MakersContract.methods
+      .uploadPhoto(hexString, title, description, targetKlay, D_day)
+      .send({
+        from: getWallet().address,
+        gas: "200000000"
+      })
+      .once("transactionHash", txHash => {
+        ui.showToast({
+          status: "pending",
+          message: `Sending a transaction... (uploadPhoto)`,
+          txHash
+        });
+      })
+      .once("receipt", receipt => {
+        ui.showToast({
+          status: receipt.status ? "success" : "fail",
+          message: `Received receipt! It means your transaction is
+          in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+          link: receipt.transactionHash
+        });
+        const tokenId = receipt.events.PhotoUploaded.returnValues[0];
+        dispatch(updateFeed(tokenId));
+      })
+      .once("error", error => {
+        ui.showToast({
+          status: "error",
+          message: error.toString()
+        });
+      });
+  };
+};
