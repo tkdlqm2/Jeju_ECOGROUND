@@ -1,7 +1,5 @@
 import React from "react";
-// import moment from "moment";
 import ProductInfo from "../ProductInfo";
-import MakersHeader from "components/MakersHeader";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -53,7 +51,6 @@ const MakersFeed = props => {
   console.log(feed);
   return (
     <Container>
-      <MakersHeader />
       <FeedContainer>
         {feed !== null ? (
           feed.map(

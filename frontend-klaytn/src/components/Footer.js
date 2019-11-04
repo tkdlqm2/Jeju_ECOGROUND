@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Container = styled.footer`
   width: "100%";
   height: "104px";
+  margin-bottom: 200px;
 `;
 
 const FooterInner = styled.div`

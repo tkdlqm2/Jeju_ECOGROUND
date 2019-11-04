@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --config webpack.dev.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -8,7 +8,6 @@ import GlobalStyles from "./styles/GlobalStyles";
 import Theme from "./styles/Theme";
 import Routes from "./Routes";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
 
 import * as authActions from "./redux/actions/auth";
 
@@ -54,7 +53,6 @@ class App extends Component {
           <GlobalStyles />
           <Router>
             <>
-              {isLoggedIn && <Header />}
               <Wrapper>
                 <Routes isLoggedIn={isLoggedIn} />
                 <Footer />

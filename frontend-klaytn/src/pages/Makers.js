@@ -1,21 +1,24 @@
 import React from "react";
-import MakersFeed from "../components/MakersFeed";
 import styled from "styled-components";
-import UploadButton from "../components/UploadButton";
+import MakersFeed from "components/MakersFeed";
+import MakersNav from "components/MakersNav";
+import MakersHeader from "components/MakersHeader";
 
 const Container = styled.main`
   width: 100%;
   min-height: 100%;
-  min-width: $min-page-width;
-  max-width: $max-page-width;
+  min-width: ${props => props.theme.maxCardWidth};
+  max-width: ${props => props.theme.maxCardWidth};
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const Makers = () => (
+export default () => (
   <Container>
+    <MakersHeader />
+    <MakersNav />
     <MakersFeed />
-    <UploadButton />
   </Container>
 );
-
-export default Makers;

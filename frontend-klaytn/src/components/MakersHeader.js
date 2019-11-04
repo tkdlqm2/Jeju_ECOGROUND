@@ -1,93 +1,132 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import styled from "styled-components";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-import { blueGrey } from "@material-ui/core/colors";
+import { Link, withRouter } from "react-router-dom";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
 
-const Root = styled(Paper)`
-  flex-grow: 0;
+const Header = styled.header`
   width: ${props => props.theme.maxCardWidth};
-  min-height: 100%;
-`;
-
-// const Makers = styled.div`
-//   height: 50px;
-//   width: ${props => props.theme.maxCardWidth};
-//   z-index: 1;
-//   position: fixed;
-//   background-color: ${props => props.theme.bgColor};
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-const StyledTabs = styled(Tabs)`
-  width: ${props => props.theme.maxCardWidth};
+  border: 0;
   position: fixed;
-  z-index: 1;
+  top: 0;
   background-color: ${props => props.theme.bgColor};
+  color: white;
+  border-bottom: ${props => props.theme.boxBorder};
+  border-radius: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 5px;
+  z-index: 2;
+  height: 60px;
 `;
 
-const StyledTab = styled(Tab)`
-  width: 20%;
+const HeaderWrapper = styled.div`
+  width: 100%;
+  max-width: ${props => props.theme.maxWidth};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export default function CenteredTabs() {
-  const [value, setValue] = React.useState(0);
+const LeftColumn = styled.span`
+  display: flex;
+  align-items: center;
+  width: 33%;
+  text-align: center;
+  &:first-child {
+    margin-right: auto;
+    text-align: left;
+  }
+  &:last-child {
+    margin-left: auto;
+    text-align: right;
+  }
+`;
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+const MiddleColumn = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 33%;
+  text-align: center;
+`;
 
-  const theme = createMuiTheme({
-    palette: {
-      primary: { main: blueGrey[900] },
-      secondary: { main: "#17202E" }
-    },
-    typography: {
-      fontFamily: [
-        "-apple-system",
-        "Noto Sans KR",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"'
-      ].join(","),
-      fontSize: 16,
-      fontWeight: 700
-    }
-  });
+const RightColumn = styled.span`
+  width: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+`;
 
+const HeaderLink = styled.div`
+  a {
+    font-weight: 700;
+  }
+  a:hover {
+    color: ${props => props.theme.brownGrey};
+  }
+`;
+
+const Divider = styled.span`
+  padding: 10px;
+`;
+
+const Ground = styled.span`
+  a {
+    font-weight: 700;
+  }
+  a:hover {
+    color: ${props => props.theme.brownGrey};
+  }
+`;
+
+const Makers = styled.span`
+  a {
+    font-size: 22px;
+    font-weight: 300;
+  }
+  a:hover {
+    color: ${props => props.theme.brownGrey};
+  }
+`;
+
+const FatText = styled.span`
+  font-weight: 900;
+`;
+
+export default withRouter(({ history }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Root>
-        {/* <Makers>
-          <Menu></Menu>
-          <Typography variant="h5" component="h2" align="center">
-            Eco Makers
-          </Typography>
-        </Makers> */}
-        <StyledTabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="secondary"
-          centered
-        >
-          <StyledTab label="홈" />
-          <StyledTab label="아티스트" />
-          <StyledTab label="신규" />
-          <StyledTab label="오픈예정" />
-        </StyledTabs>
-      </Root>
-    </ThemeProvider>
+    <Header>
+      <HeaderWrapper>
+        <LeftColumn>
+          <Ground>
+            <Link to="/">Eco Ground</Link>
+          </Ground>
+        </LeftColumn>
+        <MiddleColumn>
+          <Makers>
+            <Link to="/makers">
+              eco<FatText>makers</FatText>
+            </Link>
+          </Makers>
+        </MiddleColumn>
+        <RightColumn>
+          <HeaderLink>
+            <Link to="/wallet">
+              <AccountBalanceWalletOutlinedIcon />
+            </Link>
+          </HeaderLink>
+          <Divider></Divider>
+          <HeaderLink>
+            <Link to="/">
+              <ExitToAppOutlinedIcon />
+            </Link>
+          </HeaderLink>
+        </RightColumn>
+      </HeaderWrapper>
+    </Header>
   );
-}
+});

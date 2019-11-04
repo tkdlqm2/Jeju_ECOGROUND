@@ -29,6 +29,9 @@ const HeaderWrapper = styled.div`
 `;
 
 const HeaderColumn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 33%;
   text-align: center;
   &:first-child {
@@ -41,10 +44,10 @@ const HeaderColumn = styled.div`
   }
 `;
 
-const HeaderLink = styled(Link)`
-  font-weight: 700;
+const HeaderLink = styled.div`
   a {
     color: #fff;
+    font-weight: 700;
   }
   a:hover {
     color: ${props => props.theme.brownGrey};
@@ -55,11 +58,26 @@ const Divider = styled.span`
   padding: 10px;
 `;
 
-const Ground = styled(HeaderLink)`
+const Ground = styled.span`
   font-size: 20px;
+  a {
+    color: #fff;
+    font-weight: 700;
+  }
+  a:hover {
+    color: ${props => props.theme.brownGrey};
+  }
 `;
 
-const Makers = styled(HeaderLink)``;
+const Makers = styled.span`
+  a {
+    color: #fff;
+    font-weight: 700;
+  }
+  a:hover {
+    color: ${props => props.theme.brownGrey};
+  }
+`;
 
 export default withRouter(({ history }) => {
   return (

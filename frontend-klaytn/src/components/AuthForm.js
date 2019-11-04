@@ -18,7 +18,7 @@ const Message = styled.p`
   margin-top: 50px;
 `;
 
-const Link = styled.span`
+const LinkSpan = styled.span`
   font-weight: bold;
   cursor: pointer;
   &:hover {
@@ -42,7 +42,9 @@ export default () => {
       {loginForm ? <LoginForm /> : <SignupForm />}
       <Message>
         {loginForm ? "Don't have an account? " : "Have an account? "}
-        <Link onClick={toggleForm}>{loginForm ? "Sign up" : "Login"}</Link>
+        <LinkSpan to="/" onClick={toggleForm}>
+          {loginForm ? "Sign up" : "Login"}
+        </LinkSpan>
       </Message>
     </Container>
   );

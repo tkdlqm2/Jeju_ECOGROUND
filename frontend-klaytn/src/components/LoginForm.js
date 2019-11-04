@@ -41,8 +41,6 @@ const LoginForm = ({ login }) => {
     const usernameValue = username.value;
     const passwordValue = password.value;
 
-    console.log(usernameValue, passwordValue);
-
     // 웹 로그인
 
     if (usernameValue && passwordValue) {
@@ -50,7 +48,7 @@ const LoginForm = ({ login }) => {
         ? login(privateKeyValue)
         : setWarningMessage("* Invalid Private Key");
     } else {
-      console.log("no username");
+      alert("아이디와 패스워드를 입력해주세요");
     }
   };
 

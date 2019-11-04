@@ -7,12 +7,11 @@ const Container = props => {
 
   useEffect(() => {
     if (!feed) {
-      console.log("feed");
       getFeed();
     } else {
       setIsLoading(false);
     }
-  }, [feed]);
+  }, [feed, getFeed]);
 
   return (
     <MakersFeed feed={feed} userAddress={userAddress} isLoading={isLoading} />

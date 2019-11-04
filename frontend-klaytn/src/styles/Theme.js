@@ -14,6 +14,7 @@ export default {
   darkBrown: "#4f473e",
   lightGreen: "#03a87c",
   darkGreen: "#41734E",
+  HeaderColor: "#17202E",
   black: "#2c2c2c",
   white: "#ffffff",
   boxBorder: "1px solid #eaeaea",
