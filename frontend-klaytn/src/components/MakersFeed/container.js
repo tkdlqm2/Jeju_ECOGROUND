@@ -8,7 +8,7 @@ const Container = props => {
   useEffect(() => {
     if (!feed) {
       console.log("feed");
-      // getFeed();
+      getFeed();
     } else {
       setIsLoading(false);
     }
