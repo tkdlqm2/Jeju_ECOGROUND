@@ -9,6 +9,9 @@ const Button = styled.button`
   font-weight: 600;
   background-color: ${props => props.theme.lightGreen};
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 7px 0px;
   font-size: 14px;
   cursor: pointer;

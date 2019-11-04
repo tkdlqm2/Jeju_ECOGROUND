@@ -1,4 +1,4 @@
-import caver from "klaytn/caver";
+import caver from "./caver";
 /**
  * 1. Create contract instance
  * ex:) new caver.klay.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS)

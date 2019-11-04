@@ -2,6 +2,7 @@
   "name": "frontend-klaytn",
   "version": "0.1.0",
   "private": true,
+  "main": "truffle-config.js",
   "dependencies": {
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
@@ -26,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "webpack-dev-server"
   },
   "eslintConfig": {
     "extends": "react-app"
