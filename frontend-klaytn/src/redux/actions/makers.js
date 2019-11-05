@@ -1,4 +1,4 @@
-// import MakersContract from "../../klaytn/MakersContract";
+import MakersContract from "../../klaytn/MakersContract";
 // import { getWallet } from "../../utils/crypto";
 // import ui from "../../utils/ui";
 import { feedParser } from "../../utils/misc";
@@ -28,25 +28,25 @@ const setFeed = feed => ({
 
 // API functions
 
-// export const getFeed = () => dispatch => {
-//   MakersContract.methods
-//     .getTotalMakersCount()
-//     .call()
-//     .then(totalMakersCount => {
-//       if (!totalMakersCount) return [];
-//       const feed = [];
-//       for (let i = totalMakersCount; i > 0; i--) {
-//         const product = MakersContract.methods.getMakers(i).call();
-//         feed.push(product);
-//       }
-//       return Promise.all(feed);
-//     })
-//     .then(feed => dispatch(setFeed(feedParser(feed))));
-// };
-
 export const getFeed = () => dispatch => {
-  dispatch(setFeed(feedParser(makersFeed)));
+  MakersContract.methods
+    .getTotalMakersCount()
+    .call()
+    .then(totalMakersCount => {
+      if (!totalMakersCount) return [];
+      const feed = [];
+      for (let i = totalMakersCount; i > 0; i--) {
+        const product = MakersContract.methods.getMakers(i).call();
+        feed.push(product);
+      }
+      return Promise.all(feed);
+    })
+    .then(feed => dispatch(setFeed(feedParser(feed))));
 };
+
+// export const getFeed = () => dispatch => {
+//   dispatch(setFeed(feedParser(makersFeed)));
+// };
 
 // export const uploadPhoto = (
 //   file,
