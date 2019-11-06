@@ -34,7 +34,7 @@ export default () => {
     e.preventDefault();
 
     if (email.value !== "" && username.value !== "" && password.value !== "") {
-      // sign up
+      // TODO: sign up
 
       console.log(email.value, username.value, password.value);
     }
