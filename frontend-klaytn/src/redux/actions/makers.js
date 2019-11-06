@@ -15,6 +15,7 @@ const setFeed = feed => ({
 
 const updateFeed = tokenId => (dispatch, getState) => {
   console.log("updateFeed");
+
   Makers.methods
     .getMakers(tokenId)
     .call()

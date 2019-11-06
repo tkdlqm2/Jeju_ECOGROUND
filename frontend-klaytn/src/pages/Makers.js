@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MakersFeed from "components/MakersFeed";
 import MakersNav from "components/MakersNav";
 import MakersHeader from "components/MakersHeader";
+import UploadButton from "components/UploadButton";
 
 const Container = styled.main`
   width: 100%;
@@ -20,5 +21,6 @@ export default () => (
     <MakersHeader />
     <MakersNav />
     <MakersFeed />
+    <UploadButton />
   </Container>
 );

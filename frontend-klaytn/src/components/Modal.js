@@ -10,12 +10,10 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 200;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: white;
 `;
 
 const ModalDiv = styled.div`
-  @include fixed-center();
-  @include cardBox();
   width: 100%;
   max-width: $max-card-width;
 
@@ -38,7 +36,6 @@ const ModalBody = styled.div`
 `;
 
 const ModalClose = styled.button`
-  @include imageReplacement(24px, 24px, "/images/icon-close.png", $white);
   position: absolute;
   top: 18px;
   right: 24px;
