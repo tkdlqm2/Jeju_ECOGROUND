@@ -2,6 +2,7 @@ import React from "react";
 import ProductInfo from "../ProductInfo";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Slider from "components/Slider";
 
 const Container = styled.div`
   display: flex;
@@ -80,6 +81,7 @@ const MakersFeed = props => {
                       tokenId={tokenId}
                     />
                   </InfoContainer>
+                  <Slider />
 
                   {timestamp}
                 </FeedProduct>

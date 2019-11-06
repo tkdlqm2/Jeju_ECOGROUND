@@ -3,7 +3,7 @@ import { getWallet } from "../../utils/crypto";
 import ui from "../../utils/ui";
 import { feedParser } from "../../utils/misc";
 import { SET_FEED } from "./actionTypes";
-import { makersFeed } from "data";
+// import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
 import cav from "../../klaytn/caver";
 
@@ -67,6 +67,7 @@ export const getFeed = () => dispatch => {
 //   dispatch(setFeed(feedParser(makersFeed)));
 // };
 
+<<<<<<< HEAD
 // 메이커스 투자하기.
 
 export const returnKlay = (tokenId, price) => (dispatch) => {
@@ -137,11 +138,14 @@ export const investMakers = (tokenId, price) => (dispatch) => {
 };
 
 export const uploadPhoto = (
+=======
+export const uploadItem = (
+>>>>>>> 326435dd9c1ce98f00d7ea607c4f91bb4b0f3b22
   file,
   title,
   description,
-  targetKlay = 100,
-  D_day = "dsfds"
+  targetKlay,
+  D_day
 ) => dispatch => {
   console.log(
     `
@@ -162,7 +166,7 @@ export const uploadPhoto = (
      * to recognize hexString as bytes by contract
      */
     const hexString = "0x" + buffer.toString("hex");
-    console.log("hexString: ", hexString);
+    console.log("hexString");
 
     MakersContract.methods
       .uploadMakers(hexString, title, description, targetKlay, D_day)
@@ -174,7 +178,7 @@ export const uploadPhoto = (
         console.log("txHash:", txHash);
         ui.showToast({
           status: "pending",
-          message: `Sending a transaction... (uploadPhoto)`,
+          message: `Sending a transaction... (uploadMakers)`,
           txHash
         });
       })
@@ -182,7 +186,7 @@ export const uploadPhoto = (
         ui.showToast({
           status: receipt.status ? "success" : "fail",
           message: `Received receipt! It means your transaction is
-          in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+          in klaytn block (#${receipt.blockNumber}) (uploadMakers)`,
           link: receipt.transactionHash
         });
         const tokenId = receipt.events.MakersUploaded.returnValues[0];

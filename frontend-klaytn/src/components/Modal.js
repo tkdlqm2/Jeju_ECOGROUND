@@ -15,11 +15,7 @@ const Wrapper = styled.div`
 
 const ModalDiv = styled.div`
   width: 100%;
-  max-width: $max-card-width;
-
-  @include breakpoint("max-card") {
-    width: 95%;
-  }
+  max-width: ${props => props.theme.maxCardWidth};
 `;
 
 const ModalHeader = styled.h2`
