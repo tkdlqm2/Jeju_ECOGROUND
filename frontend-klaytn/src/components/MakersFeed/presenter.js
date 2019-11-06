@@ -80,6 +80,8 @@ const MakersFeed = props => {
                       tokenId={tokenId}
                     />
                   </InfoContainer>
+
+                  {timestamp}
                 </FeedProduct>
               );
             }

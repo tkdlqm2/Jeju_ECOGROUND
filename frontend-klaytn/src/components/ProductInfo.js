@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: ${props => props.theme.maxCardWidth};
 `;
 
 const Title = styled.h2`
@@ -17,7 +18,7 @@ const Title = styled.h2`
 `;
 
 const Description = styled.p`
-  width: 420px;
+  width: 90%;
   font-size: 16px;
   margin-bottom: 18px;
   font-weight: 400;
