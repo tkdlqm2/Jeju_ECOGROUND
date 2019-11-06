@@ -7,7 +7,7 @@ import "openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 contract MakersToken is ERC721Full {
 
     event MakersUploaded
-    (uint256 indexed tokenId, string photo, string title, string description, int targetKlay, string D_day, uint256 timestamp);
+    (uint256 indexed tokenId, bytes photo, string title, string description, int targetKlay, string D_day, uint256 timestamp);
 
     constructor(string memory name, string memory symbol) ERC721Full(name, symbol) public {}
 
@@ -19,7 +19,7 @@ contract MakersToken is ERC721Full {
     struct Makers{
         uint256 tokenId;
         address[] buyer;
-        string photo;
+        bytes photo;
         string title;
         string description;
         int targetKlay;
@@ -30,7 +30,7 @@ contract MakersToken is ERC721Full {
     }
 
     function uploadMakers
-    (string memory photo, string memory title, string memory description, int targetKlay,  string memory D_day) public {
+    (bytes memory photo, string memory title, string memory description, int targetKlay,  string memory D_day) public {
         uint256 tokenId = totalSupply() + 1;
 
         _mint(msg.sender, tokenId);
@@ -62,7 +62,7 @@ contract MakersToken is ERC721Full {
 
     // 메이커스 불러오기
     function getMakers (uint _tokenId) public view
-    returns(uint256, string memory, string memory, string memory, int, string memory, uint256) {
+    returns(uint256, bytes memory, string memory, string memory, int, string memory, uint256) {
         return (
             _MakersList[_tokenId].tokenId,
             _MakersList[_tokenId].photo,
@@ -111,7 +111,7 @@ contract MakersToken is ERC721Full {
 
     }
 
-    // 환불 함수
+    // 메이커스 마감 시, 환불 함수
 
     function returnklay(uint256 _tokenId) public payable returns (bool) {
         address[] memory investors = _MakersList[_tokenId].buyer;

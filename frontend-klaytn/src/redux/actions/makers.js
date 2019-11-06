@@ -15,12 +15,11 @@ const setFeed = feed => ({
 
 const updateFeed = tokenId => (dispatch, getState) => {
   console.log("updateFeed");
-  console.log(tokenId);
+
   Makers.methods
     .getMakers(tokenId)
     .call()
     .then(newMakers => {
-      console.log("new makers");
       const {
         makers: { feed }
       } = getState();
@@ -79,9 +78,8 @@ export const uploadPhoto = (
     const hexString = "0x" + buffer.toString("hex");
     console.log("hexString: ", hexString);
 
-    console.log(getWallet().address);
     MakersContract.methods
-      .uploadMakers(hexString, title, description, (targetKlay = 10), D_day)
+      .uploadMakers(hexString, title, description, targetKlay, D_day)
       .send({
         from: getWallet().address,
         gas: "200000000"
