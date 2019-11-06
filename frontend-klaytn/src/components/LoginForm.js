@@ -41,8 +41,9 @@ const LoginForm = ({ login }) => {
     const usernameValue = username.value;
     const passwordValue = password.value;
 
-    // 웹 로그인
+    // TODO: log in
 
+    // 클레이튼 로그인
     if (usernameValue && passwordValue) {
       isValidPrivateKey(privateKeyValue)
         ? login(privateKeyValue)
