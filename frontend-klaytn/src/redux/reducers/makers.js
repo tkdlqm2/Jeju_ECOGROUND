@@ -11,6 +11,13 @@ const makersReducer = (state = initialState, action) => {
         ...state,
         feed: action.payload.feed
       };
+
+    case SET_DONATION:
+      return {
+        ...state,
+        dontaion: action.payload.dontaion
+      }
+
     default:
       return state;
   }

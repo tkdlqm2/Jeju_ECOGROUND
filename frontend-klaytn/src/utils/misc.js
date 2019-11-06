@@ -16,6 +16,19 @@ export const last = array => {
   return length ? array[length - 1] : undefined;
 };
 
+export const donationParser = donation => {
+  const donationKeys = {
+    0: "donation"
+  };
+  if (!isArray(donation)) {
+    return renameKeys(donation, donationKeys);
+  }
+
+  const parsedDonation = donation.map(donate => renameKeys(donate, donation));
+
+  return parsedDonation;
+};
+
 export const feedParser = feed => {
   const photoKeys = {
     0: "id",
@@ -29,6 +42,8 @@ export const feedParser = feed => {
     8: "count",
     9: "timestamp"
   };
+
+
 
   /**
    * 1. If feed is one object of photo,
@@ -45,3 +60,4 @@ export const feedParser = feed => {
 
   return parsedFeed;
 };
+

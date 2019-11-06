@@ -5,12 +5,18 @@ import { feedParser } from "../../utils/misc";
 import { SET_FEED } from "./actionTypes";
 import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
+import cav from "../../klaytn/caver";
 
 // Action creators
 
 const setFeed = feed => ({
   type: SET_FEED,
   payload: { feed }
+});
+
+const setDonation = donation => ({
+  type: SET_DONATION,
+  payload: { donation }
 });
 
 const updateFeed = tokenId => (dispatch, getState) => {
@@ -29,6 +35,17 @@ const updateFeed = tokenId => (dispatch, getState) => {
 };
 
 // API functions
+
+export const getDonation = (tokenId) => (dispatch) => {
+  MakersContract.methods.parentStateMakers(tokenId).call()
+    .then(newDonation => {
+      const {
+        invests: { donation }
+      } = getState();
+      const donation = [donationParser(newDonation), ...donation];
+      dispatch(setDonation(newDonation));
+    })
+};
 
 export const getFeed = () => dispatch => {
   MakersContract.methods
@@ -49,6 +66,75 @@ export const getFeed = () => dispatch => {
 // export const getFeed = () => dispatch => {
 //   dispatch(setFeed(feedParser(makersFeed)));
 // };
+
+// 메이커스 투자하기.
+
+export const returnKlay = (tokenId, price) => (dispatch) => {
+  MakersContract.methods.returnKlay(tokenId)
+    .send({
+      from: getWallet().address,
+      gas: "200000000",
+      value: cav.utils.toPeb(price, "KLAY")
+    }).once("transactionHash", txHash => {
+      console.log("txHash:", txHash);
+      ui.showToast({
+        status: "pending",
+        message: `Sending a transaction... (uploadPhoto)`,
+        txHash
+      });
+    })
+    .once("receipt", receipt => {
+      ui.showToast({
+        status: receipt.status ? "success" : "fail",
+        message: `Received receipt! It means your transaction is
+        in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+        link: receipt.transactionHash
+      });
+      const tokenId = receipt.events.MakersUploaded.returnValues[0];
+      console.log("tokenId: ", tokenId);
+      dispatch(updateFeed(tokenId));
+    })
+    .once("error", error => {
+      ui.showToast({
+        status: "error",
+        message: error.toString()
+      });
+    });
+}
+
+export const investMakers = (tokenId, price) => (dispatch) => {
+  MakersContract.methods.investMakers(tokenId)
+    .send({
+      from: getWallet().address,
+      gas: "200000000",
+      value: cav.utils.toPeb(price, "KLAY")
+    })
+    .once("transactionHash", txHash => {
+      console.log("txHash:", txHash);
+      ui.showToast({
+        status: "pending",
+        message: `Sending a transaction... (uploadPhoto)`,
+        txHash
+      });
+    })
+    .once("receipt", receipt => {
+      ui.showToast({
+        status: receipt.status ? "success" : "fail",
+        message: `Received receipt! It means your transaction is
+        in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+        link: receipt.transactionHash
+      });
+      const tokenId = receipt.events.MakersUploaded.returnValues[0];
+      console.log("tokenId: ", tokenId);
+      dispatch(updateFeed(tokenId));
+    })
+    .once("error", error => {
+      ui.showToast({
+        status: "error",
+        message: error.toString()
+      });
+    });
+};
 
 export const uploadPhoto = (
   file,
