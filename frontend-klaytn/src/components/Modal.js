@@ -4,11 +4,10 @@ import ui from "../utils/ui";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 650px;
+  height: 700px;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 100px;
   z-index: 200;
   background-color: white;
 `;
@@ -36,6 +35,21 @@ const ModalClose = styled.button`
   top: 18px;
   right: 24px;
   cursor: pointer;
+  background-color: white;
+
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: ${props => props.theme.borderRadius};
+  color: black;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 0px;
+  font-size: 14px;
+  cursor: pointer;
 `;
 
 const Modal = ({ modal }) =>
@@ -44,7 +58,7 @@ const Modal = ({ modal }) =>
       <ModalDiv style={modal.width && { width: `${modal.width}` }}>
         <ModalHeader>{modal.header}</ModalHeader>
         <ModalBody>{modal.content}</ModalBody>
-        <ModalClose onClick={ui.hideModal}>Close modal</ModalClose>
+        <ModalClose onClick={ui.hideModal}>X</ModalClose>
       </ModalDiv>
     </Wrapper>
   );
