@@ -17,6 +17,8 @@ contract MakersToken is ERC721Full {
     mapping (uint256 => int) public _totalKlayList;
     // 메이커스 가격 맵핑
     mapping (uint256 => int) public _MakersPrice;
+
+    mapping (address => uint256[]) public _MyMakersList;
     
     struct Makers{
         uint256 tokenId;
@@ -54,7 +56,7 @@ contract MakersToken is ERC721Full {
 
         _MakersList[tokenId] = newMakers;
         _MakersPrice[tokenId] = price;
-
+        _MyMakersList[msg.sender].push(tokenId);
 
         emit MakersUploaded(tokenId, photo, title, description, targetKlay, D_day, now);
     }
@@ -166,6 +168,7 @@ contract MakersToken is ERC721Full {
             payableTokenSeller.transfer(msg.value); // 메이커스 Token의 owner 계정으로 klay 송금
             _totalKlayList[tokenId] += 1; // 메이커스 목표 금액을 다루는 list에 klay 추가
             _MakersList[tokenId].buyer.push(msg.sender); // 메이커스 투자자들 push
+            _MyMakersList[msg.sender].push(tokenId); // 내가 투자한 메이커스 
         } else {
             require(msg.sender == msg.sender,"wer");
         }
@@ -212,5 +215,14 @@ contract MakersToken is ERC721Full {
 
         require(msg.sender == ownerOf(_tokenId), "This function can access only owner");
         _MakersList[_tokenId].status = 0;
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    // My Makers List 불러오기.
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+    function showMyMakers(address Id) public view returns (uint256[] memory) {
+        require(msg.sender == Id, "This function is can only access owner");
+        return _MyMakersList[Id];
     }
 }

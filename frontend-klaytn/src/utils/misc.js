@@ -16,6 +16,18 @@ export const last = array => {
   return length ? array[length - 1] : undefined;
 };
 
+export const stateParser = state => {
+  const stateKeys = {
+    0: "state"
+  };
+  if (!isArray(state)) {
+    return renameKeys(state, stateKeys);
+  }
+  const parseState = state.map(_state => renameKeys(_state, state));
+
+  return parseState;
+}
+
 export const donationParser = donation => {
   const donationKeys = {
     0: "donation"
@@ -42,8 +54,6 @@ export const feedParser = feed => {
     8: "count",
     9: "timestamp"
   };
-
-
 
   /**
    * 1. If feed is one object of photo,
