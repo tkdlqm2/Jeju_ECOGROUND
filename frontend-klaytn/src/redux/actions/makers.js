@@ -2,7 +2,7 @@ import MakersContract from "../../klaytn/MakersContract";
 import { getWallet } from "../../utils/crypto";
 import ui from "../../utils/ui";
 import { feedParser } from "../../utils/misc";
-import { SET_FEED } from "./actionTypes";
+import { SET_FEED, SET_DONATION, MAKERS_PRICE, MAKERS_REMOVE, MAKERS_INVEST, MAKERS_RETURN } from "./actionTypes";
 // import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
 import cav from "../../klaytn/caver";
@@ -22,6 +22,21 @@ const setDonation = donation => ({
 const MakersPrice = makersPrice => ({
   type: MAKERS_PRICE,
   payload: { makersPrice }
+});
+
+const MakersRemove = makersRemove => ({
+  type: MAKERS_REMOVE,
+  payload: { makersRemove }
+});
+
+const MakersInvest = makersInvest => ({
+  type: MAKERS_INVEST,
+  payload: { makersInvest }
+});
+
+const MakersReturn = makersReturn => ({
+  type: MAKERS_RETURN,
+  payload: { makersReturn }
 });
 
 const updateFeed = tokenId => (dispatch, getState) => {
@@ -107,7 +122,7 @@ export const returnKlay = (tokenId) => (dispatch) => {
       });
       const tokenId = receipt.events.MakersUploaded.returnValues[0];
       console.log("tokenId: ", tokenId);
-      dispatch(updateFeed(tokenId));
+      dispatch(MakersReturn(tokenId));
     })
     .once("error", error => {
       ui.showToast({
@@ -116,6 +131,44 @@ export const returnKlay = (tokenId) => (dispatch) => {
       });
     });
 }
+
+// ----------------------------------------------------------------
+//              Makers 삭제
+// ----------------------------------------------------------------
+
+export const removeMakers = (tokenId) => (dispatch) => {
+  MakersContract.methods.removeMakers(tokenId)
+    .send({
+      from: getWallet().address,
+      gas: "200000000"
+    })
+    .once("transactionHash", txHash => {
+      console.log("txHash:", txHash);
+      ui.showToast({
+        status: "pending",
+        message: `Sending a transaction... (uploadPhoto)`,
+        txHash
+      });
+    })
+    .once("receipt", receipt => {
+      ui.showToast({
+        status: receipt.status ? "success" : "fail",
+        message: `Received receipt! It means your transaction is
+        in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+        link: receipt.transactionHash
+      });
+      const tokenId = receipt.events.MakersUploaded.returnValues[0];
+      console.log("tokenId: ", tokenId);
+      dispatch(MakersRemove(tokenId));
+    })
+    .once("error", error => {
+      ui.showToast({
+        status: "error",
+        message: error.toString()
+      });
+    });
+}
+
 
 // ----------------------------------------------------------------
 //              Makers 투자
@@ -145,7 +198,7 @@ export const investMakers = (tokenId) => (dispatch) => {
       });
       const tokenId = receipt.events.MakersUploaded.returnValues[0];
       console.log("tokenId: ", tokenId);
-      dispatch(updateFeed(tokenId));
+      dispatch(MakersInvest(tokenId));
     })
     .once("error", error => {
       ui.showToast({
@@ -154,6 +207,12 @@ export const investMakers = (tokenId) => (dispatch) => {
       });
     });
 };
+
+
+// ----------------------------------------------------------------
+//              Makers 업로드
+// ----------------------------------------------------------------
+
 export const uploadItem = (
   file,
   title,
