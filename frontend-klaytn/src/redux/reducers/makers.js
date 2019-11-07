@@ -1,4 +1,4 @@
-import { SET_FEED } from "../actions/actionTypes";
+import { SET_FEED } from "redux/actions/actionTypes";
 
 const initialState = {
   feed: null
@@ -11,6 +11,7 @@ const makersReducer = (state = initialState, action) => {
         ...state,
         feed: action.payload.feed
       };
+
     default:
       return state;
   }

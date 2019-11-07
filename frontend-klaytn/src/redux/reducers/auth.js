@@ -5,6 +5,7 @@ import {
   REMOVE_WALLET
 } from "../actions/actionTypes";
 
+// 전역변수
 const initialState = {
   isLoggedIn: !!sessionStorage.getItem("walletInstance"),
   privateKey: null,

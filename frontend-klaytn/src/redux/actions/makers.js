@@ -5,6 +5,7 @@ import { feedParser } from "../../utils/misc";
 import { SET_FEED } from "./actionTypes";
 // import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
+import cav from "../../klaytn/caver";
 
 // Action creators
 
@@ -12,6 +13,11 @@ const setFeed = feed => ({
   type: SET_FEED,
   payload: { feed }
 });
+
+// const MakersState = makersState => ({
+//   type: MAKERS_STATE,
+//   payload: { makersState }
+// });
 
 const updateFeed = tokenId => (dispatch, getState) => {
   console.log("updateFeed");
@@ -30,6 +36,39 @@ const updateFeed = tokenId => (dispatch, getState) => {
 
 // API functions
 
+// export const getMakersState = (tokenId) => (dispatchEvent) => {
+//   MakersContract.methods.checkMakersStatus(tokenId).call()
+//     .then(newState => {
+//       const {
+//         state: { MakersState }
+//       } = getState();
+//       const MakersState = [stateParser(newState), ...MakersState];
+//       dispatch(setState(newState));
+//     })
+// }
+
+// export const getDonation = (tokenId) => (dispatch) => {
+//   MakersContract.methods.parentStateMakers(tokenId).call()
+//     .then(newDonation => {
+//       const {
+//         invests: { donation }
+//       } = getState();
+//       const donation = [donationParser(newDonation), ...donation];
+//       dispatch(setDonation(newDonation));
+//     })
+// };
+
+// export const getMakersPrice = (tokenId) => (dispatch) => {
+//   MakersContract.methods.showMakersPrice(tokenId).call()
+//     .then(newMakersPrice => {
+//       const {
+//         prices: { makersPrice }
+//       } = getState();
+//       const makersPrice = [priceParser(newMakersPrice), ...makersPrice];
+//       dispatch(MakersPrice(newMakersPrice));
+//     })
+// }
+
 export const getFeed = () => dispatch => {
   MakersContract.methods
     .getTotalMakersCount()
@@ -46,9 +85,50 @@ export const getFeed = () => dispatch => {
     .then(feed => dispatch(setFeed(feedParser(feed))));
 };
 
-// export const getFeed = () => dispatch => {
-//   dispatch(setFeed(feedParser(makersFeed)));
-// };
+
+
+// ----------------------------------------------------------------
+//              Makers 삭제
+// ----------------------------------------------------------------
+
+export const removeMakers = (tokenId) => (dispatch) => {
+  MakersContract.methods.removeMakers(tokenId)
+    .send({
+      from: getWallet().address,
+      gas: "200000000"
+    })
+    .once("transactionHash", txHash => {
+      console.log("txHash:", txHash);
+      ui.showToast({
+        status: "pending",
+        message: `Sending a transaction... (uploadPhoto)`,
+        txHash
+      });
+    })
+    .once("receipt", receipt => {
+      ui.showToast({
+        status: receipt.status ? "success" : "fail",
+        message: `Received receipt! It means your transaction is
+        in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+        link: receipt.transactionHash
+      });
+      const tokenId = receipt.events.MakersUploaded.returnValues[0];
+      console.log("tokenId: ", tokenId);
+      dispatch(updateFeed(tokenId));
+    })
+    .once("error", error => {
+      ui.showToast({
+        status: "error",
+        message: error.toString()
+      });
+    });
+}
+
+
+
+// ----------------------------------------------------------------
+//              Makers 업로드
+// ----------------------------------------------------------------
 
 export const uploadItem = (
   file,
