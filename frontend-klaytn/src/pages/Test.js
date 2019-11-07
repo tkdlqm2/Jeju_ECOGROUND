@@ -4,6 +4,7 @@ import MakersHeader from "components/MakersHeader";
 import { getWallet } from "utils/crypto";
 import ui from "utils/ui";
 import MakersContract from "klaytn/MakersContract";
+import cav from "../../klaytn/caver";
 
 const Container = styled.main`
   width: 100%;
