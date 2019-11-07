@@ -1,6 +1,9 @@
-import jwt  from 'jsonwebtoken';
-import User from '../../../db/models/user.js';
+require('dotenv').config();
 
+import jwt  from 'jsonwebtoken';
+const models = require('../../../db/models')
+
+const { User } = models.default;
 /*
     POST /api/auth/register
     {
@@ -9,7 +12,9 @@ import User from '../../../db/models/user.js';
     }
 */
 exports.register = (req, res) => {
-    const { username, password } = req.body
+    const { email, username, password} = req.body;
+    console.log(username);
+    console.log(pw);
     let newUser = null
 
     // create a new user if does not exist
@@ -17,15 +22,15 @@ exports.register = (req, res) => {
         if(user) {
             throw new Error('username exists')
         } else {
-            return User.create(username, password)
+            return User.create(email, username, password)
         }
-    }
+    };
 
     // count the number of the user
     const count = (user) => {
         newUser = user
-        return User.count({}).exec()
-    }
+        return User.count({});
+    };
 
     // assign admin if count is 1
     const assign = (count) => {
@@ -35,7 +40,7 @@ exports.register = (req, res) => {
             // if not, return a promise that returns false
             return Promise.resolve(false)
         }
-    }
+    };
 
     // respond to the client
     const respond = (isAdmin) => {
@@ -43,23 +48,23 @@ exports.register = (req, res) => {
             message: 'registered successfully',
             admin: isAdmin ? true : false
         })
-    }
+    };
 
     // run when there is an error (username exists)
     const onError = (error) => {
         res.status(409).json({
             message: error.message
         })
-    }
+    };
 
     // check username duplication
-    User.findOneByUsername(username)
-    .then(create)
-    .then(count)
-    .then(assign)
-    .then(respond)
-    .catch(onError)
-}
+    User.findOneByUserEmail(email)
+        .then(create)
+        .then(count)
+        .then(assign)
+        .then(respond)
+        .catch(onError)
+};
 
 /*
     POST /api/auth/login
@@ -68,10 +73,9 @@ exports.register = (req, res) => {
         password
     }
 */
-
 exports.login = (req, res) => {
-    const {username, password} = req.body
-    const secret = req.app.get('jwt-secret')
+    const { email, password } = req.body;
+    const secret = req.app.get('jwt-secret');
 
     // check the user info & generate the jwt
     const check = (user) => {
@@ -80,31 +84,32 @@ exports.login = (req, res) => {
             throw new Error('login failed')
         } else {
             // user exists, check the password
-            if(user.verify(password)) {
+            if(User.verify(user, password)) {
                 // create a promise that generates jwt asynchronously
                 const p = new Promise((resolve, reject) => {
                     jwt.sign(
                         {
                             _id: user._id,
-                            username: user.username,
+                            email: user.email,
                             admin: user.admin
                         }, 
                         secret, 
                         {
                             expiresIn: '7d',
-                            issuer: 'velopert.com',
-                            subject: 'userInfo'
+                            issuer: process.env.JWT_USER_ISSUER,
+                            subject: user.name
+
                         }, (err, token) => {
-                            if (err) reject(err)
+                            if (err) reject(err);
                             resolve(token) 
                         })
-                })
+                });
                 return p
             } else {
                 throw new Error('login failed')
             }
         }
-    }
+    };
 
     // respond the token 
     const respond = (token) => {
@@ -112,22 +117,21 @@ exports.login = (req, res) => {
             message: 'logged in successfully',
             token
         })
-    }
+    };
 
     // error occured
     const onError = (error) => {
         res.status(403).json({
             message: error.message
         })
-    }
+    };
 
     // find the user
-    User.findOneByUsername(username)
-    .then(check)
-    .then(respond)
-    .catch(onError)
-
-}
+    User.findOneByUserEmail(email)
+        .then(check)
+        .then(respond)
+        .catch(onError)
+};
 
 /*
     GET /api/auth/check
@@ -138,4 +142,4 @@ exports.check = (req, res) => {
         success: true,
         info: req.decoded
     })
-}
+};

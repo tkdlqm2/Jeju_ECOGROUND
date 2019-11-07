@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./app.js --exec babel-node",
+    "start": "nodemon ./bin/www --exec babel-node",
     "seeders-dev": "npx sequelize-cli db:seed:all --seeders-path ./src/db/seeders-dev",
     "migrations": "npx sequelize-cli db:migrate"
   },
