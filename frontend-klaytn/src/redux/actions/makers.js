@@ -66,8 +66,6 @@ export const getFeed = () => dispatch => {
 // export const getFeed = () => dispatch => {
 //   dispatch(setFeed(feedParser(makersFeed)));
 // };
-
-<<<<<<< HEAD
 // 메이커스 투자하기.
 
 export const returnKlay = (tokenId, price) => (dispatch) => {
@@ -136,11 +134,7 @@ export const investMakers = (tokenId, price) => (dispatch) => {
       });
     });
 };
-
-export const uploadPhoto = (
-=======
 export const uploadItem = (
->>>>>>> 326435dd9c1ce98f00d7ea607c4f91bb4b0f3b22
   file,
   title,
   description,
