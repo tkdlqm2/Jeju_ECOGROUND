@@ -7,7 +7,7 @@ import "openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 contract MakersToken is ERC721Full {
 
     event MakersUploaded
-    (uint256 indexed tokenId, string photo, string title, string description, int targetKlay, string D_day, int price, uint256 timestamp);
+    (uint256 indexed tokenId, bytes photo, string title, string description, int targetKlay, string D_day, int price, uint256 timestamp);
 
     constructor(string memory name, string memory symbol) ERC721Full(name, symbol) public {}
 
@@ -21,7 +21,7 @@ contract MakersToken is ERC721Full {
     struct Makers{
         uint256 tokenId;
         address[] buyer;
-        string photo;
+        bytes photo;
         string title;
         string description;
         int targetKlay;
@@ -33,7 +33,7 @@ contract MakersToken is ERC721Full {
     }
 
     function uploadMakers
-    (string memory photo, string memory title, string memory description, int targetKlay,  string memory D_day, int price) public {
+    (bytes memory photo, string memory title, string memory description, int targetKlay,  string memory D_day, int price) public {
         uint256 tokenId = totalSupply() + 1;
 
         _mint(msg.sender, tokenId);
@@ -58,6 +58,15 @@ contract MakersToken is ERC721Full {
         _MyMakersList[msg.sender].push(tokenId);
 
         emit MakersUploaded(tokenId, photo, title, description, targetKlay, D_day, price, now);
+    }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    // Makers TargetKlay 불러오기 (명수)
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+    function showTargetKlay(uint256 _tokenId) public view returns (int) {
+        require(msg.sender == ownerOf(_tokenId), "This function can access only owner of Token");
+        return _MakersList[_tokenId].targetKlay;
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -87,7 +96,7 @@ contract MakersToken is ERC721Full {
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function getMakers (uint _tokenId) public view
-    returns(uint256, string memory, string memory, string memory, int, string memory, uint256) {
+    returns(uint256, bytes memory, string memory, string memory, int, string memory, uint256) {
         return (
             _MakersList[_tokenId].tokenId,
             _MakersList[_tokenId].photo,
@@ -109,7 +118,7 @@ contract MakersToken is ERC721Full {
     function returnklay(uint256 _tokenId) public payable returns (bool) {
         require(_MakersList[_tokenId].status == 1,"This token was already finish about returing klay");
         _MakersList[_tokenId].status = 0;
-        int price = _MakersPrice[_tokenId];
+        int price = _MakersList[_tokenId].price;
         
         address[] memory investors = _MakersList[_tokenId].buyer;
         uint256 len = _MakersList[_tokenId].count;
@@ -148,7 +157,7 @@ contract MakersToken is ERC721Full {
 
     function investMakers(uint256 tokenId) public payable {
         
-        int price = _MakersPrice[tokenId];
+        int price = _MakersList[tokenId].price;
         require(msg.sender != ownerOf(tokenId), "메이커스 당사자는 투자못함.");
         require(_MakersList[tokenId].targetKlay >= _totalKlayList[tokenId],"모금 금액을 모두 달성함");
         if (overlappingInvestment(tokenId, msg.sender)){
