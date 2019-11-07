@@ -22,7 +22,7 @@ const Button = styled.button`
   width: 100px;
 `;
 
-const removeMakers = tokenId => {
+const _removeMakers = tokenId => {
   console.log("remove", tokenId);
   MakersContract.methods
     .removeMakers(tokenId)
@@ -61,7 +61,7 @@ const TokenId = 123;
 const remove = e => {
   const { value } = e.target;
   console.log(value);
-  removeMakers(value);
+  _removeMakers(value);
 };
 
 export default () => {

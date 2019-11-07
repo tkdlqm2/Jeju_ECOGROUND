@@ -7,7 +7,7 @@ import "openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
 contract MakersToken is ERC721Full {
 
     event MakersUploaded
-    (uint256 indexed tokenId, bytes photo, string title, string description, int targetKlay, string D_day, uint256 timestamp);
+    (uint256 indexed tokenId, string photo, string title, string description, int targetKlay, string D_day, int price, uint256 timestamp);
 
     constructor(string memory name, string memory symbol) ERC721Full(name, symbol) public {}
 
@@ -15,15 +15,13 @@ contract MakersToken is ERC721Full {
     mapping (uint256 => Makers) public _MakersList; 
     // Makers 마다 모금액 -> 최종 모금액이 얼마인지 확인 하기위해 필요한 mapping
     mapping (uint256 => int) public _totalKlayList;
-    // 메이커스 가격 맵핑
-    mapping (uint256 => int) public _MakersPrice;
 
     mapping (address => uint256[]) public _MyMakersList;
     
     struct Makers{
         uint256 tokenId;
         address[] buyer;
-        bytes photo;
+        string photo;
         string title;
         string description;
         int targetKlay;
@@ -31,10 +29,11 @@ contract MakersToken is ERC721Full {
         uint256 status;
         uint256 timestamp;
         uint256 count;
+        int price;
     }
 
     function uploadMakers
-    (bytes memory photo, string memory title, string memory description, int targetKlay,  string memory D_day, int price) public {
+    (string memory photo, string memory title, string memory description, int targetKlay,  string memory D_day, int price) public {
         uint256 tokenId = totalSupply() + 1;
 
         _mint(msg.sender, tokenId);
@@ -51,14 +50,14 @@ contract MakersToken is ERC721Full {
             D_day : D_day, // 마감일
             status : 1, // 투자 상태 -> 0 이면 종료 / 1 이면 진행 / 2 이면 목표금액 달성된 메이커스.
             count : 0,
+            price : price,
             timestamp : now
         });
 
         _MakersList[tokenId] = newMakers;
-        _MakersPrice[tokenId] = price;
         _MyMakersList[msg.sender].push(tokenId);
 
-        emit MakersUploaded(tokenId, photo, title, description, targetKlay, D_day, now);
+        emit MakersUploaded(tokenId, photo, title, description, targetKlay, D_day, price, now);
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -88,25 +87,16 @@ contract MakersToken is ERC721Full {
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function getMakers (uint _tokenId) public view
-    returns(uint256, bytes memory, string memory, string memory, int, string memory, uint256) {
+    returns(uint256, string memory, string memory, string memory, int, string memory, uint256) {
         return (
             _MakersList[_tokenId].tokenId,
             _MakersList[_tokenId].photo,
             _MakersList[_tokenId].title,
             _MakersList[_tokenId].description,
-            _MakersList[_tokenId].targetKlay,
+            _MakersList[_tokenId].price,
             _MakersList[_tokenId].D_day,
             _MakersList[_tokenId].status
         );
-    }
-
-
-    // ----------------------------------------------------------------------------------------------------------------------------------
-    // 메이커스 가격 보기
-    // ----------------------------------------------------------------------------------------------------------------------------------
-
-    function showMakersPrice(uint256 _tokenId) public view returns (int) {
-        return _MakersPrice[_tokenId];
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
