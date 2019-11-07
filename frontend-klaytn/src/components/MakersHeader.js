@@ -121,7 +121,7 @@ export default withRouter(({ history }) => {
           </HeaderLink>
           <Divider></Divider>
           <HeaderLink>
-            <Link to="/">
+            <Link to="/test">
               <ExitToAppOutlinedIcon />
             </Link>
           </HeaderLink>

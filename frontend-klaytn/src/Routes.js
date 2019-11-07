@@ -6,6 +6,7 @@ import Home from "pages/Home";
 import Makers from "pages/Makers";
 import Wallet from "pages/Wallet";
 import MakersDetail from "pages/MakersDetail";
+import Test from "pages/Test";
 
 const LoggedInRoutes = () => (
   <Switch>
@@ -13,6 +14,7 @@ const LoggedInRoutes = () => (
     <Route path="/makers/:tokenId" component={MakersDetail} />
     <Route path="/makers" component={Makers} />
     <Route path="/wallet" component={Wallet} />
+    <Route path="/test" component={Test} />
     <Redirect from="*" to="/" />
   </Switch>
 );
