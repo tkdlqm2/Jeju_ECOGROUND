@@ -16,7 +16,12 @@ const makersReducer = (state = initialState, action) => {
       return {
         ...state,
         dontaion: action.payload.dontaion
-      }
+      };
+    case MAKERS_PRICE:
+      return {
+        ...state,
+        makersPrice: action.payload.makersPrice
+      };
 
     default:
       return state;

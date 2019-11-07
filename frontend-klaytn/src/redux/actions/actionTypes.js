@@ -10,3 +10,4 @@ export const HIDE_TOAST = "HIDE_TOAST";
 
 export const SET_FEED = "SET_FEED";
 export const SET_DONATION = "SET_DONATION";
+export const MAKERS_PRICE = "MakersPrice";

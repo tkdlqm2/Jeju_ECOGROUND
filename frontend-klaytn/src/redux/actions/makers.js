@@ -19,6 +19,11 @@ const setDonation = donation => ({
   payload: { donation }
 });
 
+const MakersPrice = makersPrice => ({
+  type: MAKERS_PRICE,
+  payload: { makersPrice }
+});
+
 const updateFeed = tokenId => (dispatch, getState) => {
   console.log("updateFeed");
 
@@ -47,6 +52,17 @@ export const getDonation = (tokenId) => (dispatch) => {
     })
 };
 
+export const getMakersPrice = (tokenId) => (dispatch) => {
+  MakersContract.methods.showMakersPrice(tokenId).call()
+    .then(newMakersPrice => {
+      const {
+        prices: { makersPrice }
+      } = getState();
+      const makersPrice = [priceParser(newMakersPrice), ...makersPrice];
+      dispatch(MakersPrice(newMakersPrice));
+    })
+}
+
 export const getFeed = () => dispatch => {
   MakersContract.methods
     .getTotalMakersCount()
@@ -63,17 +79,17 @@ export const getFeed = () => dispatch => {
     .then(feed => dispatch(setFeed(feedParser(feed))));
 };
 
-// export const getFeed = () => dispatch => {
-//   dispatch(setFeed(feedParser(makersFeed)));
-// };
-// 메이커스 투자하기.
 
-export const returnKlay = (tokenId, price) => (dispatch) => {
+// ----------------------------------------------------------------
+//              Makers 마감시 환불
+// ----------------------------------------------------------------
+
+export const returnKlay = (tokenId) => (dispatch) => {
   MakersContract.methods.returnKlay(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000",
-      value: cav.utils.toPeb(price, "KLAY")
+      value: cav.utils.toPeb(MakersContract._MakersPrice[tokenId], "KLAY")
     }).once("transactionHash", txHash => {
       console.log("txHash:", txHash);
       ui.showToast({
@@ -101,12 +117,16 @@ export const returnKlay = (tokenId, price) => (dispatch) => {
     });
 }
 
-export const investMakers = (tokenId, price) => (dispatch) => {
+// ----------------------------------------------------------------
+//              Makers 투자
+// ----------------------------------------------------------------
+
+export const investMakers = (tokenId) => (dispatch) => {
   MakersContract.methods.investMakers(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000",
-      value: cav.utils.toPeb(price, "KLAY")
+      value: cav.utils.toPeb(MakersContract._MakersPrice[tokenId], "KLAY")
     })
     .once("transactionHash", txHash => {
       console.log("txHash:", txHash);

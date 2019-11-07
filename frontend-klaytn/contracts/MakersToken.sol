@@ -16,7 +16,7 @@ contract MakersToken is ERC721Full {
     // Makers 마다 모금액 -> 최종 모금액이 얼마인지 확인 하기위해 필요한 mapping
     mapping (uint256 => int) public _totalKlayList;
     // 메이커스 가격 맵핑
-    mapping (uint256 => int) public _makersPrice;
+    mapping (uint256 => int) public _MakersPrice;
     
     struct Makers{
         uint256 tokenId;
@@ -53,7 +53,7 @@ contract MakersToken is ERC721Full {
         });
 
         _MakersList[tokenId] = newMakers;
-        _makersPrice[tokenId] = price;
+        _MakersPrice[tokenId] = price;
 
 
         emit MakersUploaded(tokenId, photo, title, description, targetKlay, D_day, now);
@@ -104,7 +104,7 @@ contract MakersToken is ERC721Full {
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function showMakersPrice(uint256 _tokenId) public view returns (int) {
-        return _makersPrice[_tokenId];
+        return _MakersPrice[_tokenId];
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -114,9 +114,10 @@ contract MakersToken is ERC721Full {
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
-    function returnklay(uint256 _tokenId,int price) public payable returns (bool) {
+    function returnklay(uint256 _tokenId) public payable returns (bool) {
         require(_MakersList[_tokenId].status == 1,"This token was already finish about returing klay");
         _MakersList[_tokenId].status = 0;
+        int price = _MakersPrice[_tokenId];
         
         address[] memory investors = _MakersList[_tokenId].buyer;
         uint256 len = _MakersList[_tokenId].count;
@@ -153,11 +154,10 @@ contract MakersToken is ERC721Full {
     //
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function investMakers(uint256 tokenId,uint256 price) public payable {
+    function investMakers(uint256 tokenId) public payable {
         
-        require(msg.value >= price, "caller sent klay lower than price");
+        int price = _MakersPrice[tokenId];
         require(msg.sender != ownerOf(tokenId), "메이커스 당사자는 투자못함.");
-        // require(_MakersList[tokenId].D_day, "기간이 지남"); // 날짜 유효성 판단을 어떻게 할 지 아직 못정함.
         require(_MakersList[tokenId].targetKlay >= _totalKlayList[tokenId],"모금 금액을 모두 달성함");
         if (overlappingInvestment(tokenId, msg.sender)){
             _MakersList[tokenId].count += 1;
@@ -195,4 +195,22 @@ contract MakersToken is ERC721Full {
         address payable payableTokenSeller = address(uint160(walletAddress));
         payableTokenSeller.transfer(msg.value);
      }
+
+     // ----------------------------------------------------------------------------------------------------------------------------------
+     //  Makers 마감 확인 함수
+     // ----------------------------------------------------------------------------------------------------------------------------------
+
+     function checkMakersStatus(uint256 _tokenId) public view returns (uint256) {
+         return _MakersList[_tokenId].status;
+     }
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    // Maker 취소하기.
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+    function removeMakers(uint256 _tokenId) public payable {
+
+        require(msg.sender == ownerOf(_tokenId), "This function can access only owner");
+        _MakersList[_tokenId].status = 0;
+    }
 }
