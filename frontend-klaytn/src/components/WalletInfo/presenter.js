@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import caver from "klaytn/caver";
+import React from "react";
 import { KLAY_FAUCET } from "constants/url";
 import Input from "components/Input";
 import styled from "styled-components";

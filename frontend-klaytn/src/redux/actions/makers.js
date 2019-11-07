@@ -5,7 +5,7 @@ import { feedParser } from "../../utils/misc";
 import { SET_FEED } from "./actionTypes";
 // import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
-import cav from "../../klaytn/caver";
+// import cav from "../../klaytn/caver";
 
 // Action creators
 
@@ -85,14 +85,13 @@ export const getFeed = () => dispatch => {
     .then(feed => dispatch(setFeed(feedParser(feed))));
 };
 
-
-
 // ----------------------------------------------------------------
 //              Makers 삭제
 // ----------------------------------------------------------------
 
-export const removeMakers = (tokenId) => (dispatch) => {
-  MakersContract.methods.removeMakers(tokenId)
+export const removeMakers = tokenId => dispatch => {
+  MakersContract.methods
+    .removeMakers(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000"
@@ -122,9 +121,7 @@ export const removeMakers = (tokenId) => (dispatch) => {
         message: error.toString()
       });
     });
-}
-
-
+};
 
 // ----------------------------------------------------------------
 //              Makers 업로드

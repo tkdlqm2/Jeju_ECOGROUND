@@ -15,7 +15,7 @@ const Container = props => {
 
   useEffect(() => {
     getBalance(address);
-  }, [balance, getBalance]);
+  }, [address]);
 
   return <WalletInfo address={address} balance={balance} logout={logout} />;
 };

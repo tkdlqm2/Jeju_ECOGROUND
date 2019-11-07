@@ -4,7 +4,7 @@ import MakersHeader from "components/MakersHeader";
 import { getWallet } from "utils/crypto";
 import ui from "utils/ui";
 import MakersContract from "klaytn/MakersContract";
-import cav from "../../klaytn/caver";
+import cav from "../klaytn/caver";
 
 const Container = styled.main`
   width: 100%;
@@ -25,7 +25,8 @@ const Button = styled.button`
 
 const _investMakers = tokenId => {
   console.log("invest", tokenId);
-  MakersContract.methods.investMakers(tokenId)
+  MakersContract.methods
+    .investMakers(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000",
@@ -55,7 +56,7 @@ const _investMakers = tokenId => {
         message: error.toString()
       });
     });
-}
+};
 
 const _removeMakers = tokenId => {
   console.log("remove", tokenId);

@@ -1,45 +1,48 @@
 import React from "react";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
 import ui from "utils/ui";
 import UploadProduct from "components/UploadProduct";
+import Tooltip from "@material-ui/core/Tooltip";
 import styled from "styled-components";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 
-const ButtonContainer = styled.button`
-  width: 64px;
-  height: 64px;
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  z-index: 5;
-  color: ${props => props.theme.white};
-  background: ${props => props.theme.lightGreen};
-  border-radius: 50%;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  cursor: pointer;
-
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    width: 24px;
-    height: 2px;
-    background-color: $white;
-  }
-  &::after {
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: ${props => props.theme.maxCardWidth};
+  position: absolute;
+  bottom: 20px;
 `;
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#17202E" },
+    secondary: { main: "#17202E" }
+  }
+});
 
-const UploadButton = () => (
-  <ButtonContainer
-    onClick={() =>
-      ui.showModal({
-        header: "Upload Product",
-        content: <UploadProduct />
-      })
-    }
-  >
-    Upload
-  </ButtonContainer>
-);
+const StyledFab = styled(Fab)``;
 
-export default UploadButton;
+export default () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Tooltip
+          title="Add"
+          aria-label="add"
+          onClick={() =>
+            ui.showModal({
+              header: "Upload Product",
+              content: <UploadProduct />
+            })
+          }
+        >
+          <StyledFab color="primary">
+            <AddIcon />
+          </StyledFab>
+        </Tooltip>
+      </Container>
+    </ThemeProvider>
+  );
+};

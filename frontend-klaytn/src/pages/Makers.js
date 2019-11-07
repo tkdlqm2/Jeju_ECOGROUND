@@ -17,10 +17,12 @@ const Container = styled.main`
 `;
 
 export default () => (
-  <Container>
-    <MakersHeader />
-    <MakersNav />
-    <MakersFeed />
-    <UploadButton />
-  </Container>
+  <>
+    <Container>
+      <MakersHeader />
+      <MakersNav />
+      <MakersFeed />
+      <UploadButton />
+    </Container>
+  </>
 );
