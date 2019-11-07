@@ -13,8 +13,6 @@ const { User } = models.default;
 */
 exports.register = (req, res) => {
     const { email, username, password} = req.body;
-    console.log(username);
-    console.log(pw);
     let newUser = null
 
     // create a new user if does not exist
