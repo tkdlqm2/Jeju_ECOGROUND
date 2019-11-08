@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }, tableConfig(sequelize));
   
   User.associate = models => {
-    this.belongsToMany(models.Maker, {
+    User.belongsToMany(models.Maker, {
       through: 'UserToMaker',
       foreignKey: 'userId'
     })
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     return userObj.password === password
   };
 
-  User.assignAdmin = function() {
+  User.assignAdmin = function(user) {
     this.admin = true;
     return this.save()
   };

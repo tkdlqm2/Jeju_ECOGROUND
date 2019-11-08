@@ -13,7 +13,7 @@ const { User } = models.default;
 */
 exports.register = (req, res) => {
     const { email, username, password} = req.body;
-    let newUser = null
+    let newUser = null;
 
     // create a new user if does not exist
     const create = (user) => {
@@ -26,14 +26,14 @@ exports.register = (req, res) => {
 
     // count the number of the user
     const count = (user) => {
-        newUser = user
+        newUser = user;
         return User.count({});
     };
 
     // assign admin if count is 1
     const assign = (count) => {
         if(count === 1) {
-            return newUser.assignAdmin()
+            return User.assignAdmin(newUser)
         } else {
             // if not, return a promise that returns false
             return Promise.resolve(false)

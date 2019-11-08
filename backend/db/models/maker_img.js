@@ -16,6 +16,7 @@ const tableConfig = (sequelize) => {
 module.exports = (sequelize, DataTypes) => {
   const MakersImg = sequelize.define('MakerImg', {
     makerId     : DataTypes.INTEGER,
+    order       : DataTypes.INTEGER,
     imgURL      : DataTypes.STRING,
   }, tableConfig(sequelize));
 

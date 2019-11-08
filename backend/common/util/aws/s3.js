@@ -1,5 +1,6 @@
 require('dotenv').config();
 const AWS = require('aws-sdk');
+
 AWS.config.update({ 
     accessKeyId: process.env.AWS_IAM_ACCESS_KEY, 
     secretAccessKey: process.env.AWS_IAM_SECRET_ACCESS_KEY, 
@@ -18,11 +19,11 @@ module.exports = class S3 {
     }
 
     upload(URL, fileReadStream) {
-        const param = { 
+        const param = {
             Bucket: process.env.AWS_S3_BUCKET_NAME,
             Key   : URL,
             Body  : fileReadStream
-        }
+        };
 
         this.s3Obj.upload(param, (err, data) => {
             if(err)

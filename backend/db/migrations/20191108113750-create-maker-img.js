@@ -18,6 +18,10 @@ const defineTable = Sequelize => ({
     },
   },
 
+  order: {
+    type: Sequelize.INTEGER
+  },
+
   imgURL: {
     type: Sequelize.STRING
   },
