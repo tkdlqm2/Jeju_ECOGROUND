@@ -88,37 +88,57 @@ export const getFeed = () => dispatch => {
     .then(feed => dispatch(setFeed(feedParser(feed))));
 };
 
-
 // --------------------------------------------------
 //  MyMakers 확인
 // --------------------------------------------------
+<<<<<<< HEAD
 export const _showMyMakers = (addressId) => dispatch => {
+=======
+export const _showMyMakers = addressId => dispatch => {
+  console.log(MakersContract.methods.showMyMakers(addressId).call());
+  console.log("------------");
+  console.log(addressId);
+>>>>>>> e80d146f4aba68eb19d49d481a393e1732d56b22
   MakersContract.methods
-    .showMyMakers(addressId).call()
+    .showMyMakers(addressId)
+    .call()
     .then(totalMyMakers => {
       if (!totalMyMakers.length) {
         console.log("없음");
         return [];
       }
       const feed = [];
+<<<<<<< HEAD
       for (let i = totalMyMakers.length - 1; i > 0; i--) {
         const product = MakersContract.methods.getMakers(totalMyMakers[i]).call();
+=======
+      for (let i = totalMyMakers.length; i > 0; i--) {
+        const product = MakersContract.methods
+          .getMakers(totalMyMakers[i].tokenId)
+          .call();
+>>>>>>> e80d146f4aba68eb19d49d481a393e1732d56b22
         feed.push(product);
       }
       return Promise.all(feed);
     })
+<<<<<<< HEAD
     .then(feed => dispatch(setFeed(feedParser(feed))))
 }
 
 
 
+=======
+    .then(feed => dispatch(setFeed(feedParser(Makers))));
+};
+>>>>>>> e80d146f4aba68eb19d49d481a393e1732d56b22
 
 // ----------------------------------------------------------------
 //              Makers 삭제
 // ----------------------------------------------------------------
 
-export const removeMakers = (tokenId) => (dispatch) => {
-  MakersContract.methods.removeMakers(tokenId)
+export const removeMakers = tokenId => dispatch => {
+  MakersContract.methods
+    .removeMakers(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000"
@@ -148,9 +168,7 @@ export const removeMakers = (tokenId) => (dispatch) => {
         message: error.toString()
       });
     });
-}
-
-
+};
 
 // ----------------------------------------------------------------
 //              Makers 업로드
@@ -171,6 +189,7 @@ export const uploadItem = (
     description: ${description}
     targetKlay: ${targetKlay}
     D_day: ${D_day}
+    price: ${price}
     `
   );
 

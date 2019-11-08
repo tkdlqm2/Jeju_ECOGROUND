@@ -5,10 +5,10 @@ import styled from "styled-components";
 const InputFileContainer = styled.div`
   position: relative;
   font-size: 14px;
-  border: 1px solid $light-grey;
+  border: 1px solid ${props => props.theme.lightGrey};
   border-radius: 5px;
-  margin-top: 26px;
-  @include clear-both();
+  margin-top: 40px;
+  height: 50px;
   &--err {
     border-color: $alert-red;
   }
@@ -19,23 +19,24 @@ const Label = styled.p`
   font-size: 12px;
   font-weight: bold;
   line-height: 1;
-  color: $brown-grey;
+  color: ${props => props.theme.brownGrey};
 `;
 
 const InputButton = styled.label`
   float: right;
   display: block;
   width: 120px;
-  height: 62px;
-  line-height: 62px;
+  height: 48px;
+  line-height: 48px;
   text-align: center;
   font-weight: bold;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  color: $white;
-  background-color: $dark-brown;
+  color: white;
+  background-color: ${props => props.theme.brownGrey};
   cursor: pointer;
 `;
+
 const InputFileInput = styled.input`
   position: absolute;
   width: 1px;
@@ -46,15 +47,14 @@ const InputFileInput = styled.input`
   clip: rect(0, 0, 0, 0);
   border: 0;
 `;
-const FileName = styled.p`
+const FileName = styled.div`
   float: left;
-  padding: 22px 24px;
+  padding: 16px 18px;
   text-align: left;
-  color: $black;
-  @include textEllipsis();
+  color: ${props => props.theme.middleGrey};
 
   &--empty {
-    color: $middle-grey;
+    color: ${props => props.theme.middleGrey};
   }
 `;
 const Err = styled.p`
@@ -78,7 +78,6 @@ const Input = ({
 }) => (
   <InputFileContainer>
     <Label>{label}</Label>
-    <InputButton htmlFor="upload">Search</InputButton>
     <InputFileInput
       id="upload"
       type="file"
@@ -89,6 +88,7 @@ const Input = ({
       accept={accept}
     />
     <FileName>{fileName || "No photo"}</FileName>
+    <InputButton htmlFor="upload">Search</InputButton>
     {err && <Err>{err}</Err>}
   </InputFileContainer>
 );
