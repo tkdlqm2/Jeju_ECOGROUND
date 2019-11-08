@@ -56,7 +56,7 @@ const LikeButton = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.HeaderColor};
+  background-color: ${props => props.theme.headerColor};
 `;
 
 const Order = styled.div`
@@ -92,9 +92,9 @@ const OrderButton = styled.span`
 `;
 
 const ColoredLine = styled.hr`
-  border : solid, 0.1px;
-  color : lightgrey;
-  width : 98%;
+  border: solid, 0.1px;
+  color: lightgrey;
+  width: 98%;
 `;
 
 const Test = styled.div`
@@ -140,7 +140,7 @@ const MakersProduct = ({
       </ImageContainer>
 
       <ColoredLine />
-      
+
       <InfoContainer>
         <MakersDesc tokenId={tokenId} description={description} title={title} />
       </InfoContainer>

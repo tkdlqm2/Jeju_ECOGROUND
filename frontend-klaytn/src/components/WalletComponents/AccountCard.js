@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import CardGiftcardRoundedIcon from "@material-ui/icons/CardGiftcardRounded";
+import CachedIcon from "@material-ui/icons/Cached";
+import CreditCardIcon from "@material-ui/icons/CreditCard";
 
 const Container = styled.div`
   width: 540px;
@@ -76,26 +78,26 @@ export default ({ balance }) => {
             <CardGiftcardRoundedIcon style={{ fontSize: 40 }} />
           </IconContainer>
           <IconDescContainer>
-            <IconDesc>Card</IconDesc>
-            <Balance>1000ECO</Balance>
+            <IconDesc>Eco Power</IconDesc>
+            <Balance>3000ECO</Balance>
           </IconDescContainer>
         </Item>
         <Item>
           <IconContainer>
-            <CardGiftcardRoundedIcon style={{ fontSize: 40 }} />
+            <CreditCardIcon style={{ fontSize: 40 }} />
           </IconContainer>
           <IconDescContainer>
             <IconDesc>Card</IconDesc>
-            <Balance>1000ECO</Balance>
+            <Balance>100ECO</Balance>
           </IconDescContainer>
         </Item>
         <Item>
           <IconContainer>
-            <CardGiftcardRoundedIcon style={{ fontSize: 40 }} />
+            <CachedIcon style={{ fontSize: 40 }} />
           </IconContainer>
           <IconDescContainer>
-            <IconDesc>Card</IconDesc>
-            <Balance>1000ECO</Balance>
+            <IconDesc>Reward</IconDesc>
+            <Balance>200ECO</Balance>
           </IconDescContainer>
         </Item>
       </EcoData>

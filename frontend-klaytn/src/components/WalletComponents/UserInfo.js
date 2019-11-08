@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import AccountInfo from "./AccountInfo";
+import AccountCard from "./AccountCard";
 import Avatar from "components/Avatar";
 
 const Container = styled.div`
@@ -43,7 +43,7 @@ export default ({ address, balance }) => {
         />
       </Wrapper>
       <Address>{address}</Address>
-      <AccountInfo address={address} balance={balance} />
+      <AccountCard address={address} balance={balance} />
     </Container>
   );
 };
