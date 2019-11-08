@@ -132,17 +132,9 @@ export const uploadItem = (
   title,
   description,
   targetKlay,
-  D_day
+  D_day,
+  price
 ) => dispatch => {
-  console.log(
-    `
-    file: ${file} 
-    title: ${title}
-    description: ${description}
-    targetKlay: ${targetKlay}
-    D_day: ${D_day}
-    `
-  );
   const reader = new window.FileReader();
   reader.readAsArrayBuffer(file);
   reader.onloadend = () => {
@@ -154,15 +146,28 @@ export const uploadItem = (
      */
     const hexString = "0x" + buffer.toString("hex");
     console.log("hexString");
-
+    console.log(
+      `
+      file: ${file} 
+      title: ${title}
+      description: ${description}
+      targetKlay: ${targetKlay}
+      D_day: ${D_day}
+      price: ${price}
+      address: ${getWallet().address}
+      `
+    );
     MakersContract.methods
-      .uploadMakers(hexString, title, description, targetKlay, D_day)
+      .uploadMakers(hexString, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
         gas: "200000000"
       })
       .once("transactionHash", txHash => {
-        console.log("txHash:", txHash);
+        console.log(`
+        트랜잭션 성공 
+        txHash: ${txHash}
+        `);
         ui.showToast({
           status: "pending",
           message: `Sending a transaction... (uploadMakers)`,

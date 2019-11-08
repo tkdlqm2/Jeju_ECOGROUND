@@ -17,6 +17,7 @@ const UploadProduct = ({
   title,
   description,
   targetKlay,
+  price,
   D_day
 }) => {
   return (
@@ -25,6 +26,7 @@ const UploadProduct = ({
         <Input label="Create new account" placeholder={"Title"} {...title} />
         <Input placeholder={"Description"} {...description} />
         <Input placeholder={"targetKlay"} {...targetKlay} />
+        <Input placeholder={"price"} {...price} />
         <Input placeholder={"D_day"} {...D_day} />
         <InputFile
           className="UploadPhoto__file"

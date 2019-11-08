@@ -26,7 +26,7 @@ export const stateParser = state => {
   const parseState = state.map(_state => renameKeys(_state, state));
 
   return parseState;
-}
+};
 
 export const donationParser = donation => {
   const donationKeys = {
@@ -52,7 +52,8 @@ export const feedParser = feed => {
     6: "D_day",
     7: "status",
     8: "count",
-    9: "timestamp"
+    9: "timestamp",
+    10: "price"
   };
 
   /**
@@ -70,4 +71,3 @@ export const feedParser = feed => {
 
   return parsedFeed;
 };
-

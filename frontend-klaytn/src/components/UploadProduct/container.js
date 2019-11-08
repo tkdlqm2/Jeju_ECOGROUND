@@ -8,6 +8,8 @@ const Container = props => {
   const title = useInput("");
   const description = useInput("");
   const targetKlay = useInput("");
+
+  const price = useInput("");
   const D_day = useInput("");
 
   const { uploadItem } = props;
@@ -36,10 +38,18 @@ const Container = props => {
     const titleValue = title.value;
     const descriptionValue = description.value;
     const targetKlayValue = targetKlay.value;
+    const priceValue = price.value;
     const D_dayValue = D_day.value;
 
     e.preventDefault();
-    uploadItem(file, titleValue, descriptionValue, targetKlayValue, D_dayValue);
+    uploadItem(
+      file,
+      titleValue,
+      descriptionValue,
+      targetKlayValue,
+      D_dayValue,
+      priceValue
+    );
     ui.hideModal();
   };
 
@@ -67,6 +77,7 @@ const Container = props => {
       title={title}
       description={description}
       targetKlay={targetKlay}
+      price={price}
       isCompressing={isCompressing}
       D_day={D_day}
     />

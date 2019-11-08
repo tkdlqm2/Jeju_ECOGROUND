@@ -62,6 +62,7 @@ const MakersFeed = props => {
               title,
               description,
               targetKlay,
+              price,
               D_day,
               status,
               timestamp
