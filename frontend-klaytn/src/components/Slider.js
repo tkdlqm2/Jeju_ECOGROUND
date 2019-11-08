@@ -6,7 +6,8 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 const SliderContainer = styled.div`
-  width: 100%;
+  width: 85%;
+  margin-bottom: 20px;
 `;
 
 const Margin = styled.div`
@@ -45,7 +46,7 @@ export default ({ targetKlay, price, status }) => {
     },
     {
       value: 30,
-      label: "최소 주문 금액"
+      label: "최소주문금액"
     },
     {
       value: 100,
@@ -70,7 +71,6 @@ export default ({ targetKlay, price, status }) => {
           marks={marks}
           valueLabelDisplay="off"
           textColor="secondary"
-          disabled
         />
       </SliderContainer>
     </ThemeProvider>

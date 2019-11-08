@@ -48,16 +48,9 @@ const HeartIcon = styled(HeartEmpty)`
 const ProductInfo = ({ title, description, D_day, tokenId }) => (
   <Container>
     <Link to={`/makers/${tokenId}`}>
-      <Title>Title: {title}</Title>
-      <Description>Description: {description}</Description>
+      <Title>{title}</Title>
+      <Description>{description}</Description>
     </Link>
-
-    <DDay>Token id: {tokenId}</DDay>
-    <DDay>D day: {D_day}</DDay>
-    {/* <LikeButton>
-      <HeartIcon />
-      2,000명
-    </LikeButton> */}
   </Container>
 );
 
