@@ -33,7 +33,7 @@ export default () => {
           aria-label="add"
           onClick={() =>
             ui.showModal({
-              header: "Upload Product",
+              header: "상품 등록",
               content: <UploadProduct />
             })
           }

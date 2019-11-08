@@ -4,9 +4,14 @@ import InputFile from "components/InputFile";
 import Button from "components/Button";
 import styled from "styled-components";
 
+const Container = styled.div``;
+
 const Form = styled.form``;
 
-const Container = styled.div``;
+const StyledButton = styled(Button)`
+  background-color: ${props => props.theme.HeaderColor};
+  margin-top: 30px;
+`;
 
 const UploadProduct = ({
   handleSubmit,
@@ -23,10 +28,10 @@ const UploadProduct = ({
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <Input label="Create new account" placeholder={"Title"} {...title} />
+        <Input label="Create New Product" placeholder={"Title"} {...title} />
         <Input placeholder={"Description"} {...description} />
-        <Input placeholder={"targetKlay"} {...targetKlay} />
         <Input placeholder={"price"} {...price} />
+        <Input placeholder={"targetKlay"} {...targetKlay} />
         <Input placeholder={"D_day"} {...D_day} />
         <InputFile
           className="UploadPhoto__file"
@@ -37,7 +42,7 @@ const UploadProduct = ({
           accept=".png, .jpg, .jpeg"
           required
         />
-        <Button type="submit">Upload</Button>
+        <StyledButton type="submit">Upload</StyledButton>
       </Form>
     </Container>
   );
