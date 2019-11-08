@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
-import { HeartEmpty } from "./Icons";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -23,26 +21,6 @@ const Description = styled.p`
   margin-bottom: 18px;
   font-weight: 100;
   line-height: 160%;
-`;
-
-const DDay = styled.span`
-  font-size: 14px;
-  color: ${props => props.theme.lightGreen};
-  margin-bottom: 18px;
-`;
-
-const LikeButton = styled(Button)`
-  background-color: ${props => props.theme.white};
-  color: ${props => props.theme.black};
-  width: 100px;
-  height: 40px;
-  border: ${props => props.theme.boxBorder};
-`;
-
-const HeartIcon = styled(HeartEmpty)`
-  margin-right: 7px;
-  width: 15px;
-  height: 15px;
 `;
 
 const ProductInfo = ({ title, description, D_day, tokenId }) => (

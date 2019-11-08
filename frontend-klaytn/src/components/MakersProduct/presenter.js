@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 // import { Link } from "react-router-dom";
-import { HeartFull, Next, Prev } from "../Icons";
+import { HeartFull } from "../Icons";
 import MakersDesc from "components/MakersDesc";
 import TargetInfo from "components/TargetInfo";
 import SubInfo from "components/SubInfo";
@@ -44,13 +44,13 @@ const Image = styled.div`
   transition: opacity 0.2s linear;
 `;
 
-const SlideButton = styled.div`
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  ${props => (props.type === "prev" ? "left: 10px" : "right: 10px")};
-  opacity: 0.7;
-`;
+// const SlideButton = styled.div`
+//   cursor: pointer;
+//   position: absolute;
+//   top: 50%;
+//   ${props => (props.type === "prev" ? "left: 10px" : "right: 10px")};
+//   opacity: 0.7;
+// `;
 
 const LikeButton = styled.span`
   cursor: pointer;
@@ -58,7 +58,7 @@ const LikeButton = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.HeaderColor};
+  background-color: ${props => props.theme.headerColor};
 `;
 
 const Order = styled.div`
@@ -94,13 +94,9 @@ const OrderButton = styled.span`
 `;
 
 const ColoredLine = styled.hr`
-  border : solid, 0.1px;
-  color : lightgrey;
-  width : 98%;
-`;
-
-const Test = styled.div`
-  margin-top: 10px;
+  border: solid, 0.1px;
+  color: lightgrey;
+  width: 98%;
 `;
 
 const MakersProduct = ({
@@ -119,7 +115,15 @@ const MakersProduct = ({
   const { ...item } = product;
   const { tokenId, description, status, targetKlay, title, photo, D_day } = item;
 
-  console.log("product: ", product);
+  console.log(
+    "product: ",
+    tokenId,
+    description,
+    status,
+    targetKlay,
+    title,
+    photo
+  );
 
   return (
     <Container>
@@ -154,7 +158,7 @@ const MakersProduct = ({
       </InfoContainer>
 
       <ColoredLine />
-      
+
       <InfoContainer>
         <MakersDesc tokenId={tokenId} description={description} title={title} D_day={D_day} />
       </InfoContainer>

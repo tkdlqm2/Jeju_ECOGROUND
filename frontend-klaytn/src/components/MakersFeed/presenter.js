@@ -25,7 +25,6 @@ const FeedProduct = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +37,7 @@ const ImageContainer = styled.div`
 const InfoContainer = styled.div`
   width: ${props => props.theme.maxCardWidth};
   position: relative;
-  padding: 24px 24px 40px 10px;
+  padding: 24px 24px 24px 10px;
 `;
 
 const FeedEmpty = styled.div`
