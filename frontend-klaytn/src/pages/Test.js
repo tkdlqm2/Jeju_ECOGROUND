@@ -88,26 +88,89 @@ const _checkDonate = tokenId => {
 const _removeMakers = tokenId => {
   console.log("refund 함수 호출");
 
-  MakersContract.methods.showMakersPrice(tokenId).call()
-    .then(price => {
-      if (!price) {
+  MakersContract.methods.checkMakersStatus(tokenId).call()
+    .then(state => {
+      if (state == 0) {
+        console.log("종료된 Makers 입니다.");
         return 0;
+      } else {
+        MakersContract.methods.showMakersPrice(tokenId).call()
+          .then(price => {
+            if (!price) {
+              return 0;
+            }
+            // -------------------
+            console.log(price);
+            MakersContract.methods.showInvestor(tokenId).call()
+              .then(buyer => {
+                if (!buyer) {
+                  return 0;
+                }
+                MakersContract.methods.removeMakers(tokenId);
+                console.log("------------------");
+                console.log(buyer[0]);
+                console.log(buyer[1]);
+                console.log("------------------");
+                for (let i = 0; i < buyer.length; i++) {
+
+                  console.log("i : ", i);
+                  MakersContract.methods.returnklay(buyer[i])
+                    .send({
+                      from: getWallet().address,
+                      gas: "200000000",
+                      value: cav.utils.toPeb(price.toString(), "KLAY")
+                    })
+                    .once("transactionHash", txHash => {
+                      console.log("txHash:", txHash);
+                      ui.showToast({
+                        status: "pending",
+                        message: `Sending a transaction... (uploadPhoto)`,
+                        txHash
+                      });
+                    })
+                    .once("receipt", receipt => {
+                      ui.showToast({
+                        status: receipt.status ? "success" : "fail",
+                        message: `Received receipt! It means your transaction is
+                   in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+                        link: receipt.transactionHash
+                      });
+                    })
+                    .once("error", error => {
+                      ui.showToast({
+                        status: "error",
+                        message: error.toString()
+                      });
+                    });
+                }
+              });
+          });
       }
-      // -------------------
-      console.log(price);
-      MakersContract.methods.showInvestor(tokenId).call()
-        .then(buyer => {
-          if (!buyer) {
-            return 0;
-          }
-          MakersContract.methods.removeMakers(tokenId);
-          console.log("------------------");
-          console.log(buyer[0]);
-          console.log(buyer[1]);
-          console.log(buyer[2]);
-          console.log("------------------");
-          for (let i = 0; i < buyer.length; i++) {
-            MakersContract.methods.returnklay(buyer[i])
+    });
+};
+
+// --------------------------------------------------
+//  Makers 공동구매 
+// --------------------------------------------------
+
+const _investMakers = tokenId => {
+  console.log("invest", tokenId);
+  // var price = MakersContract.methods.getPriceMakers(tokenId);
+  // var price = MakersContract._MakerList[tokenId].price;
+
+  MakersContract.methods.successMakers(tokenId).call()
+    .then(result => {
+      if (result == true) {
+        console.log("모금액을 모두 달성하여서 참여 불가능함.");
+        return 0;
+      } else {
+        MakersContract.methods.showMakersPrice(tokenId).call()
+          .then(price => {
+            if (!price) {
+              return 0;
+            }
+            // -------------------
+            MakersContract.methods.investMakers(tokenId)
               .send({
                 from: getWallet().address,
                 gas: "200000000",
@@ -125,7 +188,7 @@ const _removeMakers = tokenId => {
                 ui.showToast({
                   status: receipt.status ? "success" : "fail",
                   message: `Received receipt! It means your transaction is
-                   in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+                  in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
                   link: receipt.transactionHash
                 });
               })
@@ -135,58 +198,13 @@ const _removeMakers = tokenId => {
                   message: error.toString()
                 });
               });
-          }
-        });
-    });
-};
-
-// --------------------------------------------------
-//  Makers 공동구매 
-// --------------------------------------------------
-
-const _investMakers = tokenId => {
-  console.log("invest", tokenId);
-  // var price = MakersContract.methods.getPriceMakers(tokenId);
-  // var price = MakersContract._MakerList[tokenId].price;
-  MakersContract.methods.showMakersPrice(tokenId).call()
-    .then(price => {
-      if (!price) {
-        return 0;
+          });
       }
-      // -------------------
-      MakersContract.methods.investMakers(tokenId)
-        .send({
-          from: getWallet().address,
-          gas: "200000000",
-          value: cav.utils.toPeb(price.toString(), "KLAY")
-        })
-        .once("transactionHash", txHash => {
-          console.log("txHash:", txHash);
-          ui.showToast({
-            status: "pending",
-            message: `Sending a transaction... (uploadPhoto)`,
-            txHash
-          });
-        })
-        .once("receipt", receipt => {
-          ui.showToast({
-            status: receipt.status ? "success" : "fail",
-            message: `Received receipt! It means your transaction is
-          in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-            link: receipt.transactionHash
-          });
-        })
-        .once("error", error => {
-          ui.showToast({
-            status: "error",
-            message: error.toString()
-          });
-        });
     });
 
 }
 
-const TokenId = 5;
+const TokenId = 2;
 
 const invest = e => {
   const invest_value = e.target.value;

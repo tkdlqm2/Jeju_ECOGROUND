@@ -236,4 +236,16 @@ contract MakersToken is ERC721Full {
         }
     }
 
+    // ------------------------------------------------------------------------
+    // Makers 모금 달성 성공 시 호출
+    // ------------------------------------------------------------------------
+    
+    function successMakers(uint256 tokenId) public view returns (bool) {
+        if(_MakersList[tokenId].targetKlay == _totalKlayList[tokenId]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

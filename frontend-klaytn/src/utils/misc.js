@@ -43,17 +43,16 @@ export const donationParser = donation => {
 
 export const feedParser = feed => {
   const photoKeys = {
-    0: "id",
-    1: "buyer",
-    2: "photo",
-    3: "title",
-    4: "description",
-    5: "targetKlay",
-    6: "D_day",
-    7: "status",
-    8: "count",
-    9: "timestamp",
-    10: "price"
+    0: "tokenId",
+    1: "photo",
+    2: "title",
+    3: "description",
+    4: "targetKlay",
+    5: "D_day",
+    6: "status",
+    7: "count",
+    8: "timestamp",
+    9: "price"
   };
 
   /**

@@ -33,41 +33,6 @@ const updateFeed = tokenId => (dispatch, getState) => {
     });
 };
 
-// API functions
-
-// export const getMakersState = (tokenId) => (dispatchEvent) => {
-//   MakersContract.methods.checkMakersStatus(tokenId).call()
-//     .then(newState => {
-//       const {
-//         state: { MakersState }
-//       } = getState();
-//       const MakersState = [stateParser(newState), ...MakersState];
-//       dispatch(setState(newState));
-//     })
-// }
-
-// export const getDonation = (tokenId) => (dispatch) => {
-//   MakersContract.methods.parentStateMakers(tokenId).call()
-//     .then(newDonation => {
-//       const {
-//         invests: { donation }
-//       } = getState();
-//       const donation = [donationParser(newDonation), ...donation];
-//       dispatch(setDonation(newDonation));
-//     })
-// };
-
-// export const getMakersPrice = (tokenId) => (dispatch) => {
-//   MakersContract.methods.showMakersPrice(tokenId).call()
-//     .then(newMakersPrice => {
-//       const {
-//         prices: { makersPrice }
-//       } = getState();
-//       const makersPrice = [priceParser(newMakersPrice), ...makersPrice];
-//       dispatch(MakersPrice(newMakersPrice));
-//     })
-// }
-
 export const getFeed = () => dispatch => {
   MakersContract.methods
     .getTotalMakersCount()
