@@ -3,7 +3,6 @@ import styled from "styled-components";
 import CardGiftcardRoundedIcon from "@material-ui/icons/CardGiftcardRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
-import { Link } from "@material-ui/core";
 
 const Container = styled.div`
   width: 540px;

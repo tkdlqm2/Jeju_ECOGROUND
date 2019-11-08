@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 // import { Link } from "react-router-dom";
-import { HeartFull, Next, Prev } from "../Icons";
+import { HeartFull } from "../Icons";
 import MakersDesc from "components/MakersDesc";
 
 const Container = styled.div`
@@ -42,13 +42,13 @@ const Image = styled.div`
   transition: opacity 0.2s linear;
 `;
 
-const SlideButton = styled.div`
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  ${props => (props.type === "prev" ? "left: 10px" : "right: 10px")};
-  opacity: 0.7;
-`;
+// const SlideButton = styled.div`
+//   cursor: pointer;
+//   position: absolute;
+//   top: 50%;
+//   ${props => (props.type === "prev" ? "left: 10px" : "right: 10px")};
+//   opacity: 0.7;
+// `;
 
 const LikeButton = styled.span`
   cursor: pointer;
@@ -97,10 +97,6 @@ const ColoredLine = styled.hr`
   width: 98%;
 `;
 
-const Test = styled.div`
-  margin-top: 10px;
-`;
-
 const MakersProduct = ({
   userAddress,
   isLoading,
@@ -117,7 +113,15 @@ const MakersProduct = ({
   const { ...item } = product;
   const { tokenId, description, status, targetKlay, title, photo } = item;
 
-  console.log("product: ", product);
+  console.log(
+    "product: ",
+    tokenId,
+    description,
+    status,
+    targetKlay,
+    title,
+    photo
+  );
 
   return (
     <Container>

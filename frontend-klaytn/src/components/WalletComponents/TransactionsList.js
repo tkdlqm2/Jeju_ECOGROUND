@@ -18,7 +18,7 @@ const Label = styled.div`
 
 const transactionsList = [
   {
-    txHash: "",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
     TXType: "Smart Contract Execution",
     Block: 11663903,
     Time: "2 hours ago",
@@ -27,32 +27,28 @@ const transactionsList = [
   {
     TXType: "Value Transfer",
     Block: 11663903,
-    From: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
-    To: "0xc6cd9993388cc0e1e6318192c9e19856acc4f655",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
     Time: "2 hours ago",
     TXFee: 0.5
   },
   {
     TXType: "Smart Contract Execution",
     Block: 11663903,
-    From: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
-    To: "0xc6cd9993388cc0e1e6318192c9e19856acc4f655",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
     Time: "2 hours ago",
     TXFee: 0.5
   },
   {
     TXType: "Smart Contract Execution",
     Block: 11663903,
-    From: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
-    To: "0xc6cd9993388cc0e1e6318192c9e19856acc4f655",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
     Time: "2 hours ago",
     TXFee: 0.5
   },
   {
     TXType: "Smart Contract Execution",
     Block: 11663903,
-    From: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
-    To: "0xc6cd9993388cc0e1e6318192c9e19856acc4f655",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
     Time: "2 hours ago",
     TXFee: 0.5
   }
@@ -75,7 +71,17 @@ export default () => {
       <Label>Transactions list</Label>
       <ListContainer>
         {transactionsList.map(tx => {
-          return <Transaction>{tx.TXType}</Transaction>;
+          return (
+            <>
+              <Transaction>
+                <div>TX type: {tx.TXType}</div>
+                <div>Block: {tx.Block}</div>
+                <div>tx hash: {tx.txHash}</div>
+                <div>time: {tx.Time}</div>
+                <div>tx fee: {tx.TXFee}</div>
+              </Transaction>
+            </>
+          );
         })}
       </ListContainer>
     </Container>

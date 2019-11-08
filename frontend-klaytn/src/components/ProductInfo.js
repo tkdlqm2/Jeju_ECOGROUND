@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
-import { HeartEmpty } from "./Icons";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`

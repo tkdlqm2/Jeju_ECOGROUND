@@ -1,5 +1,4 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";

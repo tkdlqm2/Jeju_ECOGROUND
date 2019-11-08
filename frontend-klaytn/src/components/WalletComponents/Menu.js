@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import CardGiftcardRoundedIcon from "@material-ui/icons/CardGiftcardRounded";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import MoneyIcon from "@material-ui/icons/Money";

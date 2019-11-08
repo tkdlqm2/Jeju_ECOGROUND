@@ -94,7 +94,7 @@ const _removeMakers = tokenId => {
     .checkMakersStatus(tokenId)
     .call()
     .then(state => {
-      if (state == 0) {
+      if (state === 0) {
         console.log("종료된 Makers 입니다.");
         return 0;
       } else {
@@ -170,7 +170,7 @@ const _investMakers = tokenId => {
     .successMakers(tokenId)
     .call()
     .then(result => {
-      if (result == true) {
+      if (result === true) {
         console.log("모금액을 모두 달성하여서 참여 불가능함.");
         return 0;
       } else {
