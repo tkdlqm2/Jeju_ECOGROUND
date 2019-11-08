@@ -32,38 +32,45 @@ const Button = styled.button`
 const _investMakers = tokenId => {
   console.log("invest", tokenId);
   // var price = MakersContract.methods.getPriceMakers(tokenId);
-  var price = MakersContract.methods._MakerList[tokenId].price;
-  console.log(price.price);
-  MakersContract.methods.investMakers(tokenId)
-    .send({
-      from: getWallet().address,
-      gas: "200000000",
-      value: cav.utils.toPeb(price.toString(), "KLAY")
-    })
-    .once("transactionHash", txHash => {
-      console.log("txHash:", txHash);
-      ui.showToast({
-        status: "pending",
-        message: `Sending a transaction... (uploadPhoto)`,
-        txHash
-      });
-    })
-    .once("receipt", receipt => {
-      ui.showToast({
-        status: receipt.status ? "success" : "fail",
-        message: `Received receipt! It means your transaction is
+  // var price = MakersContract._MakerList[tokenId].price;
+  MakersContract.methods.showMakersPrice(tokenId).call()
+    .then(price => {
+      if (!price) {
+        return 0;
+      }
+      // -------------------
+      MakersContract.methods.investMakers(tokenId)
+        .send({
+          from: getWallet().address,
+          gas: "200000000",
+          value: cav.utils.toPeb(price.toString(), "KLAY")
+        })
+        .once("transactionHash", txHash => {
+          console.log("txHash:", txHash);
+          ui.showToast({
+            status: "pending",
+            message: `Sending a transaction... (uploadPhoto)`,
+            txHash
+          });
+        })
+        .once("receipt", receipt => {
+          ui.showToast({
+            status: receipt.status ? "success" : "fail",
+            message: `Received receipt! It means your transaction is
           in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-        link: receipt.transactionHash
-      });
-      const tokenId = receipt.events.MakersUploaded.returnValues[0];
-      console.log("tokenId: ", tokenId);
-    })
-    .once("error", error => {
-      ui.showToast({
-        status: "error",
-        message: error.toString()
-      });
+            link: receipt.transactionHash
+          });
+          const tokenId = receipt.events.MakersUploaded.returnValues[0];
+          console.log("tokenId: ", tokenId);
+        })
+        .once("error", error => {
+          ui.showToast({
+            status: "error",
+            message: error.toString()
+          });
+        });
     });
+
 }
 
 // --------------------------------------------------
@@ -104,8 +111,7 @@ const _removeMakers = tokenId => {
     });
 };
 
-const TokenId = 2;
-const addressId = 12312312;
+const TokenId = 1;
 
 const invest = e => {
   const invest_value = e.target.value;
