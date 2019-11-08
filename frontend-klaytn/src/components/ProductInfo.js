@@ -18,45 +18,19 @@ const Title = styled.h2`
 `;
 
 const Description = styled.p`
-  width: 90%;
+  width: 96%;
   font-size: 16px;
   margin-bottom: 18px;
-  font-weight: 400;
-`;
-
-const DDay = styled.span`
-  font-size: 14px;
-  color: ${props => props.theme.lightGreen};
-  margin-bottom: 18px;
-`;
-
-const LikeButton = styled(Button)`
-  background-color: ${props => props.theme.white};
-  color: ${props => props.theme.black};
-  width: 100px;
-  height: 40px;
-  border: ${props => props.theme.boxBorder};
-`;
-
-const HeartIcon = styled(HeartEmpty)`
-  margin-right: 7px;
-  width: 15px;
-  height: 15px;
+  font-weight: 100;
+  line-height: 160%;
 `;
 
 const ProductInfo = ({ title, description, D_day, tokenId }) => (
   <Container>
     <Link to={`/makers/${tokenId}`}>
-      <Title>Title: {title}</Title>
-      <Description>Description: {description}</Description>
+      <Title>{title}</Title>
+      <Description>{description}</Description>
     </Link>
-
-    <DDay>Token id: {tokenId}</DDay>
-    <DDay>D day: {D_day}</DDay>
-    {/* <LikeButton>
-      <HeartIcon />
-      2,000명
-    </LikeButton> */}
   </Container>
 );
 

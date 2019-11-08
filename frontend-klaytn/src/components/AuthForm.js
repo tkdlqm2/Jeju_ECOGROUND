@@ -6,9 +6,7 @@ import SignupForm from "./SignupForm";
 const Container = styled.div`
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
-  padding: 72px 60px 83px;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  padding: 36px 60px 83px;
   ${props => props.theme.whiteBox}
 `;
 

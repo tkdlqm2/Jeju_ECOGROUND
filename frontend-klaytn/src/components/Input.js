@@ -18,7 +18,7 @@ const Label = styled.label`
   display: block;
   font-size: 12px;
   font-weight: bold;
-  color: ${props => props.theme.brownGrey};
+  color: ${props => props.theme.black};
   margin-bottom: 8px;
 `;
 

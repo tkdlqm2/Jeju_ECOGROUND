@@ -11,6 +11,10 @@ const Container = styled.div`
 `;
 
 const FeedProduct = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   position: relative;
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
@@ -21,6 +25,9 @@ const FeedProduct = styled.div`
 `;
 
 const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   img {
     width: 100%;
@@ -28,8 +35,9 @@ const ImageContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
+  width: ${props => props.theme.maxCardWidth};
   position: relative;
-  padding: 24px 24px 40px 10px;
+  padding: 24px 24px 24px 10px;
 `;
 
 const FeedEmpty = styled.div`
@@ -71,7 +79,12 @@ const MakersFeed = props => {
                 <FeedProduct key={tokenId}>
                   <Link to={`/makers/${tokenId}`}>
                     <ImageContainer>
-                      <img src={photo} alt={title} />
+                      <img
+                        src={
+                          "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+                        }
+                        alt={title}
+                      />
                     </ImageContainer>
                   </Link>
                   <InfoContainer>
@@ -82,15 +95,17 @@ const MakersFeed = props => {
                       tokenId={tokenId}
                     />
                   </InfoContainer>
-                  <Slider />
-
-                  {timestamp}
+                  <Slider
+                    targetKlay={targetKlay}
+                    price={price}
+                    status={status}
+                  />
                 </FeedProduct>
               );
             }
           )
         ) : (
-          <FeedEmpty>No Product :D</FeedEmpty>
+          <FeedEmpty>Loading...</FeedEmpty>
         )}
       </FeedContainer>
     </Container>

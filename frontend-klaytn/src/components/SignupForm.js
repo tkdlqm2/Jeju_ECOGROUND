@@ -5,7 +5,10 @@ import Button from "./Button";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const SignupInput = styled(Input)`
   margin-bottom: 10px;
@@ -16,8 +19,18 @@ const PKButton = styled(Button)`
 `;
 
 const SignupButton = styled(Button)`
-  margin-top: 50px;
+  margin-top: 40px;
 `;
+
+const LogoImage = styled.img.attrs({
+  src: "https://1.bp.blogspot.com/-Y4N0BKHt0x0/XcURWNtr-XI/AAAAAAAAADY/EIrCmxnBMB4y9u_rVOc6bjq8_TJgfXgdACLcBGAsYHQ/s1600/Long%2BLogo.png"
+})`
+  width: 304px;
+  height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+`
 
 export default () => {
   const [privateKey, setPrivateKey] = useState(null);
@@ -42,6 +55,7 @@ export default () => {
 
   return (
     <Wrapper>
+      <LogoImage/>
       <form onSubmit={onSubmit}>
         <Input
           label="Create new account"

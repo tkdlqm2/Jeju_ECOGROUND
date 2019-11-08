@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 // import { Link } from "react-router-dom";
 import { HeartFull, Next, Prev } from "../Icons";
+import MakersDesc from "components/MakersDesc";
 
 const Container = styled.div`
   position: relative;
   width: 100%;
   min-height: 100%;
-  padding: 60px 0;
+  padding: 30px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,13 +16,18 @@ const Container = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-  padding-bottom: 100%;
+  padding-bottom: 80%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   flex-shrink: 0;
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
+`;
+
+const InfoContainer = styled.div`
+  position: relative;
+  padding: 24px 10px 40px 10px;
 `;
 
 const Image = styled.div`
@@ -85,10 +91,19 @@ const OrderButton = styled.span`
   background-color: ${props => props.theme.lightGreen};
 `;
 
+const ColoredLine = styled.hr`
+  border : solid, 0.1px;
+  color : lightgrey;
+  width : 98%;
+`;
+
+const Test = styled.div`
+  margin-top: 10px;
+`;
+
 const MakersProduct = ({
   userAddress,
   isLoading,
-  tokenId,
   likeCount,
   isLiked,
   setIsLiked,
@@ -100,44 +115,35 @@ const MakersProduct = ({
   product
 }) => {
   const { ...item } = product;
-  const {
-    title,
-    buyer,
-    description,
-    targetKlay,
-    price,
-    D_day,
-    status,
-    timestamp,
-    photo
-  } = item;
+  const { tokenId, description, status, targetKlay, title, photo } = item;
 
-  console.log(
-    "item: ",
-    title,
-    buyer,
-    description,
-    targetKlay,
-    price,
-    D_day,
-    status,
-    timestamp,
-    photo
-  );
+  console.log("product: ", product);
 
   return (
     <Container>
       <ImageContainer>
-        <Image key={tokenId} src={photo} showing={true} />
-        <>
+        <Image
+          key={tokenId}
+          src={
+            "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+          }
+          showing={true}
+        />
+        {/* <>
           <SlideButton type="prev" onClick={slidePrev}>
             <Prev />
           </SlideButton>
           <SlideButton type="next" onClick={slideNext}>
             <Next />
           </SlideButton>
-        </>
+        </> */}
       </ImageContainer>
+
+      <ColoredLine />
+      
+      <InfoContainer>
+        <MakersDesc tokenId={tokenId} description={description} title={title} />
+      </InfoContainer>
 
       <Order>
         <LikeButton>
@@ -145,7 +151,7 @@ const MakersProduct = ({
           <LikeText>좋아요</LikeText>
         </LikeButton>
         <OrderButton>
-          <OrderText>주문하기</OrderText>
+          <OrderText>신청하기</OrderText>
         </OrderButton>
       </Order>
     </Container>

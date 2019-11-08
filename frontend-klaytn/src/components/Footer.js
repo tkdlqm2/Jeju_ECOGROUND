@@ -38,26 +38,9 @@ const Copyright = styled.div`
   font-weight: normal;
 `;
 
-const footerLinks = [
-  { title: "Klaytn Official Site", link: URL.KLAYTN_HOMEPAGE },
-  { title: "Klaytnscope", link: URL.KLAYTN_SCOPE },
-  { title: "Klaytn Wallet", link: URL.KLAYTN_WALLET },
-  { title: "Klaytn Docs", link: URL.KLAYTN_DOCS },
-  { title: "Ground X Official Site", link: URL.GROUNDX_HOMEPAGE }
-];
-
 const Footer = () => (
   <Container>
     <FooterInner>
-      <LinkBox>
-        {footerLinks.map(({ title, link }) => (
-          <Link key={title}>
-            <a href={link} target="_blank" rel="noreferrer noopener">
-              {title}
-            </a>
-          </Link>
-        ))}
-      </LinkBox>
       <Copyright>&copy; 2019 Eco Ground</Copyright>
     </FooterInner>
   </Container>

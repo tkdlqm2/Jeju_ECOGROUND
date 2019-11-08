@@ -13,6 +13,17 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const LogoImage = styled.img.attrs({
+  src:
+    "https://1.bp.blogspot.com/-Y4N0BKHt0x0/XcURWNtr-XI/AAAAAAAAADY/EIrCmxnBMB4y9u_rVOc6bjq8_TJgfXgdACLcBGAsYHQ/s1600/Long%2BLogo.png"
+})`
+  width: 304px;
+  height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+`;
+
 const LoginInput = styled(Input)`
   margin-bottom: 10px;
 `;
@@ -55,6 +66,7 @@ const LoginForm = ({ login }) => {
 
   return (
     <Container>
+      <LogoImage />
       <LoginInput
         type="text"
         name="username"
