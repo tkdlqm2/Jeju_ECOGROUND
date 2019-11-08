@@ -6,7 +6,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 const SliderContainer = styled.div`
-  width: 80%;
+  width: 100%;
 `;
 
 const Margin = styled.div`
@@ -70,6 +70,7 @@ export default ({ targetKlay, price, status }) => {
           marks={marks}
           valueLabelDisplay="off"
           textColor="secondary"
+          disabled
         />
       </SliderContainer>
     </ThemeProvider>
