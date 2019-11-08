@@ -92,7 +92,6 @@ export const getFeed = () => dispatch => {
 //  MyMakers 확인
 // --------------------------------------------------
 export const _showMyMakers = addressId => dispatch => {
-
   MakersContract.methods
     .showMyMakers(addressId)
     .call()
@@ -102,9 +101,9 @@ export const _showMyMakers = addressId => dispatch => {
         return [];
       }
       const feed = [];
-      for (let i = totalMyMakers.length; i > 0; i--) {
+      for (let i = totalMyMakers.length - 1; i > 0; i--) {
         const product = MakersContract.methods
-          .getMakers(totalMyMakers[i].tokenId)
+          .getMakers(totalMyMakers[i])
           .call();
         feed.push(product);
       }
@@ -192,7 +191,7 @@ export const uploadItem = (
       .uploadMakers(hexString, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
-        gas: "200000000"
+        gas: "20000000"
       })
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);
@@ -212,11 +211,12 @@ export const uploadItem = (
         const tokenId = receipt.events.MakersUploaded.returnValues[0];
         console.log("-----------------");
         console.log("tokenId: ", tokenId);
-        console.log("-----------------");
+        console.log("————————");
 
         dispatch(updateFeed(tokenId));
       })
       .once("error", error => {
+        console.log(error);
         ui.showToast({
           status: "error",
           message: error.toString()

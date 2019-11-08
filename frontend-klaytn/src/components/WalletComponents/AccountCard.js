@@ -3,13 +3,14 @@ import styled from "styled-components";
 import CardGiftcardRoundedIcon from "@material-ui/icons/CardGiftcardRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
+import { Link } from "@material-ui/core";
 
 const Container = styled.div`
   width: 540px;
-  height: 350px;
+  height: 300px;
   display: flex;
   position: relative;
-  top: 40px;
+  top: 60px;
   ${props => props.theme.whiteBox};
   flex-direction: column;
   align-items: center;
@@ -17,21 +18,21 @@ const Container = styled.div`
 `;
 
 const KlayBalance = styled.div`
-  height: 100px;
+  height: 70px;
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0 20px;
+  padding-top: 60px;
 `;
 
 const Span = styled.span`
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
 `;
 
 const EcoData = styled.div`
-  height: 250;
+  height: 240px;
   width: 95%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -46,6 +47,7 @@ const Item = styled.div`
 
 const IconContainer = styled.div`
   font-size: 40px;
+  cursor: pointer;
 `;
 
 const IconDescContainer = styled.div`
@@ -56,21 +58,32 @@ const IconDescContainer = styled.div`
   margin-top: 25px;
 `;
 
-const IconDesc = styled.div``;
+const IconDesc = styled.div`
+  cursor: pointer;
+`;
 
 const Balance = styled.div`
   margin-top: 10px;
   color: ${props => props.theme.lightGreen};
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const GreenText = styled.span`
+  color: ${props => props.theme.lightGreen};
+  font-size: 28px;
 `;
 
 export default ({ balance }) => {
+  const balanceFloor = Math.floor(balance * 10000) / 10000;
   return (
     <Container>
       <KlayBalance>
         <Span>My Total Balance</Span>
-        <Span>{balance} Klay</Span>
+        <Span>
+          <GreenText>{balanceFloor} </GreenText> Klay
+        </Span>
       </KlayBalance>
       <EcoData>
         <Item>

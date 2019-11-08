@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Menu from "../WalletComponents/Menu";
 import UserInfo from "../WalletComponents/UserInfo";
 import TransactionsList from "../WalletComponents/TransactionsList";
+import { Divider } from "@material-ui/core";
 
 const Container = styled.div``;
 
@@ -20,6 +21,7 @@ export default ({ address, balance }) => {
       <UserInfo address={address} balance={balance} />
 
       <Menu />
+      <Divider />
       <TransactionsList />
     </Container>
   );

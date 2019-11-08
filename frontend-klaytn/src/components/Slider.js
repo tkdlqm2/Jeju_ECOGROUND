@@ -54,7 +54,7 @@ export default ({ targetKlay, price, status }) => {
     return `${value}`;
   };
 
-  const currentValue = Math.floor((1 / targetKlay) * 100);
+  const currentValue = Math.floor((1 / targetKlay) * 100).toString();
 
   return (
     <ThemeProvider theme={theme}>
