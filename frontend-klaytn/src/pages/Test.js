@@ -32,7 +32,7 @@ const Button = styled.button`
 const _investMakers = tokenId => {
   console.log("invest", tokenId);
   // var price = MakersContract.methods.getPriceMakers(tokenId);
-  var price = 3;
+  var price = MakersContract.methods._MakerList[tokenId].price;
   console.log(price.price);
   MakersContract.methods.investMakers(tokenId)
     .send({
@@ -104,7 +104,7 @@ const _removeMakers = tokenId => {
     });
 };
 
-const TokenId = 1;
+const TokenId = 2;
 const addressId = 12312312;
 
 const invest = e => {

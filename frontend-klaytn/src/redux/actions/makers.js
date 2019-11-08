@@ -21,7 +21,7 @@ const setFeed = feed => ({
 const updateFeed = tokenId => (dispatch, getState) => {
   console.log("updateFeed");
 
-  Makers.methods
+  MakersContract.methods
     .getMakers(tokenId)
     .call()
     .then(newMakers => {
@@ -82,6 +82,7 @@ export const getFeed = () => dispatch => {
         const product = MakersContract.methods.getMakers(i).call();
         feed.push(product);
       }
+      console.log(feed);
       return Promise.all(feed);
     })
     .then(feed => dispatch(setFeed(feedParser(feed))));
@@ -92,10 +93,6 @@ export const getFeed = () => dispatch => {
 //  MyMakers 확인
 // --------------------------------------------------
 export const _showMyMakers = (addressId) => dispatch => {
-
-  console.log(MakersContract.methods.showMyMakers(addressId).call());
-  console.log("------------");
-  console.log(addressId)
   MakersContract.methods
     .showMyMakers(addressId).call()
     .then(totalMyMakers => {
@@ -104,13 +101,13 @@ export const _showMyMakers = (addressId) => dispatch => {
         return [];
       }
       const feed = [];
-      for (let i = totalMyMakers.length; i > 0; i--) {
-        const product = MakersContract.methods.getMakers(totalMyMakers[i].tokenId).call();
+      for (let i = totalMyMakers.length - 1; i > 0; i--) {
+        const product = MakersContract.methods.getMakers(totalMyMakers[i]).call();
         feed.push(product);
       }
       return Promise.all(feed);
     })
-    .then(feed => dispatch(setFeed(feedParser(Makers))))
+    .then(feed => dispatch(setFeed(feedParser(feed))))
 }
 
 
@@ -164,7 +161,8 @@ export const uploadItem = (
   title,
   description,
   targetKlay,
-  D_day
+  D_day,
+  price
 ) => dispatch => {
   console.log(
     `
@@ -175,6 +173,9 @@ export const uploadItem = (
     D_day: ${D_day}
     `
   );
+
+  // TODO: upload image file logic
+  // 179 ~ 189 번 까지 기존 업로드 로직.
   const reader = new window.FileReader();
   reader.readAsArrayBuffer(file);
   reader.onloadend = () => {
@@ -188,7 +189,7 @@ export const uploadItem = (
     console.log("hexString");
 
     MakersContract.methods
-      .uploadMakers(hexString, title, description, targetKlay, D_day)
+      .uploadMakers(hexString, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
         gas: "200000000"
@@ -209,7 +210,10 @@ export const uploadItem = (
           link: receipt.transactionHash
         });
         const tokenId = receipt.events.MakersUploaded.returnValues[0];
+        console.log("-----------------");
         console.log("tokenId: ", tokenId);
+        console.log("-----------------");
+
         dispatch(updateFeed(tokenId));
       })
       .once("error", error => {
