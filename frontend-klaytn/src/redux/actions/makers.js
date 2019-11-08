@@ -92,7 +92,6 @@ export const getFeed = () => dispatch => {
 //  MyMakers 확인
 // --------------------------------------------------
 export const _showMyMakers = addressId => dispatch => {
-
   MakersContract.methods
     .showMyMakers(addressId)
     .call()
@@ -102,9 +101,9 @@ export const _showMyMakers = addressId => dispatch => {
         return [];
       }
       const feed = [];
-      for (let i = totalMyMakers.length; i > 0; i--) {
+      for (let i = totalMyMakers.length - 1; i > 0; i--) {
         const product = MakersContract.methods
-          .getMakers(totalMyMakers[i].tokenId)
+          .getMakers(totalMyMakers[i])
           .call();
         feed.push(product);
       }

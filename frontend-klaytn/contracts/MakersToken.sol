@@ -65,7 +65,7 @@ contract MakersToken is ERC721Full {
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function showTargetKlay(uint256 _tokenId) public view returns (int) {
-        require(msg.sender == ownerOf(_tokenId), "This function can access only owner of Token");
+        // require(msg.sender == ownerOf(_tokenId), "This function can access only owner of Token");
         return _MakersList[_tokenId].targetKlay;
     }
 
@@ -118,8 +118,6 @@ contract MakersToken is ERC721Full {
     function returnklay(uint256 _tokenId) public payable returns (bool) {
         require(_MakersList[_tokenId].status == 1,"This token was already finish about returing klay");
         _MakersList[_tokenId].status = 0;
-        int price = _MakersList[_tokenId].price;
-        
         address[] memory investors = _MakersList[_tokenId].buyer;
         uint256 len = _MakersList[_tokenId].count;
         for (uint256 i=0; i<len; i++){
@@ -165,7 +163,7 @@ contract MakersToken is ERC721Full {
             address MakersOwner = ownerOf(tokenId);
             address payable payableTokenSeller = address(uint160(MakersOwner));
             payableTokenSeller.transfer(msg.value); // 메이커스 Token의 owner 계정으로 klay 송금
-            _totalKlayList[tokenId] += 1; // 메이커스 목표 금액을 다루는 list에 klay 추가
+            _totalKlayList[tokenId] += price; // 메이커스 목표 금액을 다루는 list에 klay 추가
             _MakersList[tokenId].buyer.push(msg.sender); // 메이커스 투자자들 push
             _MyMakersList[msg.sender].push(tokenId); // 내가 투자한 메이커스 
         } else {

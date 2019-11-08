@@ -25,6 +25,61 @@ const Button = styled.button`
   width: 100px;
 `;
 
+
+const _showTargetKlay = tokenId => {
+  console.log("_showTargetKlay 함수 호출");
+
+  MakersContract.methods.showTargetKlay(tokenId).call()
+    .then(targetKlay => {
+      if (!targetKlay) {
+        return 0;
+      }
+      console.log("-----------------");
+      console.log("targetKlay : ", targetKlay);
+      console.log("-----------------");
+
+    })
+}
+
+// --------------------------------------------------
+//  MyMakers 확인
+// --------------------------------------------------
+
+const _checkMyMakers = addressId => {
+  console.log("checkMyMakers 호출");
+
+  MakersContract.methods.showMyMakers(addressId).call()
+    .then(Makers => {
+      if (!Makers) {
+        return 0;
+      }
+      console.log("-----------------------------")
+      for (let i = Makers.length; i > 0; i--) {
+        console.log(MakersContract.methods.getMakers(i));
+      }
+      console.log("-----------------------------")
+
+    });
+}
+
+// --------------------------------------------------
+//  Makers 현재 모금액 확인 
+// --------------------------------------------------
+
+const _checkDonate = tokenId => {
+  console.log("checkNodate 호출");
+
+  MakersContract.methods.parentStateMakers(tokenId).call()
+    .then(donate => {
+      if (!donate) {
+        return 0;
+      }
+      console.log("---------< donate >---------------")
+      console.log(donate);
+      console.log("-----------------------------")
+    });
+}
+
 // --------------------------------------------------
 //  Makers 공동구매 
 // --------------------------------------------------
@@ -60,8 +115,6 @@ const _investMakers = tokenId => {
           in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
             link: receipt.transactionHash
           });
-          const tokenId = receipt.events.MakersUploaded.returnValues[0];
-          console.log("tokenId: ", tokenId);
         })
         .once("error", error => {
           ui.showToast({
@@ -125,11 +178,28 @@ const remove = e => {
   _removeMakers(remove_value);
 };
 
+const checkDonate = e => {
+  const checkDonate_value = e.target.value;
+  console.log(checkDonate_value);
+  _checkDonate(checkDonate_value);
+};
+
+const showTargetKlay = e => {
+  const showTarget_value = e.target.value;
+  console.log(showTarget_value);
+  _showTargetKlay(showTarget_value);
+}
+
+
 
 const test = (props) => {
   const check = e => {
-    props._showMyMakers(props.userAddress);
+    // props._showMyMakers(props.userAddress);
+    const checkMyMakers = e.target.value;
+    console.log(checkMyMakers);
+    _checkMyMakers(checkMyMakers);
   }
+
   return (
     <Container>
       <MakersHeader />
@@ -141,6 +211,12 @@ const test = (props) => {
       </Button>
       <Button onClick={check} value={props.userAddress}>
         checkMakers
+      </Button>
+      <Button onClick={checkDonate} value={TokenId}>
+        checkDonate
+      </Button>
+      <Button onClick={showTargetKlay} value={TokenId}>
+        showTargetKlay
       </Button>
     </Container>
   );
