@@ -23,6 +23,12 @@ const Description = styled.p`
   line-height: 160%;
 `;
 
+const DDay = styled.span`
+  font-size: 14px;
+  color: ${props => props.theme.lightGreen};
+  margin-bottom: 18px;
+`;
+
 const ProductInfo = ({ title, description, D_day, tokenId }) => (
   <Container>
     <Link to={`/makers/${tokenId}`}>
