@@ -45,10 +45,6 @@ export default ({ targetKlay, price, status }) => {
       label: "0"
     },
     {
-      value: 30,
-      label: "최소주문금액"
-    },
-    {
       value: 100,
       label: targetKlay
     }
@@ -64,6 +60,7 @@ export default ({ targetKlay, price, status }) => {
     <ThemeProvider theme={theme}>
       <SliderContainer>
         <Margin />
+        Klay 달성률
         <Slider
           defaultValue={currentValue}
           getAriaValueText={valuetext}

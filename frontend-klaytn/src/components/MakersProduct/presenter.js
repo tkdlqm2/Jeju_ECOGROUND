@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const ImageContainer = styled.div`
   position: relative;
-  padding-bottom: 100%;
+  padding-bottom: 80%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -91,6 +91,12 @@ const OrderButton = styled.span`
   background-color: ${props => props.theme.lightGreen};
 `;
 
+const ColoredLine = styled.hr`
+  border : solid, 0.1px;
+  color : lightgrey;
+  width : 98%;
+`;
+
 const Test = styled.div`
   margin-top: 10px;
 `;
@@ -132,8 +138,12 @@ const MakersProduct = ({
           </SlideButton>
         </> */}
       </ImageContainer>
+
+      <ColoredLine />
       
-      <MakersDesc tokenId={tokenId} description={description} title={title} />
+      <InfoContainer>
+        <MakersDesc tokenId={tokenId} description={description} title={title} />
+      </InfoContainer>
 
       <Order>
         <LikeButton>
