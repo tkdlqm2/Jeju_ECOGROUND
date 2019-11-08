@@ -51,6 +51,7 @@ const ProductInfo = ({ title, description, D_day, tokenId }) => (
       <Title>{title}</Title>
       <Description>{description}</Description>
     </Link>
+    <DDay>{D_day}까지</DDay>
   </Container>
 );
 

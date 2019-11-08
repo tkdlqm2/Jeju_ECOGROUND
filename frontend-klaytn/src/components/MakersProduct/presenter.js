@@ -3,6 +3,8 @@ import styled from "styled-components";
 // import { Link } from "react-router-dom";
 import { HeartFull, Next, Prev } from "../Icons";
 import MakersDesc from "components/MakersDesc";
+import TargetInfo from "components/TargetInfo";
+import SubInfo from "components/SubInfo";
 
 const Container = styled.div`
   position: relative;
@@ -115,7 +117,7 @@ const MakersProduct = ({
   product
 }) => {
   const { ...item } = product;
-  const { tokenId, description, status, targetKlay, title, photo } = item;
+  const { tokenId, description, status, targetKlay, title, photo, D_day } = item;
 
   console.log("product: ", product);
 
@@ -138,11 +140,23 @@ const MakersProduct = ({
           </SlideButton>
         </> */}
       </ImageContainer>
+      
+      <ColoredLine />
+
+      <InfoContainer>
+        <TargetInfo tokenId={tokenId} description={description} D_day={D_day} />
+      </InfoContainer>
+
+      <ColoredLine />
+
+      <InfoContainer>
+        <SubInfo tokenId={tokenId} D_day={D_day} targetKlay={targetKlay} />
+      </InfoContainer>
 
       <ColoredLine />
       
       <InfoContainer>
-        <MakersDesc tokenId={tokenId} description={description} title={title} />
+        <MakersDesc tokenId={tokenId} description={description} title={title} D_day={D_day} />
       </InfoContainer>
 
       <Order>
