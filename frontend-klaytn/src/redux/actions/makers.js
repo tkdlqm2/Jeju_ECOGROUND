@@ -5,7 +5,6 @@ import { feedParser } from "../../utils/misc";
 import { SET_FEED } from "./actionTypes";
 // import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
-// import cav from "../../klaytn/caver";
 
 // Action creators
 
@@ -74,7 +73,10 @@ export const getFeed = () => dispatch => {
     .getTotalMakersCount()
     .call()
     .then(totalMakersCount => {
-      if (!totalMakersCount) return [];
+      if (!totalMakersCount) {
+        console.log("없음");
+        return [];
+      }
       const feed = [];
       for (let i = totalMakersCount; i > 0; i--) {
         const product = MakersContract.methods.getMakers(i).call();
@@ -85,13 +87,41 @@ export const getFeed = () => dispatch => {
     .then(feed => dispatch(setFeed(feedParser(feed))));
 };
 
+
+// --------------------------------------------------
+//  MyMakers 확인
+// --------------------------------------------------
+export const _showMyMakers = (addressId) => dispatch => {
+
+  console.log(MakersContract.methods.showMyMakers(addressId).call());
+  console.log("------------");
+  console.log(addressId)
+  MakersContract.methods
+    .showMyMakers(addressId).call()
+    .then(totalMyMakers => {
+      if (!totalMyMakers.length) {
+        console.log("없음");
+        return [];
+      }
+      const feed = [];
+      for (let i = totalMyMakers.length; i > 0; i--) {
+        const product = MakersContract.methods.getMakers(totalMyMakers[i].tokenId).call();
+        feed.push(product);
+      }
+      return Promise.all(feed);
+    })
+    .then(feed => dispatch(setFeed(feedParser(Makers))))
+}
+
+
+
+
 // ----------------------------------------------------------------
 //              Makers 삭제
 // ----------------------------------------------------------------
 
-export const removeMakers = tokenId => dispatch => {
-  MakersContract.methods
-    .removeMakers(tokenId)
+export const removeMakers = (tokenId) => (dispatch) => {
+  MakersContract.methods.removeMakers(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000"
@@ -121,7 +151,9 @@ export const removeMakers = tokenId => dispatch => {
         message: error.toString()
       });
     });
-};
+}
+
+
 
 // ----------------------------------------------------------------
 //              Makers 업로드
@@ -132,9 +164,17 @@ export const uploadItem = (
   title,
   description,
   targetKlay,
-  D_day,
-  price
+  D_day
 ) => dispatch => {
+  console.log(
+    `
+    file: ${file} 
+    title: ${title}
+    description: ${description}
+    targetKlay: ${targetKlay}
+    D_day: ${D_day}
+    `
+  );
   const reader = new window.FileReader();
   reader.readAsArrayBuffer(file);
   reader.onloadend = () => {
@@ -146,28 +186,15 @@ export const uploadItem = (
      */
     const hexString = "0x" + buffer.toString("hex");
     console.log("hexString");
-    console.log(
-      `
-      file: ${file} 
-      title: ${title}
-      description: ${description}
-      targetKlay: ${targetKlay}
-      D_day: ${D_day}
-      price: ${price}
-      address: ${getWallet().address}
-      `
-    );
+
     MakersContract.methods
-      .uploadMakers(hexString, title, description, targetKlay, D_day, price)
+      .uploadMakers(hexString, title, description, targetKlay, D_day)
       .send({
         from: getWallet().address,
         gas: "200000000"
       })
       .once("transactionHash", txHash => {
-        console.log(`
-        트랜잭션 성공 
-        txHash: ${txHash}
-        `);
+        console.log("txHash:", txHash);
         ui.showToast({
           status: "pending",
           message: `Sending a transaction... (uploadMakers)`,

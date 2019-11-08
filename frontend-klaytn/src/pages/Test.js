@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import MakersHeader from "components/MakersHeader";
 import { getWallet } from "utils/crypto";
+import { connect } from "react-redux";
 import ui from "utils/ui";
 import MakersContract from "klaytn/MakersContract";
-import cav from "../klaytn/caver";
+import cav from "klaytn/caver";
+import * as makersActions from "redux/actions/makers"
 
 const Container = styled.main`
   width: 100%;
@@ -23,14 +25,20 @@ const Button = styled.button`
   width: 100px;
 `;
 
+// --------------------------------------------------
+//  Makers 공동구매 
+// --------------------------------------------------
+
 const _investMakers = tokenId => {
   console.log("invest", tokenId);
-  MakersContract.methods
-    .investMakers(tokenId)
+  // var price = MakersContract.methods.getPriceMakers(tokenId);
+  var price = 3;
+  console.log(price.price);
+  MakersContract.methods.investMakers(tokenId)
     .send({
       from: getWallet().address,
       gas: "200000000",
-      value: cav.utils.toPeb(MakersContract._MakersPrice[tokenId], "KLAY")
+      value: cav.utils.toPeb(price.toString(), "KLAY")
     })
     .once("transactionHash", txHash => {
       console.log("txHash:", txHash);
@@ -56,7 +64,11 @@ const _investMakers = tokenId => {
         message: error.toString()
       });
     });
-};
+}
+
+// --------------------------------------------------
+//  Makers 임의 종료
+// --------------------------------------------------
 
 const _removeMakers = tokenId => {
   console.log("remove", tokenId);
@@ -92,7 +104,8 @@ const _removeMakers = tokenId => {
     });
 };
 
-const TokenId = 123;
+const TokenId = 1;
+const addressId = 12312312;
 
 const invest = e => {
   const invest_value = e.target.value;
@@ -106,7 +119,11 @@ const remove = e => {
   _removeMakers(remove_value);
 };
 
-export default () => {
+
+const test = (props) => {
+  const check = e => {
+    props._showMyMakers(props.userAddress);
+  }
   return (
     <Container>
       <MakersHeader />
@@ -116,7 +133,23 @@ export default () => {
       <Button onClick={invest} value={TokenId}>
         investMakers
       </Button>
-      <Button>test4</Button>
+      <Button onClick={check} value={props.userAddress}>
+        checkMakers
+      </Button>
     </Container>
   );
 };
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  userAddress: state.auth.address
+});
+
+const mapDispatchToProps = dispatch => ({
+  _showMyMakers: (addressId) => dispatch(makersActions._showMyMakers(addressId))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(test);
