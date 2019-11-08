@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 import jwt  from 'jsonwebtoken';
-const models = require('../../../db/models')
+const models = require('../../../db/models');
 
 const { User } = models.default;
 /*
@@ -13,8 +13,6 @@ const { User } = models.default;
 */
 exports.register = (req, res) => {
     const { email, username, password} = req.body;
-    console.log(username);
-    console.log(pw);
     let newUser = null
 
     // create a new user if does not exist

@@ -14,14 +14,17 @@ const tableConfig = (sequelize) => {
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    email: DataTypes.STRING,
-    name: DataTypes.STRING,
+    email   : DataTypes.STRING,
+    name    : DataTypes.STRING,
     password: DataTypes.STRING
 
   }, tableConfig(sequelize));
   
-  User.associate = function(models) {
-    // associations can be defined here
+  User.associate = models => {
+    this.belongsToMany(models.Maker, {
+      through: 'UserToMaker',
+      foreignKey: 'userId'
+    })
   };
 
   // create new User document
