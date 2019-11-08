@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 650px;
-  height: 700px;
+  height: 100%;
   position: fixed;
-  top: 100px;
+  top: 60px;
   z-index: 200;
   background-color: white;
 `;

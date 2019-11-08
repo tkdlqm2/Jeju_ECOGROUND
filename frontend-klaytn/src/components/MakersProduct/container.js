@@ -46,7 +46,10 @@ export default withRouter(({ match: { params: { tokenId } }, ...props }) => {
   }, [feed, getFeed]);
 
   const { ...feedData } = feed;
-  const product = feedData[tokenId];
+
+  const objlength = Object.keys(feedData).length;
+
+  const product = feedData[objlength - tokenId];
 
   return (
     <MakersProduct

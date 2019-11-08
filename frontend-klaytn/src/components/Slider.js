@@ -13,25 +13,6 @@ const Margin = styled.div`
   height: 20px;
 `;
 
-const marks = [
-  {
-    value: 0,
-    label: "0"
-  },
-  {
-    value: 20,
-    label: "20Klay"
-  },
-  {
-    value: 100,
-    label: "100"
-  }
-];
-
-function valuetext(value) {
-  return `${value}`;
-}
-
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#17202E" },
@@ -56,21 +37,38 @@ const theme = createMuiTheme({
   }
 });
 
-export default () => {
+export default ({ targetKlay, price, status }) => {
+  const marks = [
+    {
+      value: 0,
+      label: "0"
+    },
+    {
+      value: 30,
+      label: "최소 주문 금액"
+    },
+    {
+      value: 100,
+      label: targetKlay
+    }
+  ];
+
+  const valuetext = value => {
+    return `${value}`;
+  };
+
+  const currentValue = Math.floor((1 / targetKlay) * 100);
+
   return (
     <ThemeProvider theme={theme}>
       <SliderContainer>
         <Margin />
-        <Typography id="discrete-slider-always" gutterBottom>
-          목표금액 2000Klay
-        </Typography>
         <Slider
-          defaultValue={80}
+          defaultValue={currentValue}
           getAriaValueText={valuetext}
-          aria-labelledby="discrete-slider-always"
-          step={10}
+          step={targetKlay}
           marks={marks}
-          valueLabelDisplay="on"
+          valueLabelDisplay="off"
           textColor="secondary"
         />
       </SliderContainer>

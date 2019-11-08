@@ -11,6 +11,10 @@ const Container = styled.div`
 `;
 
 const FeedProduct = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   position: relative;
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
@@ -21,6 +25,10 @@ const FeedProduct = styled.div`
 `;
 
 const ImageContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   img {
     width: 100%;
@@ -28,6 +36,7 @@ const ImageContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
+  width: ${props => props.theme.maxCardWidth};
   position: relative;
   padding: 24px 24px 40px 10px;
 `;
@@ -82,15 +91,17 @@ const MakersFeed = props => {
                       tokenId={tokenId}
                     />
                   </InfoContainer>
-                  <Slider />
-
-                  {timestamp}
+                  <Slider
+                    targetKlay={targetKlay}
+                    price={price}
+                    status={status}
+                  />
                 </FeedProduct>
               );
             }
           )
         ) : (
-          <FeedEmpty>No Product :D</FeedEmpty>
+          <FeedEmpty>Loading...</FeedEmpty>
         )}
       </FeedContainer>
     </Container>
