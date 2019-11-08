@@ -14,14 +14,13 @@ const Container = styled.div`
 `;
 
 const LogoImage = styled.img.attrs({
-  src: "https://1.bp.blogspot.com/-UOYwCasJQ_I/XcTjRfQ5sTI/AAAAAAAAADM/HJKcSboS9isZTMu1b1FwuDRIV_jJNwpcACLcBGAsYHQ/s320/ECO%2BGROUND%2BLOGO.png"
+  src: "https://1.bp.blogspot.com/-Y4N0BKHt0x0/XcURWNtr-XI/AAAAAAAAADY/EIrCmxnBMB4y9u_rVOc6bjq8_TJgfXgdACLcBGAsYHQ/s1600/Long%2BLogo.png"
 })`
-width: 100px;
-height: 114px;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 30px;
-
+  width: 304px;
+  height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
 `
 
 
