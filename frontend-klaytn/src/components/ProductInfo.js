@@ -18,10 +18,11 @@ const Title = styled.h2`
 `;
 
 const Description = styled.p`
-  width: 90%;
+  width: 96%;
   font-size: 16px;
   margin-bottom: 18px;
-  font-weight: 400;
+  font-weight: 100;
+  line-height: 160%;
 `;
 
 const DDay = styled.span`

@@ -66,9 +66,9 @@ export default function CenteredTabs() {
           centered
         >
           <StyledTab label="홈" />
-          <StyledTab label="아티스트" />
-          <StyledTab label="신규" />
-          <StyledTab label="오픈예정" />
+          <StyledTab label="인기상품" />
+          <StyledTab label="마감임박" />
+          <StyledTab label="종료상품" />
         </StyledTabs>
       </Root>
     </ThemeProvider>

@@ -25,6 +25,11 @@ const ImageContainer = styled.div`
   max-width: ${props => props.theme.maxCardWidth};
 `;
 
+const InfoContainer = styled.div`
+  position: relative;
+  padding: 24px 10px 40px 10px;
+`;
+
 const Image = styled.div`
   width: 100%;
   height: 500px;
@@ -127,14 +132,16 @@ const MakersProduct = ({
           </SlideButton>
         </> */}
       </ImageContainer>
+      
       <MakersDesc tokenId={tokenId} description={description} title={title} />
+
       <Order>
         <LikeButton>
           <HeartFull />
           <LikeText>좋아요</LikeText>
         </LikeButton>
         <OrderButton>
-          <OrderText>주문하기</OrderText>
+          <OrderText>신청하기</OrderText>
         </OrderButton>
       </Order>
     </Container>

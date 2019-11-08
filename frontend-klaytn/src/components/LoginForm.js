@@ -13,6 +13,18 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const LogoImage = styled.img.attrs({
+  src: "https://1.bp.blogspot.com/-UOYwCasJQ_I/XcTjRfQ5sTI/AAAAAAAAADM/HJKcSboS9isZTMu1b1FwuDRIV_jJNwpcACLcBGAsYHQ/s320/ECO%2BGROUND%2BLOGO.png"
+})`
+width: 100px;
+height: 114px;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 30px;
+
+`
+
+
 const LoginInput = styled(Input)`
   margin-bottom: 10px;
 `;
@@ -55,6 +67,7 @@ const LoginForm = ({ login }) => {
 
   return (
     <Container>
+      <LogoImage />   
       <LoginInput
         type="text"
         name="username"
