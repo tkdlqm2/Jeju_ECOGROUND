@@ -25,26 +25,6 @@ const Description = styled.p`
   line-height: 160%;
 `;
 
-const DDay = styled.span`
-  font-size: 14px;
-  color: ${props => props.theme.lightGreen};
-  margin-bottom: 18px;
-`;
-
-const LikeButton = styled(Button)`
-  background-color: ${props => props.theme.white};
-  color: ${props => props.theme.black};
-  width: 100px;
-  height: 40px;
-  border: ${props => props.theme.boxBorder};
-`;
-
-const HeartIcon = styled(HeartEmpty)`
-  margin-right: 7px;
-  width: 15px;
-  height: 15px;
-`;
-
 const ProductInfo = ({ title, description, D_day, tokenId }) => (
   <Container>
     <Link to={`/makers/${tokenId}`}>

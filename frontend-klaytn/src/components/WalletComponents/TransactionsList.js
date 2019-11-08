@@ -1,10 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
+const Container = styled.div`
+  background-color: ${props => props.theme.brownGrey};
+  width: ${props => props.theme.maxCardWidth};
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export default () => {
   return (
-    <div>
-      <div>transactions list</div>
-    </div>
+    <Container>
+      <div>transaction list</div>
+    </Container>
   );
 };
