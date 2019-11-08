@@ -3,14 +3,18 @@ import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const SliderContainer = styled.div`
-  width: 85%;
-  margin-bottom: 20px;
+  width: 90%;
+  padding: 0;
+  height: 120px;
+  /* background-color: ${props => props.theme.lightGrey}; */
 `;
 
 const Margin = styled.div`
-  height: 20px;
+  height: 30px;
 `;
 
 const theme = createMuiTheme({
@@ -37,7 +41,37 @@ const theme = createMuiTheme({
   }
 });
 
+const StyledSlider = withStyles({
+  root: {
+    color: "#17202E",
+    height: 8
+  },
+  thumb: {
+    height: 20,
+    width: 20
+  },
+  active: {},
+  valueLabel: {
+    left: "calc(-50% + 4px)"
+  },
+  track: {
+    height: 8,
+    borderRadius: 4
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4
+  }
+})(Slider);
+
+const useStyles = makeStyles({
+  mark: {
+    color: "transparent"
+  }
+});
+
 export default ({ targetKlay, price, status }) => {
+  const classes = useStyles();
   const marks = [
     {
       value: 0,
@@ -59,14 +93,16 @@ export default ({ targetKlay, price, status }) => {
     <ThemeProvider theme={theme}>
       <SliderContainer>
         <Margin />
-        Klay 달성률
-        <Slider
+        <StyledSlider
           defaultValue={currentValue}
           getAriaValueText={valuetext}
-          step={targetKlay}
+          step={price}
           marks={marks}
-          valueLabelDisplay="off"
+          valueLabelDisplay="auto"
           textColor="secondary"
+          classes={{
+            mark: classes.mark
+          }}
         />
       </SliderContainer>
     </ThemeProvider>

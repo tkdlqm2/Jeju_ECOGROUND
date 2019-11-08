@@ -81,7 +81,7 @@ export default ({ balance }) => {
       <KlayBalance>
         <Span>My Total Balance</Span>
         <Span>
-          <GreenText>{balanceFloor} </GreenText> Klay
+          <GreenText>{balanceFloor} </GreenText> KLAY
         </Span>
       </KlayBalance>
       <EcoData>
