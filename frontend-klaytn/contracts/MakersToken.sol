@@ -115,16 +115,9 @@ contract MakersToken is ERC721Full {
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
-    function returnklay(uint256 _tokenId) public payable returns (bool) {
-        require(_MakersList[_tokenId].status == 1,"This token was already finish about returing klay");
-        _MakersList[_tokenId].status = 0;
-        address[] memory investors = _MakersList[_tokenId].buyer;
-        uint256 len = _MakersList[_tokenId].count;
-        for (uint256 i=0; i<len; i++){
-            address payable payableTokenSeller = address(uint160(investors[i]));
-            payableTokenSeller.transfer(msg.value);
-        }
-        return true;
+    function returnklay(address addressID) public payable{
+        address payable payableTokenSeller = address(uint160(addressID));
+        payableTokenSeller.transfer(msg.value);
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -229,4 +222,18 @@ contract MakersToken is ERC721Full {
     function showMakersPrice(uint256 tokenId) public view returns (int) {
         return _MakersList[tokenId].price;
     }
+
+    // ------------------------------------------------------------------------
+    // Makers state 불러오기
+    // ------------------------------------------------------------------------
+
+    function showMakersState(uint256 tokenId) public view returns(bool) {
+        uint256 result = _MakersList[tokenId].status;
+        if (result == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

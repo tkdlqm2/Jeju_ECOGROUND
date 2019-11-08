@@ -41,6 +41,7 @@ const _showTargetKlay = tokenId => {
     })
 }
 
+
 // --------------------------------------------------
 //  MyMakers 확인
 // --------------------------------------------------
@@ -79,6 +80,65 @@ const _checkDonate = tokenId => {
       console.log("-----------------------------")
     });
 }
+
+// --------------------------------------------------
+//  Makers 임의 종료
+// --------------------------------------------------
+
+const _removeMakers = tokenId => {
+  console.log("refund 함수 호출");
+
+  MakersContract.methods.showMakersPrice(tokenId).call()
+    .then(price => {
+      if (!price) {
+        return 0;
+      }
+      // -------------------
+      console.log(price);
+      MakersContract.methods.showInvestor(tokenId).call()
+        .then(buyer => {
+          if (!buyer) {
+            return 0;
+          }
+          MakersContract.methods.removeMakers(tokenId);
+          console.log("------------------");
+          console.log(buyer[0]);
+          console.log(buyer[1]);
+          console.log(buyer[2]);
+          console.log("------------------");
+          for (let i = 0; i < buyer.length; i++) {
+            MakersContract.methods.returnklay(buyer[i])
+              .send({
+                from: getWallet().address,
+                gas: "200000000",
+                value: cav.utils.toPeb(price.toString(), "KLAY")
+              })
+              .once("transactionHash", txHash => {
+                console.log("txHash:", txHash);
+                ui.showToast({
+                  status: "pending",
+                  message: `Sending a transaction... (uploadPhoto)`,
+                  txHash
+                });
+              })
+              .once("receipt", receipt => {
+                ui.showToast({
+                  status: receipt.status ? "success" : "fail",
+                  message: `Received receipt! It means your transaction is
+                   in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+                  link: receipt.transactionHash
+                });
+              })
+              .once("error", error => {
+                ui.showToast({
+                  status: "error",
+                  message: error.toString()
+                });
+              });
+          }
+        });
+    });
+};
 
 // --------------------------------------------------
 //  Makers 공동구매 
@@ -126,45 +186,7 @@ const _investMakers = tokenId => {
 
 }
 
-// --------------------------------------------------
-//  Makers 임의 종료
-// --------------------------------------------------
-
-const _removeMakers = tokenId => {
-  console.log("remove", tokenId);
-  MakersContract.methods
-    .removeMakers(tokenId)
-    .send({
-      from: getWallet().address,
-      gas: "200000000"
-    })
-    .once("transactionHash", txHash => {
-      console.log("txHash:", txHash);
-      ui.showToast({
-        status: "pending",
-        message: `Sending a transaction... (uploadPhoto)`,
-        txHash
-      });
-    })
-    .once("receipt", receipt => {
-      ui.showToast({
-        status: receipt.status ? "success" : "fail",
-        message: `Received receipt! It means your transaction is
-          in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-        link: receipt.transactionHash
-      });
-      const tokenId = receipt.events.MakersUploaded.returnValues[0];
-      console.log("tokenId: ", tokenId);
-    })
-    .once("error", error => {
-      ui.showToast({
-        status: "error",
-        message: error.toString()
-      });
-    });
-};
-
-const TokenId = 1;
+const TokenId = 5;
 
 const invest = e => {
   const invest_value = e.target.value;
@@ -218,6 +240,7 @@ const test = (props) => {
       <Button onClick={showTargetKlay} value={TokenId}>
         showTargetKlay
       </Button>
+
     </Container>
   );
 };
