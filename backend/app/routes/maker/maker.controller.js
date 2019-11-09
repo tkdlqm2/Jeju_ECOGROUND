@@ -1,13 +1,13 @@
 require('dotenv').config();
 const models = require('../../../db/models');
-const { Maker, MakerImg } = models.default;
+const { Maker, MakerImage } = models.default;
 
 /**
  * 상품 maker 등록 로직
  *
  * @author Dong-Min Seol
  * @since  2019.11.08
- * @url    POST /maker/register
+ * @url    POST /api/maker/register
  */
 exports.register = (req, res) => {
     const { _id } = req.decoded;
@@ -28,13 +28,14 @@ exports.register = (req, res) => {
     };
 
     // [2] 상품 이미지 등록
-    const createMakerImg = Maker => {
-
-        let i = 0;
-        imgArr.forEach( imgURL => {
-            MakerImg.create({
-                markerId : Maker._id,
-
+    const createMakerImg = maker => {
+        console.log(maker.id);
+        let i = 1;
+        imgArr.forEach( imgArrUrl => {
+            MakerImage.create({
+                makerId : maker.id,
+                order    : i++,
+                imgURL   : imgArrUrl
             })
         });
         return i;
@@ -54,6 +55,11 @@ exports.register = (req, res) => {
             message: error.message
         })
     };
+
+    Maker.create(param)
+         .then(createMakerImg)
+         .then(response)
+         .catch(onError)
 };
 
 /**

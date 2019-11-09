@@ -10,16 +10,20 @@ AWS.config.update({
 });
 
 const s3 = new AWS.S3();
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: process.env.AWS_S3_BUCKET_NAME,
-        key: function (req, file, cb) {
-            let extension = path.extname(file.originalname);
-            cb(null, Date.now().toString() + extension)
-        },
-        acl: 'public-read-write',
-    })
-});
+const upload = (pathName) => {
+    return multer({
+        storage: multerS3({
+            s3: s3,
+            bucket: process.env.AWS_S3_BUCKET_NAME,
+            metadata: function (req, file, cb) {
+                cb(null, {fieldName: file.fieldname});
+            },
+            key: function (req, file, cb) {
+                let extension = path.extname(file.originalname);
+                cb(null, `${pathName}/${Date.now().toString()}.${extension}`)
+            }
+        })
+    });
+};
 
 export default upload;

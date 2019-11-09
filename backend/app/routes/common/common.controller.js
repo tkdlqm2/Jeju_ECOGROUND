@@ -8,5 +8,5 @@ require('dotenv').config();
  * @url    POST /api/common/tempImgSave
  */
 exports.tempImgSave = (req, res) => {
-    res.json(req.file);
+    res.json(req.files.map((item, idx) => item = { location : item.location, idx }));
 };
