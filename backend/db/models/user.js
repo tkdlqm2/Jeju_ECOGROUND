@@ -32,8 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     const user = new this({
         email, name, password
     });
-
-    // return the Promise
     return user.save()
   };
 
@@ -44,15 +42,14 @@ module.exports = (sequelize, DataTypes) => {
     })
   };
 
-
   // verify the password of the User documment
   User.verify = function(userObj, password) {
     return userObj.password === password
   };
 
   User.assignAdmin = function(user) {
-    this.admin = true;
-    return this.save()
+    user.admin = true;
+    return user.save()
   };
   
   return User;
