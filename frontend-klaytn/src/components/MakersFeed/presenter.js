@@ -94,7 +94,7 @@ const MakersFeed = props => {
                     <ImageContainer>
                       <img
                         src={
-                          "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+                          "https://1.bp.blogspot.com/-JqmRRx9XsI8/XcEykZVhXXI/AAAAAAAAAB4/8J4N1FyrQiQENpEpsszcCyrd2LKgGvN-ACLcBGAsYHQ/s1600/Wooden%2BWatches.jpg"
                         }
                         alt={title}
                       />

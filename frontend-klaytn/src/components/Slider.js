@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -89,22 +89,26 @@ export default ({ targetKlay, price, status, donate }) => {
   };
 
   const currentValue = Math.floor((donate / targetKlay) * 100).toString();
+  console.log("currentValue", currentValue);
+  console.log("slider", donate, targetKlay);
 
   return (
     <ThemeProvider theme={theme}>
       <SliderContainer>
         <Margin />
-        <StyledSlider
-          defaultValue={currentValue}
-          getAriaValueText={valuetext}
-          step={price}
-          marks={marks}
-          valueLabelDisplay="auto"
-          textColor="secondary"
-          classes={{
-            mark: classes.mark
-          }}
-        />
+        {currentValue && (
+          <StyledSlider
+            defaultValue={currentValue}
+            getAriaValueText={valuetext}
+            step={price}
+            marks={marks}
+            valueLabelDisplay="auto"
+            textColor="secondary"
+            classes={{
+              mark: classes.mark
+            }}
+          />
+        )}
       </SliderContainer>
     </ThemeProvider>
   );
