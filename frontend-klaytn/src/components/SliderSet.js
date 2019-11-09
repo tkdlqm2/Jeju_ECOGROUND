@@ -26,11 +26,9 @@ export default ({ tokenId, price, status, D_day }) => {
   const [targetKlay, setTargetKlay] = useState("");
   const [donate, setDonate] = useState(0);
 
-  const date = new Date();
-  const TodayDate =
-    date.getFullYear() +
-    ("0" + (date.getMonth() + 1)).slice(-2) +
-    ("0" + date.getDate()).slice(-2);
+  const dayGap = new Date(D_day) - new Date();
+  const daySeconds = 24 * 60 * 60 * 1000;
+  const dateGap = parseInt(dayGap/daySeconds) + 1;
 
   const _showTargetKlay = tokenId => {
     MakersContract.methods
@@ -71,7 +69,7 @@ export default ({ tokenId, price, status, D_day }) => {
           <GreyText>목표금액 {targetKlay}KLAY</GreyText>
         </First>
         <Second>
-          <BoldText>{D_day - TodayDate} 일 남음</BoldText>
+          <BoldText>{dateGap} 일 남음</BoldText>
           <GreyText>{D_day} 마감</GreyText>
         </Second>
       </SliderInfo>

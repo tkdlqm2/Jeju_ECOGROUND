@@ -32,7 +32,7 @@ const UploadProduct = ({
         <Input placeholder={"Description"} {...description} />
         <Input placeholder={"price"} {...price} />
         <Input placeholder={"targetKlay"} {...targetKlay} />
-        <Input placeholder={"D_day (ex.YYYYMMDD)"} {...D_day} />
+        <Input placeholder={"D_day (ex.YYYY-MM-DD)"} {...D_day} />
         <InputFile
           className="UploadPhoto__file"
           name="file"
