@@ -31,6 +31,9 @@ const Button = styled.button`
 `;
 
 
+
+
+
 // TODO: Mysql 호출을 통해서 txAddress 값을 불러와야함.
 // --------------------------------------------------
 //  마이페이지 - 구매목록 호출 
@@ -59,6 +62,84 @@ const _showTracking = txArray => {
 }
 
 
+
+
+
+// --------------------------------------------------
+//  친환경 제품 구매 
+// --------------------------------------------------
+
+const _purchaseGoods = (price) => {
+  console.log("_purchaseGoods 호출");
+  console.log("price : ", price);
+
+  // TODO: param1 값을 상품 주인의 값에 하드 코딩.
+
+  getCount(getWallet().address).then(cnt => {
+    MakersContract.methods.purchaseToken("0xc4b83caa6a8c07168cec216bae6813f1a165ee2f", price)
+      .send({
+        from: getWallet().address,
+        gas: "200000000",
+        value: cav.utils.toPeb(price.toString(), "KLAY"),
+        cnt: cnt + 1
+      })
+      .once("transactionHash", txHash => {
+        console.log("txHash:", txHash);
+        ui.showToast({
+          status: "pending",
+          message: `Sending a transaction... (uploadPhoto)`,
+          txHash
+        });
+      })
+      .once("receipt", receipt => {
+        console.log("영수증 완료");
+        ui.showToast({
+          status: receipt.status ? "success" : "fail",
+          message: `Received receipt! It means your transaction is in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+          link: receipt.transactionHash
+        });
+      })
+      .once("error", error => {
+        ui.showToast({
+          status: "error",
+          message: error.toString()
+        });
+      });
+    console.log("---------------------------");
+    console.log("rewardToken 호출");
+    console.log("---------------------------");
+
+    EcoTokenContract.methods.transfer(getWallet().address, 5)
+      .send({
+        from: getWallet().address,
+        gas: "200000000",
+        nonce: cnt + 1
+      })
+      .once("receipt", receipt => {
+        console.log("영수증 완료2");
+        ui.showToast({
+          status: receipt.status ? "success" : "fail",
+          message: `Received receipt! It means your transaction is in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+          link: receipt.transactionHash
+        });
+      })
+      .once("error", error => {
+        console.log(error);
+        ui.showToast({
+          status: "error",
+          message: error.toString()
+        });
+      });
+
+  });
+  // TODO: 구매 완료 후  구매완료 alert 창을 띄우고 나서 그 창을 확인 했을 때 지급 하는 식으로 해야할듯.
+
+}
+
+
+
+
+
 // --------------------------------------------------
 // Makers 목표 금액 확인
 // --------------------------------------------------
@@ -79,6 +160,10 @@ const _showTargetKlay = tokenId => {
     });
 };
 
+
+
+
+
 // --------------------------------------------------
 // 메이커스 강제 종료
 // --------------------------------------------------
@@ -95,7 +180,7 @@ const _prohibitMakers = tokenId => {
         MakersContract.methods.forcedClosure(tokenId)
           .send({
             from: getWallet().address,
-            gas: "200000000",
+            gas: "200000000"
           })
           .once("transactionHash", txHash => {
             console.log("txHash:", txHash);
@@ -122,6 +207,11 @@ const _prohibitMakers = tokenId => {
       }
     })
 }
+
+
+
+
+
 // --------------------------------------------------
 //  MyMakers 확인 (master)
 // --------------------------------------------------
@@ -144,6 +234,10 @@ const _checkMyMakers = addressId => {
     });
 }
 
+
+
+
+
 // --------------------------------------------------
 // MyMakers 확인 (운영진)
 // --------------------------------------------------
@@ -165,6 +259,10 @@ const _check_master = addressId => {
     });
 }
 
+
+
+
+
 // --------------------------------------------------
 // Makers 상태 확인함수.
 // --------------------------------------------------
@@ -177,6 +275,10 @@ const _showState = tokenId => {
       console.log("state: ", state);
     });
 };
+
+
+
+
 
 // --------------------------------------------------
 //  Makers 현재 모금액 확인
@@ -198,10 +300,12 @@ const _checkDonate = tokenId => {
     });
 };
 
+
+
+
 // --------------------------------------------------
 //  Makers 임의 종료 (투자한 Klay 환불 처리.)
 // --------------------------------------------------
-
 
 async function getCount(address) {
   const cnt = await cav.klay.getTransactionCount(address)
@@ -291,6 +395,10 @@ const _removeMakers = tokenId => {
     });
 }
 
+
+
+
+
 // --------------------------------------------------
 //  Makers 공동구매 
 // --------------------------------------------------
@@ -312,13 +420,12 @@ const _investMakers = tokenId => {
               console.log("이미 참여한 Makers 입니다.");
               return 0;
             } else {
+
               MakersContract.methods.showMakersPrice(tokenId).call()
                 .then(price => {
                   if (!price) {
                     return 0;
                   }
-
-                  console.log()
 
                   getCount(getWallet().address).then(cnt => {
 
@@ -327,7 +434,7 @@ const _investMakers = tokenId => {
                         from: getWallet().address,
                         gas: "200000000",
                         value: cav.utils.toPeb(price.toString(), "KLAY"),
-                        nonce: cnt + 10
+                        nonce: cnt + 1
                       })
                       .once("transactionHash", txHash => {
                         console.log("txHash:", txHash);
@@ -346,8 +453,7 @@ const _investMakers = tokenId => {
                       .once("receipt", receipt => {
                         ui.showToast({
                           status: receipt.status ? "success" : "fail",
-                          message: `Received receipt! It means your transaction is
-                  in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+                          message: `Received receipt! It means your transaction is in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
                           link: receipt.transactionHash
                         });
                       })
@@ -359,17 +465,41 @@ const _investMakers = tokenId => {
                           message: error.toString()
                         });
                       });
-
-
-
                   })
                 });
+
+              console.log("------------------------------------");
+              console.log("reward Eco power");
+              console.log("------------------------------------");
+
+              EcoTokenContract.methods.transfer(getWallet().address, 3)
+                .send({
+                  from: getWallet().address,
+                  gas: "200000000",
+                })
+                .once("receipt", receipt => {
+                  console.log("Eco power 영수증");
+                  ui.showToast({
+                    status: receipt.status ? "success" : "fail",
+                    message: `Received receipt! It means your transaction isin klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+                    link: receipt.transactionHash
+                  });
+                })
+                .once("error", error => {
+                  console.log(error);
+                  ui.showToast({
+                    status: "error",
+                    message: error.toString()
+                  });
+                })
+
             }
           })
       }
     });
 };
 
+const price = 1;
 const TokenId = 1;
 const txAddress = "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
 const txArray = [
@@ -497,6 +627,14 @@ const test = (props) => {
     console.log("reward_value : ", reward_value);
     _rewardToken(reward_value)
   };
+
+  const purchaseGoods = e => {
+    const purchaseGoods_value = e.target.value;
+    console.log("purchaseGoods : ", purchaseGoods_value);
+    _purchaseGoods(purchaseGoods_value);
+  };
+
+
   // TODO: 529번 라인에서 txArray 에 DB 저장된 값이 들어가야함.
 
   return (
@@ -534,6 +672,9 @@ const test = (props) => {
       </Button>
       <Button onClick={rewardToken} value={props.userAddress}>
         ERC20_rewardToken
+      </Button>
+      <Button onClick={purchaseGoods} value={price}>
+        Buy_Goods
       </Button>
 
     </Container>
