@@ -181,7 +181,7 @@ export const uploadItem = (
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);
         ui.showToast({
-          status: "pending",
+          status: "pending", 
           message: `Sending a transaction... (uploadMakers)`,
           txHash
         });
