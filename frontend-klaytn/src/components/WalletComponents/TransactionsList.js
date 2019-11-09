@@ -86,6 +86,12 @@ const HashBox = styled.div`
   color: #cccccc;
 `;
 
+const Klay = styled.span`
+  font-size: 18px;
+  color: black;
+  margin-left: 5px;
+`;
+
 const transactionsList = [
   {
     TXType: "Value Transfer",
@@ -195,7 +201,9 @@ export default () => {
                 </LeftBox>
                 <RightBox>
                   <BlockBox>#{tx.Block}</BlockBox>
-                  <ValueBox>{tx.Value} KLAY</ValueBox>
+                  <ValueBox>
+                    {tx.Value} <Klay>KLAY</Klay>
+                  </ValueBox>
                   <HashBox>{tx.txHash}</HashBox>
                 </RightBox>
               </Transaction>
