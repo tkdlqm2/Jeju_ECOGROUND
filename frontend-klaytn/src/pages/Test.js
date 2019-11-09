@@ -8,8 +8,11 @@ import MakersContract from "klaytn/MakersContract";
 import cav from "klaytn/caver";
 import * as makersActions from "redux/actions/makers";
 import EcoTokenContract from "klaytn/EcoTokenContract";
+import API from 'api/deal';
+//const PATH = API.test;
 
 
+const PATH = API.importer;
 const Container = styled.main`
   width: 100%;
   min-height: 100%;
@@ -33,19 +36,24 @@ const Button = styled.button`
 //  마이페이지 - 구매목록 호출 
 // --------------------------------------------------
 
-const _showTracking = txAddress => {
+const _showTracking = txArray => {
   console.log("_showTracking 호출");
+  console.log(txArray)
+  console.log("-----------------------")
+  console.log(txArray[0]);
 
-  cav.klay.getTransactionReceipt(txAddress).then(result => {
-    var resultList = new Array();
-    resultList[0] = result.type.toString();         // tx타입
-    resultList[1] = result.blockNumber.toString();  // 블록번호
-    resultList[2] = result.value.toString();        // value 값 (가격)
-    resultList[3] = txAddress.toString();           // tx주소값
+  for (let i = 0; i < txArray.length; i++) {
+    cav.klay.getTransactionReceipt(txArray[i].data).then(result => {
+      var resultList = new Array();
+      resultList[0] = result.type.toString();         // tx타입
+      resultList[1] = result.blockNumber.toString();  // 블록번호
+      resultList[2] = result.value.toString();        // value 값 (가격)
+      resultList[3] = txAddress.toString();           // tx주소값
 
-    console.log(resultList);
-    return resultList;
-  });
+      console.log(resultList);
+      return resultList;
+    });
+  }
 }
 
 
@@ -72,6 +80,7 @@ const _showTargetKlay = tokenId => {
 // --------------------------------------------------
 // 메이커스 강제 종료
 // --------------------------------------------------
+//
 
 const _prohibitMakers = tokenId => {
 
@@ -231,6 +240,16 @@ const _removeMakers = tokenId => {
 
                           // TODO : param1 : txHash
 
+                          API.registerGood(txHash);
+                          // const service = {
+                          //   registerGood: (txHash) => {
+                          //     return axios.post(`${PATH}/deal/register`, { txHash })
+                          //       .then(res => {
+                          //         return res.status == 200 ? true : false;
+                          //       })
+                          //   }
+                          // }
+
 
                           console.log("txHash:", txHash);
                           ui.showToast({
@@ -298,39 +317,48 @@ const _investMakers = tokenId => {
 
                   console.log()
 
-                  MakersContract.methods.investMakers(tokenId)
-                    .send({
-                      from: getWallet().address,
-                      gas: "200000000",
-                      value: cav.utils.toPeb(price.toString(), "KLAY")
-                    })
-                    .once("transactionHash", txHash => {
-                      console.log("txHash:", txHash);
+                  getCount(getWallet().address).then(cnt => {
 
-                      // TODO : param1 : txHash
+                    MakersContract.methods.investMakers(tokenId)
+                      .send({
+                        from: getWallet().address,
+                        gas: "200000000",
+                        value: cav.utils.toPeb(price.toString(), "KLAY"),
+                        nonce: cnt + 10
+                      })
+                      .once("transactionHash", txHash => {
+                        console.log("txHash:", txHash);
 
-                      ui.showToast({
-                        status: "pending",
-                        message: `Sending a transaction... (uploadPhoto)`,
-                        txHash
-                      });
-                    })
-                    .once("receipt", receipt => {
-                      ui.showToast({
-                        status: receipt.status ? "success" : "fail",
-                        message: `Received receipt! It means your transaction is
+                        // TODO : param1 : txHash
+                        // API.registerGood(txHash);
+
+
+                        ui.showToast({
+                          status: "pending",
+                          message: `Sending a transaction... (uploadPhoto)`,
+                          txHash
+                        });
+                      })
+                      .once("receipt", receipt => {
+                        ui.showToast({
+                          status: receipt.status ? "success" : "fail",
+                          message: `Received receipt! It means your transaction is
                   in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-                        link: receipt.transactionHash
+                          link: receipt.transactionHash
+                        });
+                      })
+                      .once("error", error => {
+                        console.log("_Invest Error");
+                        console.log(error);
+                        ui.showToast({
+                          status: "error",
+                          message: error.toString()
+                        });
                       });
-                    })
-                    .once("error", error => {
-                      console.log("_Invest Error");
-                      console.log(error);
-                      ui.showToast({
-                        status: "error",
-                        message: error.toString()
-                      });
-                    });
+
+
+
+                  })
                 });
             }
           })
@@ -338,8 +366,13 @@ const _investMakers = tokenId => {
     });
 };
 
-const TokenId = 3;
+const TokenId = 1;
 const txAddress = "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
+const txArray = [
+  { data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444" },
+  { data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444" },
+  { data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444" }
+];
 
 const invest = e => {
   const invest_value = e.target.value;
@@ -488,7 +521,7 @@ const test = (props) => {
       <Button onClick={prohibitMakers} value={TokenId}>
         prohibitMakers
       </Button>
-      <Button onClick={showTracking} value={txAddress}>
+      <Button onClick={showTracking} value={txArray}>
         showTracking
       </Button>
       <Button onClick={showMyToken} value={props.userAddress}>
