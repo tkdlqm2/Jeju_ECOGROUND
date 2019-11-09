@@ -54,7 +54,7 @@ const _showTracking = data => {
       resultList[0] = result.type.toString();         // tx타입
       resultList[1] = result.blockNumber.toString();  // 블록번호
       resultList[2] = result.value.toString();        // value 값 (가격)
-      resultList[3] = txAddress.toString();           // tx주소값
+      resultList[3] = data[i].Deals[i].hash;           // tx주소값
 
       console.log(resultList);
       return resultList;

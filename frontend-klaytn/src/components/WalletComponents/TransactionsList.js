@@ -1,5 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
+import cav from "klaytn/caver";
+import dealService from '../../api/deal';
 
 const Container = styled.div`
   /* background-color: ${props => props.theme.lightGrey}; */
@@ -112,6 +114,41 @@ const transactionsList = [
     txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd3",
   },
 ];
+// const real_result
+
+// const showTracking = e => {
+
+//   dealService.getDealList().then(result => {
+//     _showTracking(result);
+//   }).then(result2 => {
+//     real_result = result2;
+//   });
+// };
+
+// const _showTracking = data => {
+
+//   // [1] sesstion storag에 있는 JWT로 조회
+
+//   console.log("_showTracking 호출");
+//   console.log("data : ", data);
+//   console.log(typeof data);
+//   console.log("-----------------------")
+//   console.log(data[0]);
+//   console.log(data[0].Deals[0].id);
+//   console.log("data.length: ", data.length);
+//   for (let i = 0; i < data.length; i++) {
+//     cav.klay.getTransactionReceipt(data[i].Deals[i].hash).then(result => {
+//       var resultList = new Array();
+//       resultList[0] = result.type.toString();         // tx타입
+//       resultList[1] = result.blockNumber.toString();  // 블록번호
+//       resultList[2] = result.value.toString();        // value 값 (가격)
+//       resultList[3] = data[i].Deals[i].hash.toString();           // tx주소값
+
+//       console.log(resultList);
+//       return resultList;
+//     });
+//   }
+// }
 
 // const TXIcons = (TXType) => {
 //   switch (TXType){

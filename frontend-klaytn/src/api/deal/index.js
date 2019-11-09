@@ -3,9 +3,8 @@ import { axios, path } from '../config'
 
 const dealService = {
     registerDeal: (txHash) => {
-        const param = { txHash };
+        const param = { hash: txHash };
         const jwt = sessionStorage.getItem('jwt');
-        if (!jwt) return false;
 
         return axios.post(`${path}/deal/register`, param, {
             headers: { 'x-access-token': jwt }
