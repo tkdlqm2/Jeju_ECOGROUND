@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import * as authActions from "../redux/actions/auth";
 import useInput from "../hooks/useInput";
+import userApi  from '../api/user';
 
 const Container = styled.div`
   display: flex;
@@ -43,19 +44,20 @@ const LoginButton = styled(Button)`
 const LoginForm = ({ login }) => {
   const [warningMessage, setWarningMessage] = useState("");
 
-  const privateKey = useInput("");
-  const username = useInput("");
-  const password = useInput("");
+  const privateKey    = useInput("");
+  const emailInput    = useInput("");
+  const passwordInput = useInput("");
 
   const handleLogin = () => {
     const privateKeyValue = privateKey.value;
-    const usernameValue = username.value;
-    const passwordValue = password.value;
+    const email      = emailInput.value;
+    const password   = passwordInput.value;
 
     // TODO: log in
-
+    userApi.login({email, password});
+    
     // 클레이튼 로그인
-    if (usernameValue && passwordValue) {
+    if (email && password) {
       isValidPrivateKey(privateKeyValue)
         ? login(privateKeyValue)
         : setWarningMessage("* Invalid Private Key");
@@ -69,17 +71,17 @@ const LoginForm = ({ login }) => {
       <LogoImage />
       <LoginInput
         type="text"
-        name="username"
+        name="useremail"
         label="Log in"
         placeholder="id"
-        onChange={username.onChange}
+        onChange={emailInput.onChange}
         err={warningMessage}
       />
       <PwdInput
         type="password"
         name="password"
         placeholder="password"
-        onChange={password.onChange}
+        onChange={passwordInput.onChange}
         err={warningMessage}
       />
       <LoginInput

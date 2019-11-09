@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -16,19 +15,19 @@ const Description = styled.p`
   line-height: 160%;
 `;
 
-// const TodayDate = new Date().toLocaleDateString('se').replace(/\D/g, '')
+const TargetInfo = ({ D_day, tokenId }) => {
 
-const date = new Date();
-const TodayDate = (date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2) + ('0' + (date.getDate())).slice(-2));
-
-const TargetInfo = ({ description, D_day, tokenId }) => (
+  const dayGap = new Date(D_day) - new Date();
+  const daySeconds = 24 * 60 * 60 * 1000;
+  const dateGap = parseInt(dayGap/daySeconds) + 1;
+  
+  return(
   <Container>
-    <Link to={`/makers/${tokenId}`}>
-      <Description>{D_day - TodayDate}일 남음</Description>
+      <Description>{dateGap}일 남음</Description>
       <Description>{tokenId}% 달성</Description>
-      <Description>{tokenId}Klay 펀딩</Description>
-    </Link>
-  </Container>
-);
+      <Description>{tokenId}KLAY 펀딩</Description>
+  </Container>)
+
+}
 
 export default TargetInfo;

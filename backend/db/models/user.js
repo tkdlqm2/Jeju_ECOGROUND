@@ -14,14 +14,17 @@ const tableConfig = (sequelize) => {
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    email: DataTypes.STRING,
-    name: DataTypes.STRING,
+    email   : DataTypes.STRING,
+    name    : DataTypes.STRING,
     password: DataTypes.STRING
 
   }, tableConfig(sequelize));
   
-  User.associate = function(models) {
-    // associations can be defined here
+  User.associate = models => {
+    User.hasMany(models.Maker, {
+      sourceKey: 'id',
+      foreignKey: 'userId'
+    })
   };
 
   // create new User document
@@ -29,8 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     const user = new this({
         email, name, password
     });
-
-    // return the Promise
     return user.save()
   };
 
@@ -41,15 +42,14 @@ module.exports = (sequelize, DataTypes) => {
     })
   };
 
-
   // verify the password of the User documment
   User.verify = function(userObj, password) {
     return userObj.password === password
   };
 
-  User.assignAdmin = function() {
-    this.admin = true;
-    return this.save()
+  User.assignAdmin = function(user) {
+    user.admin = true;
+    return user.save()
   };
   
   return User;
