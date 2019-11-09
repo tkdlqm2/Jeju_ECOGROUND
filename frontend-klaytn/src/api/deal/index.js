@@ -8,7 +8,7 @@ const dealService = {
         if(!jwt) return false;
 
         return axios.post(`${path}/deal/register`, param, {
-                    header: {'x-access-token' : jwt}
+                    headers: {'x-access-token' : jwt}
                 }).then(res => {
                     return res.status === 200;
                 })
@@ -19,7 +19,7 @@ const dealService = {
         if(!jwt) return false;
 
         return axios.post(`${path}/deal/register`, {/*no param*/}, {
-            header: {'x-access-token' : jwt}
+            headers: {'x-access-token' : jwt}
         }).then(res => {
             return res.data;
         })

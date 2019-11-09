@@ -26,10 +26,8 @@ const makerApi = {
      */
     register: (param) => {
         const jwt = sessionStorage.getItem('jwt');
-        console.log(jwt)
-        //if(!jwt) return false;
         return axios.post(`${PATH}/maker/register`, param, {
-                        header : { 'x-access-token' : jwt }
+                    headers : { 'x-access-token' : jwt }
                   }).then(res => { return res });
 
     },
