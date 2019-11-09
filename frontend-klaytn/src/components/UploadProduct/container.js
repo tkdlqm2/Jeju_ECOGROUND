@@ -13,39 +13,57 @@ const Container = props => {
   const D_day    = useInput("");
   // const filePath = useInput("");
   const { uploadItem } = props;
-
   const [isCompressing, setIsCompressing] = useState(false);
 
+  const [filePath, setFilePath] = useState("");
   const [file, setFile]         = useState("");
   const [fileName, setFileName] = useState("");
-  const [filePath, setFilePath] = useState("");
 
-  const MAX_IMAGE_SIZE   = 30000; // 30KB
+  const MAX_IMAGE_SIZE    = 30000; // 30KB
   const MAX_IMAGE_SIZE_MB = 0.03; // 30KB
+
+  const hack = {url : ''};
 
   // TODO: 이미지 임시저장
   const handleFileChange = e => {
     const file = e.target.files[0];
-    makerApi.tempSave(file)
-            .then(data => {
-              setFile(file);
-              setFileName(file.name);
-              setFilePath(data[0].location);
-            });
+    let data = makerApi.tempSave(file)
+                       .then(data => {
+                         return data[0].location;
+                       })
+                       .then(data => {
+                          setFile(file);
+                          setFileName(file.name);
+                          setFilePath(data);
+
+                          hack.url = data;
+                          console.log("hack : " + hack.url);
+                       });
+
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = e =>  {
+    e.preventDefault();
+
     const titleValue       = title.value;
     const descriptionValue = description.value;
     const targetKlayValue  = targetKlay.value;
     const priceValue = price.value;
     const D_dayValue = D_day.value;
-    const filePath   = filePath.value;
 
-    e.preventDefault();
+    makerApi.register({
+      title      : titleValue ,
+      description: descriptionValue ,
+      price      : priceValue,
+      targetKlay : targetKlayValue,
+      DDay       : D_dayValue,
+      imgArr     : hack.url
+    });
+
+    // TODO: 상품 등록 - 피드
     uploadItem(
       file,
-      filePath,
+      hack.url,
       titleValue,
       descriptionValue,
       targetKlayValue,
@@ -53,7 +71,6 @@ const Container = props => {
       priceValue
     );
 
-    makerApi.register();
     ui.hideModal();
   };
 
@@ -69,8 +86,6 @@ const Container = props => {
 
       setFile(file);
       setFileName(file.name);
-      setFilePath(tempImg[0].location);
-      console.log(tempImg[0].location);
     } catch (error) {
       setIsCompressing(false);
     }
