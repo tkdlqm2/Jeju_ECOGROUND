@@ -2,7 +2,7 @@ import { axios, path } from '../config';
 
 const PATH = path;
 const makerApi = {
-    
+
     /**
      * 이미지 임시저장
      * @author Dong-Min Seol
@@ -13,9 +13,9 @@ const makerApi = {
         const formData = new FormData();
         formData.append("image", file);
         return axios.post(`${PATH}/common/temp/img`, formData)
-                    .then(res => {
-                        return res.data
-                    });
+            .then(res => {
+                return res.data
+            });
 
     },
 
@@ -29,8 +29,8 @@ const makerApi = {
         console.log(jwt)
         //if(!jwt) return false;
         return axios.post(`${PATH}/maker/register`, param, {
-                        header : { 'x-access-token' : jwt }
-                  }).then(res => { return res });
+            headers: { 'x-access-token': jwt }
+        }).then(res => { return res });
 
     },
 };
