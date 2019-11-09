@@ -56,6 +56,15 @@ export default ({ tokenId, price, status, D_day }) => {
       });
   };
 
+  useEffect(() => {
+    if (tokenId) {
+      _showTargetKlay(tokenId);
+      _checkDonate(tokenId);
+    } else {
+      console.log("no token id ");
+    }
+  }, [tokenId]);
+
   return (
     <>
       <SliderInfo>

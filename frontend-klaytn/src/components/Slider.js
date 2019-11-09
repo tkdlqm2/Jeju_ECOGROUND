@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
-import { getValues } from "jest-validate/build/condition";
 
 const SliderContainer = styled.div`
   width: 93%;
@@ -72,35 +71,8 @@ const useStyles = makeStyles({
   }
 });
 
-const Container = ({ targetKlay, price, status, donate }) => {
-  const [donateValue, setDonateValue] = useState(null);
-
-  const getValues = () => {
-    if (donateValue !== 0) {
-      return;
-    }
-  };
-
-  const wait = async () => {
-    const value = await getValues();
-    return value;
-  };
-
-  useEffect(() => {
-    wait();
-  }, []);
-
-  return <MySlider donate={donate} targetKlay={targetKlay} />;
-};
-
-const MySlider = ({ targetKlay, donate }) => {
+export default ({ targetKlay, price, status, donate }) => {
   const classes = useStyles();
-  const [currentValue, setcurrentValue] = useState(null);
-
-  const valuetext = value => {
-    return `${value}`;
-  };
-
   const marks = [
     {
       value: 0,
@@ -112,44 +84,28 @@ const MySlider = ({ targetKlay, donate }) => {
     }
   ];
 
-  console.log("target:", targetKlay);
-  useState(() => {
-    if (!targetKlay) {
-      const floor = Math.floor((1 / targetKlay) * 100).toString();
-      setcurrentValue(floor);
-    }
-  }, []);
+  const valuetext = value => {
+    return `${value}`;
+  };
+
+  const currentValue = Math.floor((donate / targetKlay) * 100).toString();
 
   return (
     <ThemeProvider theme={theme}>
       <SliderContainer>
         <Margin />
-        {currentValue === 0 ? (
-          <StyledSlider
-            defaultValue={0}
-            getAriaValueText={valuetext}
-            marks={marks}
-            valueLabelDisplay="auto"
-            textColor="secondary"
-            classes={{
-              mark: classes.mark
-            }}
-          />
-        ) : (
-          <StyledSlider
-            defaultValue={currentValue}
-            getAriaValueText={valuetext}
-            marks={marks}
-            valueLabelDisplay="auto"
-            textColor="secondary"
-            classes={{
-              mark: classes.mark
-            }}
-          />
-        )}
+        <StyledSlider
+          defaultValue={currentValue}
+          getAriaValueText={valuetext}
+          step={price}
+          marks={marks}
+          valueLabelDisplay="auto"
+          textColor="secondary"
+          classes={{
+            mark: classes.mark
+          }}
+        />
       </SliderContainer>
     </ThemeProvider>
   );
 };
-
-export default Container;
