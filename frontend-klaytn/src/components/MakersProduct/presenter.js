@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 // import { Link } from "react-router-dom";
 import { HeartFull } from "../Icons";
-import MakersDesc from "components/MakersDesc";
-import TargetInfo from "components/TargetInfo";
-import SubInfo from "components/SubInfo";
-import SliderSet from "components/SliderSet";
+import MakersDesc    from "components/MakersDesc";
+import TargetInfo    from "components/TargetInfo";
+import SubInfo       from "components/SubInfo";
+import SliderSet     from "components/SliderSet";
 
 const Container = styled.div`
   position: relative;

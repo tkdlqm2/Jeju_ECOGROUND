@@ -5,23 +5,28 @@ const makerApi = {
     
     /**
      * 이미지 임시저장
+     * @author Dong-Min Seol
+     * @since  2019.11.09
+     * @param  {email, name, password}
      */
-    tempSave(file) {
-        // {email, name, password} = param;
-
-        const result   = {};
+    tempSave: (file) => {
         const formData = new FormData();
         formData.append("image", file);
-        
-        axios.post(`${PATH}/common/temp/img`, formData)
-             .then(res => { 
-                result.urlArr = res.data
-             })
-        return result;
+        return axios.post(`${PATH}/common/temp/img`, formData)
+                    .then(res => {
+                        console.log(res.data)
+                        return res.data
+                    });
+
     },
 
+    /**
+     * 이미지 임시저장
+     * @author Dong-Min Seol
+     * @since  2019.11.09
+     * @param  {email, name, password}
+     */
     login(param) {
-        // {email, password} = param;
         let result = {};
         axios.post(`${PATH}/user/login`, param)
             .then( res => {

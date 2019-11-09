@@ -18,6 +18,7 @@ const UploadProduct = ({
   handleFileChange,
   isCompressing,
   file,
+  filePath,
   fileName,
   title,
   description,
@@ -33,6 +34,8 @@ const UploadProduct = ({
         <Input placeholder={"price"} {...price} />
         <Input placeholder={"targetKlay"} {...targetKlay} />
         <Input placeholder={"D_day (ex.YYYYMMDD)"} {...D_day} />
+        <Input type="hidden" {...filePath} />
+
         <InputFile
           className="UploadPhoto__file"
           name="file"

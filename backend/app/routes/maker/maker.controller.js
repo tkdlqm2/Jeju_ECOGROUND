@@ -88,15 +88,16 @@ exports.getMaker = (req, res) => {
  *
  * @author Dong-Min Seol
  * @since  2019.11.08
- * @param  /list/:page
+ * @param  api/maker/list/:page
  */
 exports.getMakerList = (req, res) => {
-    const pageNo = req.
-    Maker.findOne({
-        where : {id : makerId},
+    const pageNo = req.params.page;
+    Maker.findAll({
         include : {
             model : MakerImage
-        }
+        },
+        offset : (pageNo-1)*10,
+        limit  : 10
     }).then( result => {
         res.json(result);
     })

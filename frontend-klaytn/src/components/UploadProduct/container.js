@@ -3,47 +3,50 @@ import UploadProduct from "./presenter";
 import imageCompression from "utils/imageCompression";
 import ui from "utils/ui";
 import useInput from "hooks/useInput";
+import makerApi  from '../../api/maker';
 
 const Container = props => {
-  const title = useInput("");
+  const title       = useInput("");
   const description = useInput("");
-  const targetKlay = useInput("");
-
-  const price = useInput("");
-  const D_day = useInput("");
-
+  const targetKlay  = useInput("");
+  const price    = useInput("");
+  const D_day    = useInput("");
+  // const filePath = useInput("");
   const { uploadItem } = props;
 
   const [isCompressing, setIsCompressing] = useState(false);
 
-  const [file, setFile] = useState("");
+  const [file, setFile]         = useState("");
   const [fileName, setFileName] = useState("");
+  const [filePath, setFilePath] = useState("");
 
-  const MAX_IMAGE_SIZE = 30000; // 30KB
+  const MAX_IMAGE_SIZE   = 30000; // 30KB
   const MAX_IMAGE_SIZE_MB = 0.03; // 30KB
 
+  // TODO: 이미지 임시저장
   const handleFileChange = e => {
+    console.log(`저장 시작`);
     const file = e.target.files[0];
-
-    if (file.size > MAX_IMAGE_SIZE) {
-      setIsCompressing(true);
-      return compressImage(file);
-    }
+    const tempImg = makerApi.tempSave(file);
 
     setFile(file);
     setFileName(file.name);
+    setFilePath(tempImg[0].location);
+    console.log(`저장 : ${filePath}`);
   };
 
   const handleSubmit = e => {
-    const titleValue = title.value;
+    const titleValue       = title.value;
     const descriptionValue = description.value;
-    const targetKlayValue = targetKlay.value;
+    const targetKlayValue  = targetKlay.value;
     const priceValue = price.value;
     const D_dayValue = D_day.value;
+    const filePath   = filePath.value;
 
     e.preventDefault();
     uploadItem(
       file,
+      filePath,
       titleValue,
       descriptionValue,
       targetKlayValue,
@@ -60,8 +63,13 @@ const Container = props => {
         MAX_IMAGE_SIZE_MB
       );
       setIsCompressing(false);
-      setFile(compressedFile);
-      setFileName(compressedFile.name);
+      
+      const tempImg = await makerApi.tempSave(file);
+
+      setFile(file);
+      setFileName(file.name);
+      setFilePath(tempImg[0].location);
+      console.log(tempImg[0].location);
     } catch (error) {
       setIsCompressing(false);
     }
@@ -73,6 +81,7 @@ const Container = props => {
       handleSubmit={handleSubmit}
       handleFileChange={handleFileChange}
       file={file}
+      filePath={filePath}
       fileName={fileName}
       title={title}
       description={description}
