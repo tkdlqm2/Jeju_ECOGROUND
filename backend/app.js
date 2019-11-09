@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const indexRouter  = require('./app/routes');
 const userRouter   = require('./app/routes/auth/');
 const makerRouter  = require('./app/routes/maker/');
-const commonRouter = require('./app/routes/common');
+const commonRouter = require('./app/routes/common/');
 
 const app = express();
 

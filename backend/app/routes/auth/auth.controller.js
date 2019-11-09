@@ -4,33 +4,34 @@ import jwt  from 'jsonwebtoken';
 const models = require('../../../db/models');
 
 const { User } = models.default;
-/*
-    POST /api/auth/register
-    {
-        username,
-        password
-    }
-*/
+
+/**
+ * 회원 가입
+ *
+ * @author Dong-Min Seol
+ * @since  2019.11.09
+ * @url    POST /api/auth/register
+ */
 exports.register = (req, res) => {
-    const { email, username, password} = req.body;
+    const { email, name, password} = req.body;
     let newUser = null;
 
-    // create a new user if does not exist
+    // [1] 이메일 중복 체크
     const create = (user) => {
         if(user) {
-            throw new Error('username exists')
+            throw new Error('useremail exists')
         } else {
-            return User.create(email, username, password)
+            return User.create(email, name, password)
         }
     };
 
-    // count the number of the user
+    // 유저 숫자 카운트
     const count = (user) => {
         newUser = user;
         return User.count({});
     };
 
-    // assign admin if count is 1
+    // 최초 유저이면 관리자
     const assign = (count) => {
         if(count === 1) {
             return User.assignAdmin(newUser)
@@ -40,10 +41,10 @@ exports.register = (req, res) => {
         }
     };
 
-    // respond to the client
+    // 응답
     const respond = (isAdmin) => {
         res.json({
-            message: 'registered successfully',
+            message: '회원 가입 완료',
             admin: isAdmin ? true : false
         })
     };
@@ -64,13 +65,12 @@ exports.register = (req, res) => {
         .catch(onError)
 };
 
-/*
-    POST /api/auth/login
-    {
-        username,
-        password
-    }
-*/
+/**
+ * 로그인 로직
+ * @author Dong-Min Seol
+ * @since  2019.11.09
+ * @url    POST /api/auth/login
+ */
 exports.login = (req, res) => {
     const { email, password } = req.body;
     const secret = req.app.get('jwt-secret');
@@ -131,10 +131,12 @@ exports.login = (req, res) => {
         .catch(onError)
 };
 
-/*
-    GET /api/auth/check
-*/
-
+/**
+ * 로그인 확인
+ * @author Dong-Min Seol
+ * @since  2019.11.09
+ * @url    GET /api/auth/check
+ */
 exports.check = (req, res) => {
     res.json({
         success: true,
