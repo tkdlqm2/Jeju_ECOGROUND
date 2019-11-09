@@ -8,7 +8,7 @@ const userApi = {
     signup(param) {
         // {email, name, password} = param;
         return axios.post(`${PATH}/user/register`, param)
-                    .then(res => { return res.status == 200 ? true : false; })
+                    .then(res => { return res.status === 200; })
     },
     login(param) {
         // {email, password} = param;
@@ -16,9 +16,10 @@ const userApi = {
         axios.post(`${PATH}/user/login`, param)
              .then( res => {
                 result.repl = res;
-                if(res.status == 200)
+
+                if(res.status === 200)
                     sessionStorage.setItem('jwt', res.data.token)
-             })
+             });
         return result;
     },
 };

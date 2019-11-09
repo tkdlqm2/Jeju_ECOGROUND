@@ -26,15 +26,17 @@ const makerApi = {
      * @since  2019.11.09
      * @param  {email, name, password}
      */
-    login(param) {
-        let result = {};
-        axios.post(`${PATH}/user/login`, param)
-            .then( res => {
-                result.repl = res;
-                if(res.status == 200)
-                    sessionStorage.setItem('jwt', res.data.token)
-            })
-        return result;
+    register: (param) => {
+        const jwt = sessionStorage.getItem('jwt');
+
+        if(!jwt) return false;
+
+        return axios.post(`${PATH}/maker/register`, param, {
+                        header : { 'x-access-token' : jwt }
+                  }).then(res => {
+                    return res.data
+                  });
+
     },
 };
 export default makerApi;

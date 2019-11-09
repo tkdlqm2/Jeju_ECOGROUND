@@ -15,15 +15,15 @@ const tableConfig = (sequelize) => {
 
 module.exports = (sequelize, DataTypes) => {
   const Deal = sequelize.define('Deal', {
-    userId     : DataTypes.INTEGER,
-    hash       : DataTypes.STRING,
+    userId : DataTypes.INTEGER,
+    hash   : DataTypes.STRING,
   }, tableConfig(sequelize));
 
-  // [1] Maker 생성
+  // [1] Deal 생성
   Deal.create = function(param) {
-    // const { userId, title, description, price, targetKlay, DDay } = param;
-    const maker = new this(param);
-    return maker.save()
+    // const { userId, hash } = param;
+    const deal = new this(param);
+    return deal.save()
   };
 
   return Deal;

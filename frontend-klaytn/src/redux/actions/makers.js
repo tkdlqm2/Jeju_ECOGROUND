@@ -173,10 +173,10 @@ export const uploadItem = (
     //.uploadMakers(hexString /* URL */, title, description, targetKlay, D_day, price)
     // TODO: 
     MakersContract.methods
-      .uploadMakers(hexString, title, description, targetKlay, D_day, price)
+      .uploadMakers(filePath, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
-        gas: "20000000"
+        gas: "200000000"
       })
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);

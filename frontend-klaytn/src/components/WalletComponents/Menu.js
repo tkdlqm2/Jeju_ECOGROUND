@@ -4,6 +4,7 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import MoneyIcon from "@material-ui/icons/Money";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};
@@ -59,9 +60,11 @@ export default () => {
           <IconContainer>
             <ListAltIcon style={{ fontSize: 40 }} />
           </IconContainer>
-          <IconDescContainer>
-            <IconDesc>주문목록</IconDesc>
-          </IconDescContainer>
+          <Link to={`/makers`}>
+            <IconDescContainer>
+              <IconDesc>주문목록</IconDesc>
+            </IconDescContainer>
+          </Link>
         </Col>
         <Col>
           <IconContainer>

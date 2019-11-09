@@ -1,11 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-// import { Link } from "react-router-dom";
-import { HeartFull } from "../Icons";
-import MakersDesc    from "components/MakersDesc";
-import TargetInfo    from "components/TargetInfo";
+import React         from "react";
+import styled        from "styled-components";
 import SubInfo       from "components/SubInfo";
 import SliderSet     from "components/SliderSet";
+import MakersDesc    from "components/MakersDesc";
+import OrderButton   from "components/OrderButton";
+import DeleteButton  from "components/DeleteButton";
 
 const Container = styled.div`
   position: relative;
@@ -57,47 +56,6 @@ const Image = styled.div`
 //   opacity: 0.7;
 // `;
 
-const LikeButton = styled.span`
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.theme.headerColor};
-`;
-
-const Order = styled.div`
-  display: grid;
-  grid-template-columns: 4fr 9fr;
-  height: 65px;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  max-width: ${props => props.theme.maxCardWidth};
-`;
-
-const LikeText = styled.div`
-  font-size: 10px;
-  margin-top: 8px;
-  font-weight: 200;
-  color: ${props => props.theme.white};
-`;
-
-const OrderText = styled.div`
-  font-size: 20px;
-  font-weight: 600;
-  color: ${props => props.theme.white};
-`;
-
-const OrderButton = styled.span`
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.theme.lightGreen};
-`;
-
 const ColoredLine = styled.hr`
   border: 0.5px solid ${props => props.theme.lightGrey};
   width: 100%;
@@ -134,6 +92,7 @@ const MakersProduct = ({
   toggleLike,
   product
 }) => {
+  console.log("product!!! : ", product);
   const { ...item } = product;
   const {
     tokenId,
@@ -145,6 +104,8 @@ const MakersProduct = ({
     D_day,
     price
   } = item;
+
+  const deleteMakers = e => {};
 
   return (
     <Container>
@@ -192,15 +153,9 @@ const MakersProduct = ({
         />
       </InfoContainer>
 
-      <Order>
-        <LikeButton>
-          <HeartFull />
-          <LikeText>좋아요</LikeText>
-        </LikeButton>
-        <OrderButton>
-          <OrderText>신청하기</OrderText>
-        </OrderButton>
-      </Order>
+      <DeleteButton tokenId={tokenId} />
+
+      <OrderButton userAddress={userAddress} tokenId={tokenId} />
     </Container>
   );
 };

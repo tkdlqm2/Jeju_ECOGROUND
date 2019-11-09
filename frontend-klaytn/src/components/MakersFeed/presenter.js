@@ -58,11 +58,24 @@ const FeedContainer = styled.div`
 const MakersFeed = props => {
   const { feed } = props;
   console.log(feed);
+
+  const statusOneFeed = [];
+
+  {
+    feed !== null &&
+      feed.map(item => {
+        if (item.status == 1) {
+          statusOneFeed.push(item);
+        }
+      });
+  }
+
+  console.log("statusOneFeed: ", statusOneFeed);
   return (
     <Container>
       <FeedContainer>
-        {feed !== null ? (
-          feed.map(
+        {statusOneFeed !== null ? (
+          statusOneFeed.map(
             ({
               tokenId,
               buyer,

@@ -13,25 +13,37 @@ contract MakersToken is ERC721Full {
 
     // Makers 배열
     mapping (uint256 => Makers) public _MakersList; 
+
     // Makers 마다 모금액 -> 최종 모금액이 얼마인지 확인 하기위해 필요한 mapping
     mapping (uint256 => int) public _totalKlayList;
 
+    // 나의 MakersList
     mapping (address => uint256[]) public _MyMakersList;
+
+    // 참여한 MakerList
+    mapping (address => uint256[]) public _MyMakers;
+
+    // 중복 참여 방지를 위한 mapping
+    mapping (uint256 => address[]) public _investMakersList;
     
     struct Makers{
-        uint256 tokenId;
-        address[] buyer;
-        bytes photo;
-        string title;
-        string description;
-        int targetKlay;
-        string D_day;
-        uint256 status;
-        uint256 timestamp;
-        uint256 count;
-        int price;
+        uint256 tokenId;                    // ERC721 Makers
+        address[] buyer;                    // 해당 Makers의 구매자 배열
+        bytes photo;                        // 사진
+        string title;                       // 제목
+        string description;                 // 내용
+        int targetKlay;                     // 목표금액
+        string D_day;                       // 마감일
+        int status;                     // Makers 상태 -> 0 : 종료 / 1 : 진행 / 2 : 목표금액 달성 및 종료
+        uint256 timestamp;                      
+        uint256 count;                      // Makers 참여자 수.
+        int price;                          // Makers 공동 구매 가격
     }
 
+
+    // --------------------------------------------------
+    // Makers 업로드 (완료)
+    // --------------------------------------------------
     function uploadMakers
     (bytes memory photo, string memory title, string memory description, int targetKlay,  string memory D_day, int price) public {
         uint256 tokenId = totalSupply() + 1;
@@ -64,15 +76,13 @@ contract MakersToken is ERC721Full {
     // Makers TargetKlay 불러오기 (명수)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function showTargetKlay(uint256 _tokenId) public view returns (int) {
-        // require(msg.sender == ownerOf(_tokenId), "This function can access only owner of Token");
-        return _MakersList[_tokenId].targetKlay;
+    function showTargetKlay(uint256 tokenId) public view returns (int) {
+        // require(msg.sender == ownerOf(tokenId), "This function can access only owner of Token");
+        return _MakersList[tokenId].targetKlay;
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    // 메이커스 전체 불러오기
-    //
+    // 메이커스 전체 불러오기 (완료)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function getTotalMakersCount () public view returns (uint) {
@@ -80,107 +90,85 @@ contract MakersToken is ERC721Full {
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    // 현재 모금액 얼마인지 확인하는 함수
-    //
+    // 현재 모금액 얼마인지 확인하는 함수 (완료)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function parentStateMakers(uint256 _tokenId) public view returns (int) {
-        return _totalKlayList[_tokenId];
+    function parentStateMakers(uint256 tokenId) public view returns (int) {
+        return _totalKlayList[tokenId];
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    //  메이커스 불러오기
-    //
+    //  메이커스 불러오기 (완료)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function getMakers (uint256 _tokenId) public view
-    returns(uint256, bytes memory, string memory, string memory, int, string memory, uint256) {
+    function getMakers (uint256 tokenId) public view
+    returns(uint256, bytes memory, string memory, string memory, int, string memory, int) {
         return (
-            _MakersList[_tokenId].tokenId,
-            _MakersList[_tokenId].photo,
-            _MakersList[_tokenId].title,
-            _MakersList[_tokenId].description,
-            _MakersList[_tokenId].price,
-            _MakersList[_tokenId].D_day,
-            _MakersList[_tokenId].status
+            _MakersList[tokenId].tokenId,
+            _MakersList[tokenId].photo,
+            _MakersList[tokenId].title,
+            _MakersList[tokenId].description,
+            _MakersList[tokenId].price,
+            _MakersList[tokenId].D_day,
+            _MakersList[tokenId].status
         );
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    // 메이커스 마감 시, 환불 함수 (--> 이새키 구현)
-    //
+    // 메이커스 마감 시, 환불 함수 (완료)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
     function returnklay(address addressID) public payable{
         address payable payableTokenSeller = address(uint160(addressID));
         payableTokenSeller.transfer(msg.value);
+        
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    // 중복 투자 true false
-    //
+    // 중복 방지 함수
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function overlappingInvestment(uint256 _tokenId, address _investor) public view returns(bool) {
-        address[] memory investors = _MakersList[_tokenId].buyer;
-        uint256 len = _MakersList[_tokenId].count;
-        for (uint256 i=0; i<len; i++){
-            if(_investor == investors[i]){
-                return false;
+    function prohibitOverlap(uint256 tokenId) public view returns (bool) {
+        uint256[] memory arrayList = _MyMakers[msg.sender];
+        for(uint256 i = 0; i<arrayList.length; i++) {
+            if(tokenId == arrayList[i]) {
+                return false; // 이미 투자함.
             }
         }
         return true;
 
     }
-
-
+    
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    // 메이커스 투자하기.
-    //
+    // 메이커스 투자하기. (완료)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function investMakers(uint256 tokenId) public payable {
-        
+    function investMakers(uint256 tokenId) public payable {  
         int price = _MakersList[tokenId].price;
         require(msg.sender != ownerOf(tokenId), "메이커스 당사자는 투자못함.");
         require(_MakersList[tokenId].targetKlay >= _totalKlayList[tokenId],"모금 금액을 모두 달성함");
-        if (overlappingInvestment(tokenId, msg.sender)){
-            _MakersList[tokenId].count += 1;
-            address MakersOwner = ownerOf(tokenId);
-            address payable payableTokenSeller = address(uint160(MakersOwner));
-            payableTokenSeller.transfer(msg.value); // 메이커스 Token의 owner 계정으로 klay 송금
-            _totalKlayList[tokenId] += price; // 메이커스 목표 금액을 다루는 list에 klay 추가
-            _MakersList[tokenId].buyer.push(msg.sender); // 메이커스 투자자들 push
-            _MyMakersList[msg.sender].push(tokenId); // 내가 투자한 메이커스 
-        } else {
-            require(msg.sender == msg.sender,"wer");
-        }
-        //
+        _MakersList[tokenId].count += 1;
+        _investMakersList[tokenId].push(msg.sender);
+        address MakersOwner = ownerOf(tokenId);
+        address payable payableTokenSeller = address(uint160(MakersOwner));
+        payableTokenSeller.transfer(msg.value); // 메이커스 Token의 owner 계정으로 klay 송금
+        _totalKlayList[tokenId] += price; // 메이커스 목표 금액을 다루는 list에 klay 추가
+        _MakersList[tokenId].buyer.push(msg.sender); // 메이커스 투자자들 push
+        _MyMakers[msg.sender].push(tokenId); // 내가 투자한 메이커스 
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
-    // 투자자 확인 함수.
-    //
+    // 투자자 확인 함수. (완료)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
-    function showInvestor(uint256 _tokenId) public view returns(address[] memory) {
-        return _MakersList[_tokenId].buyer;
+    function showInvestor(uint256 tokenId) public view returns(address[] memory) {
+        return _MakersList[tokenId].buyer;
     }
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
-    //
     // Klay 송금  (제품 구매 로직)
-    //
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function purchaseToken(address walletAddress, uint256 price) public payable {
@@ -193,22 +181,20 @@ contract MakersToken is ERC721Full {
      //  Makers 마감 확인 함수
      // ----------------------------------------------------------------------------------------------------------------------------------
 
-     function checkMakersStatus(uint256 _tokenId) public view returns (uint256) {
-         return _MakersList[_tokenId].status;
+     function checkMakersStatus(uint256 tokenId) public view returns (int) {
+         return _MakersList[tokenId].status;
      }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    // Maker 취소하기.
+    // My Makers List 불러오기. (참여)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    function removeMakers(uint256 _tokenId) public payable {
-
-        require(msg.sender == ownerOf(_tokenId), "This function can access only owner");
-        _MakersList[_tokenId].status = 0;
+    function showMyMakers_cutsomer(address Id) public view returns (uint256[] memory) {
+        return _MyMakers[Id];
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    // My Makers List 불러오기.
+    // My Makers List 불러오기. (운영)
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     function showMyMakers(address Id) public view returns (uint256[] memory) {
@@ -227,25 +213,23 @@ contract MakersToken is ERC721Full {
     // Makers state 불러오기
     // ------------------------------------------------------------------------
 
-    function showMakersState(uint256 tokenId) public view returns(bool) {
-        uint256 result = _MakersList[tokenId].status;
+    function showMakersState(uint256 tokenId) public view returns(int) {
+        int result = _MakersList[tokenId].status;
         if (result == 0) {
-            return false;
+            return 0;
+        } else if (result == 2){
+            return 2;
         } else {
-            return true;
+            return 1;
         }
     }
 
-    // ------------------------------------------------------------------------
-    // Makers 모금 달성 성공 시 호출
-    // ------------------------------------------------------------------------
-    
-    function successMakers(uint256 tokenId) public view returns (bool) {
-        if(_MakersList[tokenId].targetKlay == _totalKlayList[tokenId]) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // ------------------------------------
+    // Makers 강제 마감
+    // ------------------------------------
 
+    function forcedClosure(uint256 tokenId) public payable {
+        require(msg.sender == ownerOf(tokenId));
+        _MakersList[tokenId].status = 0;
+    }
 }

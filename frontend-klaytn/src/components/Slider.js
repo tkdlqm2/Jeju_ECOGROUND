@@ -72,7 +72,6 @@ const useStyles = makeStyles({
 });
 
 export default ({ targetKlay, price, status, donate }) => {
-  console.log(`donate: ${donate}`);
   const classes = useStyles();
   const marks = [
     {

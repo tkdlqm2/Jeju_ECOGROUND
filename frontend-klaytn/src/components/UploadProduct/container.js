@@ -25,14 +25,13 @@ const Container = props => {
 
   // TODO: 이미지 임시저장
   const handleFileChange = e => {
-    console.log(`저장 시작`);
     const file = e.target.files[0];
-    const tempImg = makerApi.tempSave(file);
-
-    setFile(file);
-    setFileName(file.name);
-    setFilePath(tempImg[0].location);
-    console.log(`저장 : ${filePath}`);
+    makerApi.tempSave(file)
+            .then(data => {
+              setFile(file);
+              setFileName(file.name);
+              setFilePath(data[0].location);
+            });
   };
 
   const handleSubmit = e => {
@@ -53,6 +52,8 @@ const Container = props => {
       D_dayValue,
       priceValue
     );
+
+    makerApi.register();
     ui.hideModal();
   };
 
