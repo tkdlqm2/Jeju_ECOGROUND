@@ -100,7 +100,7 @@ exports.login = (req, res) => {
                         }, (err, token) => {
                             if (err) reject(err);
                             resolve(token) 
-                        })
+                        }, process.env.JWT_USER_KEY)
                 });
                 return p
             } else {
