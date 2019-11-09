@@ -36,6 +36,8 @@ const Button = styled.button`
 //  마이페이지 - 구매목록 호출 
 // --------------------------------------------------
 
+// TODO: 여기 41번 라인에서 txArray가 529번 에서 DB에서 뽑은 TxArray를 넣어줘야함
+
 const _showTracking = txArray => {
   console.log("_showTracking 호출");
   console.log(txArray)
@@ -239,6 +241,7 @@ const _removeMakers = tokenId => {
                         .once("transactionHash", txHash => {
 
                           // TODO : param1 : txHash
+                          // TODO : 여기
 
                           API.registerGood(txHash);
                           // const service = {
@@ -330,6 +333,7 @@ const _investMakers = tokenId => {
                         console.log("txHash:", txHash);
 
                         // TODO : param1 : txHash
+                        // TODO : 여기!
                         // API.registerGood(txHash);
 
 
@@ -493,6 +497,7 @@ const test = (props) => {
     console.log("reward_value : ", reward_value);
     _rewardToken(reward_value)
   };
+  // TODO: 529번 라인에서 txArray 에 DB 저장된 값이 들어가야함.
 
   return (
     <Container>
