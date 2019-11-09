@@ -47,10 +47,11 @@ export const getFeed = () => dispatch => {
         const product = MakersContract.methods.getMakers(i).call();
         feed.push(product);
       }
-      console.log(feed);
       return Promise.all(feed);
     })
-    .then(feed => dispatch(setFeed(feedParser(feed))));
+    .then(feed => {
+      dispatch(setFeed(feedParser(feed)));
+    });
 };
 
 // --------------------------------------------------

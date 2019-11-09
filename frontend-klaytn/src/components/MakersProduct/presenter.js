@@ -5,6 +5,7 @@ import { HeartFull } from "../Icons";
 import MakersDesc from "components/MakersDesc";
 import TargetInfo from "components/TargetInfo";
 import SubInfo from "components/SubInfo";
+import SliderSet from "components/SliderSet";
 
 const Container = styled.div`
   position: relative;
@@ -28,8 +29,12 @@ const ImageContainer = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  position: relative;
-  padding: 24px 10px 40px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 40px 10px;
 `;
 
 const Image = styled.div`
@@ -94,9 +99,28 @@ const OrderButton = styled.span`
 `;
 
 const ColoredLine = styled.hr`
-  border: solid, 0.1px;
-  color: lightgrey;
-  width: 98%;
+  border: 0.5px solid ${props => props.theme.lightGrey};
+  width: 100%;
+`;
+
+const TitleAndPrice = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  padding: 25px 10px;
+`;
+
+const Title = styled.div`
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+`;
+
+const Price = styled.div`
+  font-size: 20px;
+  font-weight: 600;
 `;
 
 const MakersProduct = ({
@@ -107,23 +131,20 @@ const MakersProduct = ({
   setIsLiked,
   setLikeCount,
   currentItem,
-  slidePrev,
-  slideNext,
   toggleLike,
   product
 }) => {
   const { ...item } = product;
-  const { tokenId, description, status, targetKlay, title, photo, D_day } = item;
-
-  console.log(
-    "product: ",
+  const {
     tokenId,
     description,
     status,
     targetKlay,
     title,
-    photo
-  );
+    photo,
+    D_day,
+    price
+  } = item;
 
   return (
     <Container>
@@ -135,20 +156,23 @@ const MakersProduct = ({
           }
           showing={true}
         />
-        {/* <>
-          <SlideButton type="prev" onClick={slidePrev}>
-            <Prev />
-          </SlideButton>
-          <SlideButton type="next" onClick={slideNext}>
-            <Next />
-          </SlideButton>
-        </> */}
       </ImageContainer>
-      
+      <TitleAndPrice>
+        <Title>{title}</Title>
+        <Price>{price} KLAY</Price>
+      </TitleAndPrice>
+
       <ColoredLine />
 
       <InfoContainer>
-        <TargetInfo tokenId={tokenId} description={description} D_day={D_day} />
+        {/* <TargetInfo tokenId={tokenId} description={description} D_day={D_day} /> */}
+        <SliderSet
+          targetKlay={targetKlay}
+          price={price}
+          status={status}
+          D_day={D_day}
+          tokenId={tokenId}
+        />
       </InfoContainer>
 
       <ColoredLine />
@@ -160,7 +184,12 @@ const MakersProduct = ({
       <ColoredLine />
 
       <InfoContainer>
-        <MakersDesc tokenId={tokenId} description={description} title={title} D_day={D_day} />
+        <MakersDesc
+          tokenId={tokenId}
+          description={description}
+          title={title}
+          D_day={D_day}
+        />
       </InfoContainer>
 
       <Order>

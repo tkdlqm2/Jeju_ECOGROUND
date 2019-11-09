@@ -7,9 +7,10 @@ import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 
 const SliderContainer = styled.div`
-  width: 90%;
+  width: 93%;
   padding: 0;
-  height: 120px;
+  height: 80px;
+  margin-right: 10px;
   /* background-color: ${props => props.theme.lightGrey}; */
 `;
 
@@ -70,7 +71,8 @@ const useStyles = makeStyles({
   }
 });
 
-export default ({ targetKlay, price, status }) => {
+export default ({ targetKlay, price, status, donate }) => {
+  console.log(`donate: ${donate}`);
   const classes = useStyles();
   const marks = [
     {
@@ -79,7 +81,7 @@ export default ({ targetKlay, price, status }) => {
     },
     {
       value: 100,
-      label: targetKlay
+      label: `${targetKlay} KLAY`
     }
   ];
 
@@ -87,7 +89,7 @@ export default ({ targetKlay, price, status }) => {
     return `${value}`;
   };
 
-  const currentValue = Math.floor((1 / targetKlay) * 100).toString();
+  const currentValue = Math.floor((donate / targetKlay) * 100).toString();
 
   return (
     <ThemeProvider theme={theme}>

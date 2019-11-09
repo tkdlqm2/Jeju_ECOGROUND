@@ -2,7 +2,7 @@ import React from "react";
 import ProductInfo from "../ProductInfo";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Slider from "components/Slider";
+import SliderSet from "components/SliderSet";
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ const FeedProduct = styled.div`
   position: relative;
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
-  margin-bottom: 60px;
+  margin-bottom: 70px;
   &:last-child {
     margin-bottom: 0;
   }
@@ -53,54 +53,6 @@ const FeedContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const SliderInfo = styled.div`
-  width: 90%;
-`;
-
-const BoldText = styled.span`
-  font-size: 18px;
-  font-weight: 700;
-  margin-right: 10px;
-`;
-const GreyText = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${props => props.theme.brownGrey};
-`;
-const First = styled.div`
-  margin-bottom: 10px;
-`;
-const Second = styled.div``;
-
-const Divider = styled.span`
-  text-transform: uppercase;
-  color: ${props => props.theme.brownGrey};
-  font-weight: 600;
-  margin: 20px 0;
-  margin-bottom: 20px;
-  position: relative;
-  &:before {
-    content: "";
-    width: 42%;
-    position: absolute;
-    background-color: ${props => props.theme.brownGrey};
-    height: 1px;
-    left: 0;
-    top: 6px;
-    opacity: 0.8;
-  }
-  &:after {
-    content: "";
-    width: 42%;
-    position: absolute;
-    background-color: ${props => props.theme.brownGrey};
-    height: 1px;
-    right: 0;
-    top: 6px;
-    opacity: 0.8;
-  }
 `;
 
 const MakersFeed = props => {
@@ -141,23 +93,15 @@ const MakersFeed = props => {
                       D_day={D_day}
                       description={description}
                       tokenId={tokenId}
+                      price={price}
                     />
                   </InfoContainer>
-                  <Divider />
-                  <SliderInfo>
-                    <First>
-                      <BoldText>{targetKlay} KLAY 달성</BoldText>
-                      <GreyText>목표금액 {targetKlay}KLAY</GreyText>
-                    </First>
-                    <Second>
-                      <BoldText>7 일 남음</BoldText>
-                      <GreyText>{D_day} 마감</GreyText>
-                    </Second>
-                  </SliderInfo>
-                  <Slider
+                  <SliderSet
                     targetKlay={targetKlay}
                     price={price}
                     status={status}
+                    D_day={D_day}
+                    tokenId={tokenId}
                   />
                 </FeedProduct>
               );
