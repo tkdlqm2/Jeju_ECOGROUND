@@ -4,8 +4,10 @@ const fs = require('fs')
 module.exports = function (deployer) {
 
     var decimals = "10000000000000000000";
+    var total = "99999999999999999999999";
+    var _address = "0xc4b83caa6a8c07168cec216bae6813f1a165ee2f";
 
-    deployer.deploy(EcoToken, decimals)
+    deployer.deploy(EcoToken, total, _address)
         .then(() => {
             if (EcoToken._json) {
                 fs.writeFile(
