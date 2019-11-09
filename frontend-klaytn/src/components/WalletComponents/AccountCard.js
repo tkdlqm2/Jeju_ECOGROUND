@@ -145,4 +145,8 @@ class AccountCard extends Component {
   }
 }
 
+<<<<<<< HEAD
 export default AccountCard;
+=======
+export default AccountCard;
+>>>>>>> 834946524e369a133f4a10abae199e117fb86735

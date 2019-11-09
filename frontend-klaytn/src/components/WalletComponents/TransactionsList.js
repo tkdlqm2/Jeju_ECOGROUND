@@ -1,5 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
+import cav from "klaytn/caver";
+import dealService from "../../api/deal";
 
 const Container = styled.div`
   /* background-color: ${props => props.theme.lightGrey}; */
@@ -44,12 +46,10 @@ const RightBox = styled.div`
 `;
 
 const TXtypeBox = styled.div`
-  ${props => props.theme.whiteBox};
   width: 100%;
   height: 100%;
   float: left;
   box-sizing: border-box;
-  background: #fafafa;
 `;
 
 const BlockBox = styled.div`
@@ -112,18 +112,64 @@ const transactionsList = [
     txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd3"
   }
 ];
+// const real_result
+
+// const showTracking = e => {
+
+//   dealService.getDealList().then(result => {
+//     _showTracking(result);
+//   }).then(result2 => {
+//     real_result = result2;
+//   });
+// };
+
+// const _showTracking = data => {
+
+//   // [1] sesstion storag에 있는 JWT로 조회
+
+//   console.log("_showTracking 호출");
+//   console.log("data : ", data);
+//   console.log(typeof data);
+//   console.log("-----------------------")
+//   console.log(data[0]);
+//   console.log(data[0].Deals[0].id);
+//   console.log("data.length: ", data.length);
+//   for (let i = 0; i < data.length; i++) {
+//     cav.klay.getTransactionReceipt(data[i].Deals[i].hash).then(result => {
+//       var resultList = new Array();
+//       resultList[0] = result.type.toString();         // tx타입
+//       resultList[1] = result.blockNumber.toString();  // 블록번호
+//       resultList[2] = result.value.toString();        // value 값 (가격)
+//       resultList[3] = data[i].Deals[i].hash.toString();           // tx주소값
+
+//       console.log(resultList);
+//       return resultList;
+//     });
+//   }
+// }
 
 // const TXIcons = (TXType) => {
-//   switch (TXType){
-//     case "transfer":
-//       transfer일 때 img url
-//       break;
-//     case "legacy" :
-//       legacy일 때 img url
-//       break;
-//     case "contract execution" :
-//       contract execution일 때 img url
-//       break;
+//   const T = styled.div`
+//     img src:"https://1.bp.blogspot.com/-N4t_kyWaVYI/Xcah33kQj7I/AAAAAAAAADk/nCQesMFLZjMx8ZTuz8rG4jUrPu1VzwWAgCLcBGAsYHQ/s1600/ValueTransfer.png";
+//     width: 68;
+//     height: 68;
+//   `
+//   const L = styled.div`
+//     img src:"https://1.bp.blogspot.com/-qtS-uZNAMFk/Xcah3xtliUI/AAAAAAAAADo/r5XuH-6LSp0HWJHQeE12TtQbXnBDdFWjQCLcBGAsYHQ/s1600/Legacy.png";
+//     width: 68;
+//     height: 68;
+//   `
+//   const CE = styled.div`
+//     img src:"https://1.bp.blogspot.com/-fJOx3fNnbJE/Xcalff3U1SI/AAAAAAAAAD8/VLVu3XXp4mYjzm8HLh4A3TVv_O7GaX5lQCLcBGAsYHQ/s1600/ContractExecution.jpg";
+//     width: 68;
+//     height: 68;
+//   `
+//   if (TXType === "Value Transfer"){
+//     return T
+//   } else if (TXType === "Legacy"){
+//     return L
+//   } else {
+//     return CE
 //   }
 // }
 
@@ -139,10 +185,11 @@ export default () => {
                 <LeftBox>
                   <TXtypeBox>
                     <img
-                      src="https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+                      src="https://1.bp.blogspot.com/-m45An_Kv8oA/XccT8A41ldI/AAAAAAAAAEQ/kZM4WEqwd8UwEAdRd2mqwl79J-zIcqKbQCLcBGAsYHQ/s1600/T.png"
                       width="68"
                       height="68"
                     />
+
                     {/* <TXIcons /> */}
                   </TXtypeBox>
                 </LeftBox>

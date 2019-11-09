@@ -1,14 +1,14 @@
-import React              from "react";
-import styled             from "styled-components";
-import MakersHeader       from "components/MakersHeader";
-import { getWallet }      from "utils/crypto";
-import { connect }        from "react-redux";
-import ui                 from "utils/ui";
-import MakersContract     from "klaytn/MakersContract";
-import cav                from "klaytn/caver";
-import EcoTokenContract   from "klaytn/EcoTokenContract";
+import React from "react";
+import styled from "styled-components";
+import MakersHeader from "components/MakersHeader";
+import { getWallet } from "utils/crypto";
+import { connect } from "react-redux";
+import ui from "utils/ui";
+import MakersContract from "klaytn/MakersContract";
+import cav from "klaytn/caver";
+import EcoTokenContract from "klaytn/EcoTokenContract";
 import * as makersActions from "redux/actions/makers";
-import dealService        from '../api/deal';
+import dealService from '../api/deal';
 
 const Container = styled.main`
   width: 100%;
@@ -38,23 +38,23 @@ const Button = styled.button`
 
 // TODO: 여기 41번 라인에서 txArray가 529번 에서 DB에서 뽑은 TxArray를 넣어줘야함
 
-const _showTracking = () => {
+const _showTracking = data => {
 
   // [1] sesstion storag에 있는 JWT로 조회
-  const txArray = dealService.getDealList();
 
   console.log("_showTracking 호출");
-  console.log(txArray)
+  console.log(data);
   console.log("-----------------------")
-  console.log(txArray[0]);
-
-  for (let i = 0; i < txArray.length; i++) {
-    cav.klay.getTransactionReceipt(txArray[i].data).then(result => {
+  console.log(data[0]);
+  console.log(data[0].Deals[0].id);
+  console.log("data.length: ", data.length);
+  for (let i = 0; i < data.length; i++) {
+    cav.klay.getTransactionReceipt(data[i].Deals[i].hash).then(result => {
       var resultList = new Array();
       resultList[0] = result.type.toString();         // tx타입
       resultList[1] = result.blockNumber.toString();  // 블록번호
       resultList[2] = result.value.toString();        // value 값 (가격)
-      resultList[3] = txAddress.toString();           // tx주소값
+      resultList[3] = data[i].Deals[i].hash;           // tx주소값
 
       console.log(resultList);
       return resultList;
@@ -610,7 +610,9 @@ const test = (props) => {
   const showTracking = e => {
     const track_value = e.target.value;
     console.log("track_value : ", track_value);
-    _showTracking(track_value);
+    dealService.getDealList().then(result => {
+      _showTracking(result);
+    });
   };
 
   const rewardToken = e => {
