@@ -187,6 +187,7 @@ export const uploadItem = (
           status: "error",
           message: error.toString()
         });
+
       });
   };
 };
