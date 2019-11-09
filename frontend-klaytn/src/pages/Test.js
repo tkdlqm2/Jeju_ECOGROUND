@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import ui from "utils/ui";
 import MakersContract from "klaytn/MakersContract";
 import cav from "klaytn/caver";
-import * as makersActions from "redux/actions/makers"
+import * as makersActions from "redux/actions/makers";
 
 const Container = styled.main`
   width: 100%;
@@ -25,11 +25,12 @@ const Button = styled.button`
   width: 100px;
 `;
 
-
 const _showTargetKlay = tokenId => {
   console.log("_showTargetKlay 함수 호출");
 
-  MakersContract.methods.showTargetKlay(tokenId).call()
+  MakersContract.methods
+    .showTargetKlay(tokenId)
+    .call()
     .then(targetKlay => {
       if (!targetKlay) {
         return 0;
@@ -37,10 +38,8 @@ const _showTargetKlay = tokenId => {
       console.log("-----------------");
       console.log("targetKlay : ", targetKlay);
       console.log("-----------------");
-
-    })
-}
-
+    });
+};
 
 // --------------------------------------------------
 // 메이커스 강제 종료
@@ -119,7 +118,7 @@ const _check_master = addressId => {
         console.log("해당되는 Makers가 없습니다.");
         return 0;
       }
-      console.log("-----------------------------")
+      console.log("-----------------------------");
       for (let i = Makers.length; i > 0; i--) {
         console.log(MakersContract.methods.getMakers(i));
       }
@@ -138,25 +137,27 @@ const _showState = tokenId => {
     .then(state => {
       console.log("state: ", state);
     });
-}
+};
 
 // --------------------------------------------------
-//  Makers 현재 모금액 확인 
+//  Makers 현재 모금액 확인
 // --------------------------------------------------
 
 const _checkDonate = tokenId => {
   console.log("checkNodate 호출");
 
-  MakersContract.methods.parentStateMakers(tokenId).call()
+  MakersContract.methods
+    .parentStateMakers(tokenId)
+    .call()
     .then(donate => {
       if (!donate) {
         return 0;
       }
-      console.log("---------< donate >---------------")
+      console.log("---------< donate >---------------");
       console.log(donate);
-      console.log("-----------------------------")
+      console.log("-----------------------------");
     });
-}
+};
 
 // --------------------------------------------------
 //  Makers 임의 종료
@@ -288,8 +289,7 @@ const _investMakers = tokenId => {
           })
       }
     });
-
-}
+};
 
 const TokenId = 1;
 
@@ -342,7 +342,7 @@ const test = (props) => {
     const checkMyMakers = e.target.value;
     console.log(checkMyMakers);
     _checkMyMakers(checkMyMakers);
-  }
+  };
 
   const check_master = e => {
     const Makers = e.target.value;
@@ -388,7 +388,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  _showMyMakers: (addressId) => dispatch(makersActions._showMyMakers(addressId))
+  _showMyMakers: addressId => dispatch(makersActions._showMyMakers(addressId))
 });
 
 export default connect(

@@ -1,5 +1,5 @@
 import React from "react";
-import * as URL from "constants/url";
+// import * as URL from "constants/url";
 import styled from "styled-components";
 
 const Container = styled.footer`
@@ -20,17 +20,17 @@ const FooterInner = styled.div`
   color: ${props => props.theme.middleGrey};
 `;
 
-const LinkBox = styled.ul`
-  float: left;
-`;
+// const LinkBox = styled.ul`
+//   float: left;
+// `;
 
-const Link = styled.li`
-  display: inline-block;
-  margin-right: 16px;
-  line-height: 104px;
-  color: ${props => props.theme.black};
-  cursor: pointer;
-`;
+// const Link = styled.li`
+//   display: inline-block;
+//   margin-right: 16px;
+//   line-height: 104px;
+//   color: ${props => props.theme.black};
+//   cursor: pointer;
+// `;
 
 const Copyright = styled.div`
   float: right;

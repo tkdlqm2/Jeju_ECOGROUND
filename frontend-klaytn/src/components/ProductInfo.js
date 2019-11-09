@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
-import { HeartEmpty } from "./Icons";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -23,6 +21,12 @@ const Description = styled.p`
   margin-bottom: 18px;
   font-weight: 100;
   line-height: 160%;
+`;
+
+const DDay = styled.span`
+  font-size: 14px;
+  color: ${props => props.theme.lightGreen};
+  margin-bottom: 18px;
 `;
 
 const ProductInfo = ({ title, description, D_day, tokenId }) => (

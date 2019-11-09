@@ -47,10 +47,11 @@ export const getFeed = () => dispatch => {
         const product = MakersContract.methods.getMakers(i).call();
         feed.push(product);
       }
-      console.log(feed);
       return Promise.all(feed);
     })
-    .then(feed => dispatch(setFeed(feedParser(feed))));
+    .then(feed => {
+      dispatch(setFeed(feedParser(feed)));
+    });
 };
 
 // --------------------------------------------------
@@ -156,7 +157,7 @@ export const uploadItem = (
       .uploadMakers(hexString, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
-        gas: "200000000"
+        gas: "20000000"
       })
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);
@@ -176,7 +177,7 @@ export const uploadItem = (
         const tokenId = receipt.events.MakersUploaded.returnValues[0];
         console.log("-----------------");
         console.log("tokenId: ", tokenId);
-        console.log("-----------------");
+        console.log("————————");
 
         dispatch(updateFeed(tokenId));
       })

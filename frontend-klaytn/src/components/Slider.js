@@ -1,17 +1,21 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const SliderContainer = styled.div`
-  width: 85%;
-  margin-bottom: 20px;
+  width: 93%;
+  padding: 0;
+  height: 80px;
+  margin-right: 10px;
+  /* background-color: ${props => props.theme.lightGrey}; */
 `;
 
 const Margin = styled.div`
-  height: 20px;
+  height: 30px;
 `;
 
 const theme = createMuiTheme({
@@ -38,7 +42,38 @@ const theme = createMuiTheme({
   }
 });
 
-export default ({ targetKlay, price, status }) => {
+const StyledSlider = withStyles({
+  root: {
+    color: "#17202E",
+    height: 8
+  },
+  thumb: {
+    height: 20,
+    width: 20
+  },
+  active: {},
+  valueLabel: {
+    left: "calc(-50% + 4px)"
+  },
+  track: {
+    height: 8,
+    borderRadius: 4
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4
+  }
+})(Slider);
+
+const useStyles = makeStyles({
+  mark: {
+    color: "transparent"
+  }
+});
+
+export default ({ targetKlay, price, status, donate }) => {
+  console.log(`donate: ${donate}`);
+  const classes = useStyles();
   const marks = [
     {
       value: 0,
@@ -46,7 +81,7 @@ export default ({ targetKlay, price, status }) => {
     },
     {
       value: 100,
-      label: targetKlay
+      label: `${targetKlay} KLAY`
     }
   ];
 
@@ -54,20 +89,22 @@ export default ({ targetKlay, price, status }) => {
     return `${value}`;
   };
 
-  const currentValue = Math.floor((1 / targetKlay) * 100);
+  const currentValue = Math.floor((donate / targetKlay) * 100).toString();
 
   return (
     <ThemeProvider theme={theme}>
       <SliderContainer>
         <Margin />
-        Klay 달성률
-        <Slider
+        <StyledSlider
           defaultValue={currentValue}
           getAriaValueText={valuetext}
-          step={targetKlay}
+          step={price}
           marks={marks}
-          valueLabelDisplay="off"
+          valueLabelDisplay="auto"
           textColor="secondary"
+          classes={{
+            mark: classes.mark
+          }}
         />
       </SliderContainer>
     </ThemeProvider>
