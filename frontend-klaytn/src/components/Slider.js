@@ -10,7 +10,6 @@ const SliderContainer = styled.div`
   width: 93%;
   padding: 0;
   height: 80px;
-  margin-right: 10px;
   /* background-color: ${props => props.theme.lightGrey}; */
 `;
 
@@ -71,7 +70,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default ({ targetKlay, price, status, donate }) => {
+export default ({ targetKlay, price, status, donate, currentValue }) => {
   const classes = useStyles();
   const marks = [
     {
@@ -87,10 +86,6 @@ export default ({ targetKlay, price, status, donate }) => {
   const valuetext = value => {
     return `${value}`;
   };
-
-  const currentValue = Math.floor((donate / targetKlay) * 100).toString();
-  console.log("currentValue", currentValue);
-  console.log("slider", donate, targetKlay);
 
   return (
     <ThemeProvider theme={theme}>

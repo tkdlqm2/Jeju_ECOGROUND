@@ -10,7 +10,7 @@ import Test from "pages/Test";
 
 const LoggedInRoutes = () => (
   <Switch>
-    <Route exact path="/" component={Home} />
+    <Route exact path="/" component={Makers} />
     <Route path="/makers/:tokenId" component={MakersDetail} />
     <Route path="/makers" component={Makers} />
     <Route path="/wallet" component={Wallet} />

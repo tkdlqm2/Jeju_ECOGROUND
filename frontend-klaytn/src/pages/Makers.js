@@ -23,7 +23,6 @@ export default () => (
       <MakersHeader />
       <Modal />
       <MakersNav />
-      <MakersFeed />
       <UploadButton />
     </Container>
   </>

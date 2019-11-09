@@ -7,7 +7,6 @@ import OrderButton from "components/OrderButton";
 import DeleteButton from "components/DeleteButton";
 import MoreButton from "components/MoreButton";
 
-
 const Container = styled.div`
   position: relative;
   width: 100%;
@@ -89,8 +88,8 @@ const Price = styled.span`
 const EcoPower = styled.span`
   font-size: 18px;
   font-weight: 600;
-  color: #03A87C;
-`
+  color: #03a87c;
+`;
 const MakersProduct = ({
   userAddress,
   isLoading,
@@ -120,19 +119,13 @@ const MakersProduct = ({
   return (
     <Container>
       <ImageContainer>
-        <Image
-          key={tokenId}
-          src={
-            "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
-          }
-          showing={true}
-        />
+        <Image key={tokenId} src={photo} showing={true} />
       </ImageContainer>
       <TitleAndPrice>
         <Title>{title}</Title>
         <PriceLine>
           <Price>{price} KLAY</Price>
-          <EcoPower>{price*10} ECO</EcoPower>
+          <EcoPower>{price * 10} ECO</EcoPower>
         </PriceLine>
       </TitleAndPrice>
 
