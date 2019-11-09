@@ -46,12 +46,10 @@ const RightBox = styled.div`
 `
 
 const TXtypeBox = styled.div`
-  ${props => props.theme.whiteBox};
   width: 100%;
   height: 100%;
   float: left;
   box-sizing: border-box;
-  background: #FAFAFA;
 `
 
 const BlockBox = styled.div`
@@ -151,16 +149,27 @@ const transactionsList = [
 // }
 
 // const TXIcons = (TXType) => {
-//   switch (TXType){
-//     case "transfer":
-//       transfer일 때 img url
-//       break;
-//     case "legacy" :
-//       legacy일 때 img url
-//       break;
-//     case "contract execution" :
-//       contract execution일 때 img url
-//       break;
+//   const T = styled.div`
+//     img src:"https://1.bp.blogspot.com/-N4t_kyWaVYI/Xcah33kQj7I/AAAAAAAAADk/nCQesMFLZjMx8ZTuz8rG4jUrPu1VzwWAgCLcBGAsYHQ/s1600/ValueTransfer.png";
+//     width: 68;
+//     height: 68;
+//   `
+//   const L = styled.div`
+//     img src:"https://1.bp.blogspot.com/-qtS-uZNAMFk/Xcah3xtliUI/AAAAAAAAADo/r5XuH-6LSp0HWJHQeE12TtQbXnBDdFWjQCLcBGAsYHQ/s1600/Legacy.png";
+//     width: 68;
+//     height: 68;
+//   `
+//   const CE = styled.div`
+//     img src:"https://1.bp.blogspot.com/-fJOx3fNnbJE/Xcalff3U1SI/AAAAAAAAAD8/VLVu3XXp4mYjzm8HLh4A3TVv_O7GaX5lQCLcBGAsYHQ/s1600/ContractExecution.jpg";
+//     width: 68;
+//     height: 68;
+//   `
+//   if (TXType === "Value Transfer"){
+//     return T
+//   } else if (TXType === "Legacy"){
+//     return L
+//   } else {
+//     return CE
 //   }
 // }
 
@@ -174,7 +183,8 @@ export default () => {
             <>
               <Transaction>
                 <LeftBox>
-                  <TXtypeBox><img src="https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg" width="68" height="68" />
+                  <TXtypeBox>
+                    <img src="https://1.bp.blogspot.com/-m45An_Kv8oA/XccT8A41ldI/AAAAAAAAAEQ/kZM4WEqwd8UwEAdRd2mqwl79J-zIcqKbQCLcBGAsYHQ/s1600/T.png" width="68" height="68" />
                     {/* <TXIcons /> */}
                   </TXtypeBox>
                 </LeftBox>

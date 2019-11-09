@@ -92,10 +92,7 @@ const MakersFeed = props => {
                 <FeedProduct key={tokenId}>
                   <Link to={`/makers/${tokenId}`}>
                     <ImageContainer>
-                      <img
-                        src={photo}
-                        alt={title}
-                      />
+                      <img src={photo} alt={title} />
                     </ImageContainer>
                   </Link>
                   <InfoContainer>

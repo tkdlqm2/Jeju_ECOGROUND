@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import Slider from "components/Slider";
 import styled from "styled-components";
 import MakersContract from "klaytn/MakersContract";
@@ -22,15 +22,13 @@ const First = styled.div`
 `;
 const Second = styled.div``;
 
-export default ({ tokenId, price, status, D_day }) => {
-  const [targetKlay, setTargetKlay] = useState("");
-  const [donate, setDonate] = useState(0);
+class SliderSet extends Component {
+  state = {
+    targetKlay: 0,
+    donate: 0
+  };
 
-  const dayGap = new Date(D_day) - new Date();
-  const daySeconds = 24 * 60 * 60 * 1000;
-  const dateGap = parseInt(dayGap / daySeconds) + 1;
-
-  const _showTargetKlay = tokenId => {
+  _showTargetKlay = tokenId => {
     MakersContract.methods
       .showTargetKlay(tokenId)
       .call()
@@ -38,11 +36,13 @@ export default ({ tokenId, price, status, D_day }) => {
         if (!targetKlay) {
           return 0;
         }
-        setTargetKlay(targetKlay);
+        this.setState({
+          targetKlay
+        });
       });
   };
 
-  const _checkDonate = tokenId => {
+  _checkDonate = tokenId => {
     console.log("checkNodate 호출");
 
     MakersContract.methods
@@ -52,37 +52,48 @@ export default ({ tokenId, price, status, D_day }) => {
         if (!donate) {
           return 0;
         }
-        setDonate(donate);
+        this.setState({
+          donate
+        });
       });
   };
 
-  useEffect(() => {
-    if (tokenId) {
-      _showTargetKlay(tokenId);
-      _checkDonate(tokenId);
-    } else {
-      console.log("no token id ");
-    }
-  }, [tokenId]);
+  constructor(props) {
+    super(props);
+    const { tokenId } = props;
+    this._showTargetKlay(tokenId);
+    this._checkDonate(tokenId);
+  }
 
-  return (
-    <>
-      <SliderInfo>
-        <First>
-          <BoldText>{donate} KLAY 달성</BoldText>
-          <GreyText>목표금액 {targetKlay}KLAY</GreyText>
-        </First>
-        <Second>
-          <BoldText>{dateGap} 일 남음</BoldText>
-          <GreyText>{D_day} 마감</GreyText>
-        </Second>
-      </SliderInfo>
-      <Slider
-        targetKlay={targetKlay}
-        price={price}
-        status={status}
-        donate={donate}
-      />
-    </>
-  );
-};
+  render() {
+    const { tokenId, price, status, D_day } = this.props;
+
+    const dayGap = new Date(D_day) - new Date();
+    const daySeconds = 24 * 60 * 60 * 1000;
+    const dateGap = parseInt(dayGap / daySeconds) + 1;
+    return (
+      <>
+        <SliderInfo>
+          <First>
+            <BoldText>{this.state.donate} KLAY 달성</BoldText>
+            <GreyText>목표금액 {this.state.targetKlay}KLAY</GreyText>
+          </First>
+          <Second>
+            <BoldText>{dateGap} 일 남음</BoldText>
+            <GreyText>{D_day} 마감</GreyText>
+          </Second>
+        </SliderInfo>
+        {this.state.targetKlay && this.state.donate && (
+          <Slider
+            targetKlay={this.state.targetKlay}
+            price={price}
+            status={status}
+            donate={this.state.donate}
+          />
+        )}
+      </>
+    );
+  }
+}
+
+export default SliderSet;
