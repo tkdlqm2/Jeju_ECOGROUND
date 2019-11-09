@@ -21,7 +21,8 @@ const upload = (pathName) => {
             key: function (req, file, cb) {
                 let extension = path.extname(file.originalname);
                 cb(null, `${pathName}/${Date.now().toString()}.${extension}`)
-            }
+            },
+            acl: 'public-read'
         })
     });
 };
