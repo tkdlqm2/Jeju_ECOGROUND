@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express     = require('express');
 const createError = require('http-errors');
+const cors        = require('cors');
 const path        = require('path');
 const logger      = require('morgan');
 const bodyParser  = require('body-parser')
@@ -13,6 +14,7 @@ const commonRouter = require('./app/routes/common');
 
 const app = express();
 
+app.use(cors());
 app.set('jwt-secret', process.env.JWT_USER_KEY);
 
 app.set('views', path.join(__dirname, 'assets/views'));
@@ -27,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'assets/public')));
 
+app.use('/'      , indexRouter);
 app.use('/api/'      , indexRouter);
 app.use('/api/user'  , usersRouter);
 app.use('/api/common', commonRouter);
