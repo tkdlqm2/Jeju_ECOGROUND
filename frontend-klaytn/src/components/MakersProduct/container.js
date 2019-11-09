@@ -43,7 +43,7 @@ export default withRouter(({ match: { params: { tokenId } }, ...props }) => {
     } else {
       setIsLoading(false);
     }
-  }, [feed, getFeed]);
+  }, [feed]);
 
   const { ...feedData } = feed;
 

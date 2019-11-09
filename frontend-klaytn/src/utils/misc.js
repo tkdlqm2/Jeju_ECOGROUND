@@ -47,12 +47,9 @@ export const feedParser = feed => {
     1: "photo",
     2: "title",
     3: "description",
-    4: "targetKlay",
+    4: "price",
     5: "D_day",
-    6: "status",
-    7: "count",
-    8: "timestamp",
-    9: "price"
+    6: "status"
   };
 
   /**
