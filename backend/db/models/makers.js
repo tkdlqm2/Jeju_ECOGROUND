@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
 }, tableConfig(sequelize));
 
   Maker.associate = models => {
-    Maker.belongsToMany(models.MakerImage, {
-      through: 'MakerToMakerImg',
+    Maker.hasMany(models.MakerImage, {
+      sourceKey : 'id',
       foreignKey: 'makerId'
     })
   };

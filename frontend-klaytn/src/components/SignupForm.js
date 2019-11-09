@@ -4,6 +4,7 @@ import Input from "./Input";
 import Button from "./Button";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
+import userApi  from '../api/user';
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,8 +48,18 @@ export default () => {
     e.preventDefault();
 
     if (email.value !== "" && username.value !== "" && password.value !== "") {
-      // TODO: sign up
-
+      
+      const param = {
+        email    : email.value,
+        name     : username.value,
+        password : password.value
+      }
+      
+      if(userApi.signup(param)) {
+        // TODO: 회원가입 성공액션
+      } else {
+        // TODO: 회원가입 실패액션
+      }
       console.log(email.value, username.value, password.value);
     }
   };

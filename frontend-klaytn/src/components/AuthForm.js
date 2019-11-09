@@ -26,7 +26,6 @@ const LinkSpan = styled.span`
 
 export default () => {
   const [loginForm, setLoginForm] = useState(true);
-
   const toggleForm = () => {
     if (loginForm === true) {
       setLoginForm(false);

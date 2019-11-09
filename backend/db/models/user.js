@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   }, tableConfig(sequelize));
   
   User.associate = models => {
-    User.belongsToMany(models.Maker, {
-      through: 'UserToMaker',
+    User.hasMany(models.Maker, {
+      sourceKey: 'id',
       foreignKey: 'userId'
     })
   };

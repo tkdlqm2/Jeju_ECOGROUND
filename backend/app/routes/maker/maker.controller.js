@@ -29,7 +29,6 @@ exports.register = (req, res) => {
 
     // [2] 상품 이미지 등록
     const createMakerImg = maker => {
-        console.log(maker.id);
         let i = 1;
         imgArr.forEach( imgArrUrl => {
             MakerImage.create({
@@ -67,10 +66,20 @@ exports.register = (req, res) => {
  *
  * @author Dong-Min Seol
  * @since  2019.11.08
- * @url    GET /maker/view/:id
+ * @url    GET api/maker/view/:id
  */
 exports.getMaker = (req, res) => {
+    const makerId = req.params.id;
 
+    Maker.findOne({
+        where : {id : makerId},
+        include : {
+            model : MakerImage
+        }
+    }).then( result => {
+        res.json(result);
+    })
+    //console.log(Makers.find(id));
 };
 
 
@@ -79,7 +88,16 @@ exports.getMaker = (req, res) => {
  *
  * @author Dong-Min Seol
  * @since  2019.11.08
- * @param
+ * @param  /list/:page
  */
 exports.getMakerList = (req, res) => {
+    const pageNo = req.
+    Maker.findOne({
+        where : {id : makerId},
+        include : {
+            model : MakerImage
+        }
+    }).then( result => {
+        res.json(result);
+    })
 };

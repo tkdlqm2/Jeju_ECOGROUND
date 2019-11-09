@@ -91,16 +91,16 @@ exports.login = (req, res) => {
                             email: user.email,
                             admin: user.admin
                         },
-                        secret, 
+                        process.env.JWT_USER_KEY,
                         {
                             expiresIn: '7d',
                             issuer: process.env.JWT_USER_ISSUER,
-                            subject: user.name
+                            subject: 'user'
 
                         }, (err, token) => {
                             if (err) reject(err);
-                            resolve(token) 
-                        })
+                            resolve(token)
+                        });
                 });
                 return p
             } else {
