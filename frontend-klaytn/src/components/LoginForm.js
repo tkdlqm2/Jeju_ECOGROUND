@@ -53,7 +53,7 @@ const LoginForm = ({ login }) => {
     const email      = emailInput.value;
     const password   = passwordInput.value;
 
-    // TODO: log in
+    // TODO: log in --DEPRECATED
     userApi.login({email, password});
     
     // 클레이튼 로그인

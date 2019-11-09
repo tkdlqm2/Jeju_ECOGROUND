@@ -8,7 +8,6 @@
     "@material-ui/icons": "^4.5.1",
     "caver-js": "^1.2.0",
     "classnames": "^2.2.6",
-    "mysql": "^2.17.1",
     "openzeppelin-solidity": "^2.4.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

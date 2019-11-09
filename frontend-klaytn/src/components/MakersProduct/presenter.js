@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import styled from "styled-components";
 import MakersDesc from "components/MakersDesc";
@@ -6,6 +7,15 @@ import SliderSet from "components/SliderSet";
 import OrderButton from "components/OrderButton";
 import DeleteButton from "components/DeleteButton";
 import MoreButton from "components/MoreButton";
+=======
+import React         from "react";
+import styled        from "styled-components";
+import SubInfo       from "components/SubInfo";
+import SliderSet     from "components/SliderSet";
+import MakersDesc    from "components/MakersDesc";
+import OrderButton   from "components/OrderButton";
+import DeleteButton  from "components/DeleteButton";
+>>>>>>> 1edff7a2cceabebc4d2807a5ae8dae2bd0514f1a
 
 const Container = styled.div`
   position: relative;

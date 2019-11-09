@@ -12,6 +12,7 @@ const indexRouter  = require('./app/routes');
 const userRouter   = require('./app/routes/auth/');
 const makerRouter  = require('./app/routes/maker/');
 const commonRouter = require('./app/routes/common/');
+const dealRouter   = require('./app/routes/deal/');
 
 const app = express();
 
@@ -30,11 +31,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'assets/public')));
 
-app.use('/'      , indexRouter);
+app.use('/'          , indexRouter);
 app.use('/api/'      , indexRouter);
 app.use('/api/user'  , userRouter);
 app.use('/api/maker' , makerRouter);
 app.use('/api/common', commonRouter);
+app.use('/api/deal'  , dealRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

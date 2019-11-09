@@ -18,6 +18,7 @@ const UploadProduct = ({
   handleFileChange,
   isCompressing,
   file,
+  filePath,
   fileName,
   title,
   description,
@@ -27,12 +28,14 @@ const UploadProduct = ({
 }) => {
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form >
         <Input label="Create New Product" placeholder={"Title"} {...title} />
         <Input placeholder={"Description"} {...description} />
         <Input placeholder={"price"} {...price} />
         <Input placeholder={"targetKlay"} {...targetKlay} />
         <Input placeholder={"D_day (ex.YYYY-MM-DD)"} {...D_day} />
+        <Input placeholder={""} type="hidden" {...filePath}/>
+
         <InputFile
           className="UploadPhoto__file"
           name="file"
@@ -42,7 +45,7 @@ const UploadProduct = ({
           accept=".png, .jpg, .jpeg"
           required
         />
-        <StyledButton type="submit">Upload</StyledButton>
+        <StyledButton onClick={handleSubmit}>Upload</StyledButton>
       </Form>
     </Container>
   );
