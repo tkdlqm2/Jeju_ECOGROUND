@@ -17,9 +17,12 @@ contract EcoToken {
 
     using SafeMath for uint256;
 
+    address masterAddress;
+
 
    constructor(uint256 total, address _address) public {  
 	totalSupply_ = total;
+    masterAddress = _address;
 	balances[_address] = totalSupply_; // 지갑주소 하드코딩 mapping
     }  
 
@@ -31,11 +34,11 @@ contract EcoToken {
         return balances[tokenOwner];
     }
 
-    function transfer(address receiver, uint numTokens) public returns (bool) {
-        require(numTokens <= balances[msg.sender]);
-        balances[msg.sender] = balances[msg.sender].sub(numTokens);
+    function transfer(address receiver, uint numTokens) public payable returns (bool) {
+        // require(numTokens <= balances[masterAddress]);
+        balances[masterAddress] = balances[masterAddress].sub(numTokens);
         balances[receiver] = balances[receiver].add(numTokens);
-        emit Transfer(msg.sender, receiver, numTokens);
+        emit Transfer(masterAddress, receiver, numTokens);
         return true;
     }
 

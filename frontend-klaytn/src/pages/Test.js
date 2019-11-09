@@ -9,6 +9,7 @@ import cav from "klaytn/caver";
 import * as makersActions from "redux/actions/makers";
 import EcoTokenContract from "klaytn/EcoTokenContract";
 
+
 const Container = styled.main`
   width: 100%;
   min-height: 100%;
@@ -25,6 +26,32 @@ const Button = styled.button`
   margin-top: 20px;
   width: 100px;
 `;
+
+
+// TODO: Mysql 호출을 통해서 txAddress 값을 불러와야함.
+// --------------------------------------------------
+//  마이페이지 - 구매목록 호출 
+// --------------------------------------------------
+
+const _showTracking = txAddress => {
+  console.log("_showTracking 호출");
+
+  cav.klay.getTransactionReceipt(txAddress).then(result => {
+    var resultList = new Array();
+    resultList[0] = result.type.toString();         // tx타입
+    resultList[1] = result.blockNumber.toString();  // 블록번호
+    resultList[2] = result.value.toString();        // value 값 (가격)
+    resultList[3] = txAddress.toString();           // tx주소값
+
+    console.log(resultList);
+    return resultList;
+  });
+}
+
+
+// --------------------------------------------------
+// Makers 목표 금액 확인
+// --------------------------------------------------
 
 const _showTargetKlay = tokenId => {
   console.log("_showTargetKlay 함수 호출");
@@ -161,13 +188,19 @@ const _checkDonate = tokenId => {
 };
 
 // --------------------------------------------------
-//  Makers 임의 종료
+//  Makers 임의 종료 (투자한 Klay 환불 처리.)
 // --------------------------------------------------
+
+
+async function getCount(address) {
+  const cnt = await cav.klay.getTransactionCount(address)
+  return cnt
+}
+
 
 const _removeMakers = tokenId => {
   console.log("refund 함수 호출");
   console.log("showMakersState 함수 호출");
-
 
   MakersContract.methods.showMakersState(tokenId).call()
     .then(result => {
@@ -185,40 +218,48 @@ const _removeMakers = tokenId => {
                 } else {
                   console.log("buyer수 :  ", buyer.length);
                   console.log("returnKlay 함수 호출");
+                  getCount(getWallet().address).then(cnt => {
+                    for (let i = 0; i < buyer.length; i++) {
+                      MakersContract.methods.returnklay(buyer[i])
+                        .send({
+                          from: getWallet().address,
+                          gas: "20000000",
+                          value: cav.utils.toPeb(price.toString(), "KLAY"),
+                          nonce: cnt + i
+                        })
+                        .once("transactionHash", txHash => {
 
-                  for (let i = 0; i < buyer.length; i++) {
-                    MakersContract.methods.returnklay(buyer[i])
-                      .send({
-                        from: getWallet().address,
-                        gas: "20000000",
-                        value: cav.utils.toPeb(price.toString(), "KLAY"),
-                        // nonce: getAccount().address.account.nonce + i
-                      })
-                      .once("transactionHash", txHash => {
-                        console.log("txHash:", txHash);
-                        ui.showToast({
-                          status: "pending",
-                          message: `Sending a transaction... (uploadPhoto)`,
-                          txHash
-                        });
-                      })
-                      .once("receipt", receipt => {
-                        ui.showToast({
-                          status: receipt.status ? "success" : "fail",
-                          message: `Received receipt! It means your transaction is
-                  in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-                          link: receipt.transactionHash
-                        });
-                      })
-                      .once("error", error => {
-                        console.log(error);
+                          // TODO : param1 : txHash
 
-                        ui.showToast({
-                          status: "error",
-                          message: error.toString()
+
+                          console.log("txHash:", txHash);
+                          ui.showToast({
+                            status: "pending",
+                            message: `Sending a transaction... (uploadPhoto)`,
+                            txHash
+                          });
+                        })
+                        .once("receipt", receipt => {
+                          ui.showToast({
+                            status: receipt.status ? "success" : "fail",
+                            message: `Received receipt! It means your transaction is
+                    in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+                            link: receipt.transactionHash
+                          });
+                        })
+                        .once("error", error => {
+                          console.log(error);
+
+                          ui.showToast({
+                            status: "error",
+                            message: error.toString()
+                          });
                         });
-                      });
-                  }
+                    }
+
+                  });
+
+
                 }
               })
           })
@@ -265,6 +306,9 @@ const _investMakers = tokenId => {
                     })
                     .once("transactionHash", txHash => {
                       console.log("txHash:", txHash);
+
+                      // TODO : param1 : txHash
+
                       ui.showToast({
                         status: "pending",
                         message: `Sending a transaction... (uploadPhoto)`,
@@ -294,7 +338,8 @@ const _investMakers = tokenId => {
     });
 };
 
-const TokenId = 1;
+const TokenId = 3;
+const txAddress = "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
 
 const invest = e => {
   const invest_value = e.target.value;
@@ -340,6 +385,11 @@ const prohibitMakers = e => {
 //                        Eco Toekn Logic (ERC20)
 // ------------------------------------------------------------------------------------
 
+
+// ----------------------
+// 보유한 Eco Token 확인
+// ----------------------
+
 const _showMyToken = addressId => {
   console.log("_showMyToken 호출");
 
@@ -349,8 +399,35 @@ const _showMyToken = addressId => {
     });
 }
 
+// ----------------------
+// Eco Token 보상
+// ----------------------
 
+const _rewardToken = addressId => {
+  console.log("_rewardToken 호출");
 
+  EcoTokenContract.methods.transfer(addressId, 10)
+    .send({
+      from: getWallet().address,
+      gas: "200000000",
+    })
+    .once("receipt", receipt => {
+      ui.showToast({
+        status: receipt.status ? "success" : "fail",
+        message: `Received receipt! It means your transaction is
+  in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
+        link: receipt.transactionHash
+      });
+    })
+    .once("error", error => {
+      console.log(error);
+      ui.showToast({
+        status: "error",
+        message: error.toString()
+      });
+    })
+
+}
 
 const test = (props) => {
   const check_customer = e => {
@@ -370,6 +447,18 @@ const test = (props) => {
     const showMyToken_value = e.target.value;
     console.log(showMyToken_value);
     _showMyToken(showMyToken_value);
+  };
+
+  const showTracking = e => {
+    const track_value = e.target.value;
+    console.log("track_value : ", track_value);
+    _showTracking(track_value);
+  };
+
+  const rewardToken = e => {
+    const reward_value = e.target.value;
+    console.log("reward_value : ", reward_value);
+    _rewardToken(reward_value)
   };
 
   return (
@@ -399,8 +488,14 @@ const test = (props) => {
       <Button onClick={prohibitMakers} value={TokenId}>
         prohibitMakers
       </Button>
+      <Button onClick={showTracking} value={txAddress}>
+        showTracking
+      </Button>
       <Button onClick={showMyToken} value={props.userAddress}>
         ERC20_showMyToken
+      </Button>
+      <Button onClick={rewardToken} value={props.userAddress}>
+        ERC20_rewardToken
       </Button>
 
     </Container>
