@@ -181,10 +181,12 @@ export const uploadItem = (
         dispatch(updateFeed(tokenId));
       })
       .once("error", error => {
+        console.log(error);
         ui.showToast({
           status: "error",
           message: error.toString()
         });
+
       });
   };
 };
