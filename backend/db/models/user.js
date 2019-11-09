@@ -22,9 +22,14 @@ module.exports = (sequelize, DataTypes) => {
   
   User.associate = models => {
     User.hasMany(models.Maker, {
-      sourceKey: 'id',
+      sourceKey : 'id',
       foreignKey: 'userId'
-    })
+    });
+
+    User.hasMany(models.Deal, {
+      sourceKey : 'id',
+      foreignKey: 'userId'
+    });
   };
 
   // create new User document

@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import MakersDesc from "components/MakersDesc";
-import SubInfo from "components/SubInfo";
-import SliderSet from "components/SliderSet";
-import OrderButton from "components/OrderButton";
-import DeleteButton from "components/DeleteButton";
+import React         from "react";
+import styled        from "styled-components";
+import SubInfo       from "components/SubInfo";
+import SliderSet     from "components/SliderSet";
+import MakersDesc    from "components/MakersDesc";
+import OrderButton   from "components/OrderButton";
+import DeleteButton  from "components/DeleteButton";
 
 const Container = styled.div`
   position: relative;

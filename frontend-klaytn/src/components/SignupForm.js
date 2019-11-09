@@ -57,8 +57,10 @@ export default () => {
       
       if(userApi.signup(param)) {
         // TODO: 회원가입 성공액션
+        return true;
       } else {
         // TODO: 회원가입 실패액션
+        return false;
       }
       console.log(email.value, username.value, password.value);
     }
@@ -74,7 +76,7 @@ export default () => {
           {...username}
         />
         <Input placeholder={"Password"} {...password} type="password" />
-        <Input placeholder={"Email"} {...email} type="email" />
+        <Input placeholder={"Email"} {...email} type="email"          />
         <br />
         <br />
         <SignupInput

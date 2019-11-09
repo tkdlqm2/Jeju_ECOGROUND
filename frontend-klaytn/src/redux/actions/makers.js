@@ -33,6 +33,7 @@ const updateFeed = tokenId => (dispatch, getState) => {
     });
 };
 
+// TODO: Makers 리스트
 export const getFeed = () => dispatch => {
   MakersContract.methods
     .getTotalMakersCount()
@@ -45,6 +46,20 @@ export const getFeed = () => dispatch => {
       const feed = [];
       for (let i = totalMakersCount; i > 0; i--) {
         const product = MakersContract.methods.getMakers(i).call();
+        /**
+         *  struct Makers{
+              address[] buyer;
+              bytes photo;
+              string title;
+              string description;
+              int targetKlay;
+              string D_day;
+              uint256 status;
+              uint256 timestamp;
+              uint256 count;
+              int price;
+            }
+         */
         feed.push(product);
       }
       return Promise.all(feed);
@@ -122,6 +137,7 @@ export const removeMakers = tokenId => dispatch => {
 
 export const uploadItem = (
   file,
+  filePath,
   title,
   description,
   targetKlay,
@@ -130,12 +146,13 @@ export const uploadItem = (
 ) => dispatch => {
   console.log(
     `
-    file: ${file} 
-    title: ${title}
+    file       : ${file} 
+    filepath   : ${filePath} 
+    title      : ${title}
     description: ${description}
-    targetKlay: ${targetKlay}
-    D_day: ${D_day}
-    price: ${price}
+    targetKlay : ${targetKlay}
+    D_day      : ${D_day}
+    price      : ${price}
     `
   );
 
@@ -153,8 +170,10 @@ export const uploadItem = (
     const hexString = "0x" + buffer.toString("hex");
     console.log("hexString");
 
+    //.uploadMakers(hexString /* URL */, title, description, targetKlay, D_day, price)
+    // TODO: 
     MakersContract.methods
-      .uploadMakers(hexString, title, description, targetKlay, D_day, price)
+      .uploadMakers(filePath, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
         gas: "200000000"

@@ -1,18 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import MakersHeader from "components/MakersHeader";
-import { getWallet } from "utils/crypto";
-import { connect } from "react-redux";
-import ui from "utils/ui";
-import MakersContract from "klaytn/MakersContract";
-import cav from "klaytn/caver";
+import React              from "react";
+import styled             from "styled-components";
+import MakersHeader       from "components/MakersHeader";
+import { getWallet }      from "utils/crypto";
+import { connect }        from "react-redux";
+import ui                 from "utils/ui";
+import MakersContract     from "klaytn/MakersContract";
+import cav                from "klaytn/caver";
+import EcoTokenContract   from "klaytn/EcoTokenContract";
 import * as makersActions from "redux/actions/makers";
-import EcoTokenContract from "klaytn/EcoTokenContract";
-import API from 'api/deal';
-//const PATH = API.test;
+import dealService        from '../api/deal';
 
-
-const PATH = API.importer;
 const Container = styled.main`
   width: 100%;
   min-height: 100%;
@@ -41,7 +38,11 @@ const Button = styled.button`
 
 // TODO: 여기 41번 라인에서 txArray가 529번 에서 DB에서 뽑은 TxArray를 넣어줘야함
 
-const _showTracking = txArray => {
+const _showTracking = () => {
+
+  // [1] sesstion storag에 있는 JWT로 조회
+  const txArray = dealService.getDealList();
+
   console.log("_showTracking 호출");
   console.log(txArray)
   console.log("-----------------------")
@@ -346,17 +347,7 @@ const _removeMakers = tokenId => {
 
                           // TODO : param1 : txHash
                           // TODO : 여기
-
-                          API.registerGood(txHash);
-                          // const service = {
-                          //   registerGood: (txHash) => {
-                          //     return axios.post(`${PATH}/deal/register`, { txHash })
-                          //       .then(res => {
-                          //         return res.status == 200 ? true : false;
-                          //       })
-                          //   }
-                          // }
-
+                          dealService.registerDeal(txHash);
 
                           console.log("txHash:", txHash);
                           ui.showToast({
