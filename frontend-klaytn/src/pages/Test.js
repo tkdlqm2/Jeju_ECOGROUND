@@ -432,7 +432,7 @@ const _investMakers = tokenId => {
 
                         // TODO : param1 : txHash
                         // TODO : 여기!
-                        // API.registerGood(txHash);
+                        dealService.registerDeal(txHash);
 
 
                         ui.showToast({

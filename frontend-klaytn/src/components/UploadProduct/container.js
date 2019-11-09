@@ -34,7 +34,6 @@ const Container = props => {
                           setFileName(file.name);
                           setFilePath(data);
                        });
-
   };
 
   const handleSubmit = e =>  {
