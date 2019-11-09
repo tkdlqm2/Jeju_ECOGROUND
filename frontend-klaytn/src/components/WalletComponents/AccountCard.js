@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState, Component } from "react";
 import styled from "styled-components";
 import CardGiftcardRoundedIcon from "@material-ui/icons/CardGiftcardRounded";
 import CachedIcon from "@material-ui/icons/Cached";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
+import EcoTokenContract from "klaytn/EcoTokenContract";
 
 const Container = styled.div`
   width: 540px;
@@ -74,45 +75,74 @@ const GreenText = styled.span`
   font-size: 28px;
 `;
 
-export default ({ balance }) => {
-  const balanceFloor = Math.floor(balance * 10000) / 10000;
-  return (
-    <Container>
-      <KlayBalance>
-        <Span>My Total Balance</Span>
-        <Span>
-          <GreenText>{balanceFloor} </GreenText> KLAY
-        </Span>
-      </KlayBalance>
-      <EcoData>
-        <Item>
-          <IconContainer>
-            <CardGiftcardRoundedIcon style={{ fontSize: 40 }} />
-          </IconContainer>
-          <IconDescContainer>
-            <IconDesc>Eco Power</IconDesc>
-            <Balance>3000ECO</Balance>
-          </IconDescContainer>
-        </Item>
-        <Item>
-          <IconContainer>
-            <CreditCardIcon style={{ fontSize: 40 }} />
-          </IconContainer>
-          <IconDescContainer>
-            <IconDesc>Card</IconDesc>
-            <Balance>100ECO</Balance>
-          </IconDescContainer>
-        </Item>
-        <Item>
-          <IconContainer>
-            <CachedIcon style={{ fontSize: 40 }} />
-          </IconContainer>
-          <IconDescContainer>
-            <IconDesc>Reward</IconDesc>
-            <Balance>200ECO</Balance>
-          </IconDescContainer>
-        </Item>
-      </EcoData>
-    </Container>
-  );
-};
+class AccountCard extends Component {
+  state = {
+    ecoPower: 0
+  };
+  _showMyToken = addressId => {
+    console.log("_showMyToken 호출", addressId);
+
+    EcoTokenContract.methods
+      .balanceOf(addressId)
+      .call()
+      .then(result => {
+        console.log("총 보유 Eco Token : ", result);
+        this.setState({
+          ecoPower: result
+        });
+      });
+  };
+
+  constructor(props) {
+    super(props);
+    const { address } = props;
+    this._showMyToken(address);
+  }
+
+  render() {
+    const { balance, ecoPower } = this.props;
+    const balanceFloor = Math.floor(balance * 10000) / 10000;
+
+    return (
+      <Container>
+        <KlayBalance>
+          <Span>My Total Balance</Span>
+          <Span>
+            <GreenText>{balanceFloor} </GreenText> KLAY
+          </Span>
+        </KlayBalance>
+        <EcoData>
+          <Item>
+            <IconContainer>
+              <CardGiftcardRoundedIcon style={{ fontSize: 40 }} />
+            </IconContainer>
+            <IconDescContainer>
+              <IconDesc>Eco Power</IconDesc>
+              <Balance>{this.state.ecoPower} ECO</Balance>
+            </IconDescContainer>
+          </Item>
+          <Item>
+            <IconContainer>
+              <CreditCardIcon style={{ fontSize: 40 }} />
+            </IconContainer>
+            <IconDescContainer>
+              <IconDesc>Card</IconDesc>
+              <Balance>100ECO</Balance>
+            </IconDescContainer>
+          </Item>
+          <Item>
+            <IconContainer>
+              <CachedIcon style={{ fontSize: 40 }} />
+            </IconContainer>
+            <IconDescContainer>
+              <IconDesc>Reward</IconDesc>
+              <Balance>200ECO</Balance>
+            </IconDescContainer>
+          </Item>
+        </EcoData>
+      </Container>
+    );
+  }
+}
+
+export default AccountCard;
