@@ -2,35 +2,33 @@
 
 const tableConfig = (sequelize) => {
   return {
-    tableName: 'MakerImg',
+    tableName: 'MakerImage',
     sequelize,
     imestamps: true,
     paranoid: true,
     name: {
-      singular: 'MakerImg',
-      plural: 'MakerImgs',
+      singular: 'MakerImage',
+      plural: 'MakerImages',
     },
   }
 };
 
 module.exports = (sequelize, DataTypes) => {
-  const MakersImg = sequelize.define('MakerImg', {
+  const MakerImage = sequelize.define('MakerImage', {
     makerId     : DataTypes.INTEGER,
     order       : DataTypes.INTEGER,
     imgURL      : DataTypes.STRING,
   }, tableConfig(sequelize));
 
-  MakersImg.associate = models => {
+  MakerImage.associate = models => {
 
   };
 
   // [1] MakersImg 생성
-  MakersImg.create = function(param) {
-    // const { makerId, imgURL } = param;
+  MakerImage.create = function(param) {
+    // const { makerId, order, imgURL } = param;
     const makersImg = new this(param);
     return makersImg.save()
   };
-
-
-  return MakersImg;
+  return MakerImage;
 };

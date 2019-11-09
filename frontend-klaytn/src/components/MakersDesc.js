@@ -1,14 +1,15 @@
 import React from "react";
 import ProductInfo from "./ProductInfo";
 
-
-export default ({ tokenId, description, title }) => {
-  console.log("data:  ", tokenId, description, title);
-  return <div>
-        <ProductInfo
-          title={title}
-          description={description}
-          tokenId={tokenId}
-        />
-    </div>;
+export default ({ tokenId, description, title, D_day }) => {
+  return (
+    <div>
+      <ProductInfo
+        title={title}
+        D_day={D_day}
+        description={description}
+        tokenId={tokenId}
+      />
+    </div>
+  );
 };

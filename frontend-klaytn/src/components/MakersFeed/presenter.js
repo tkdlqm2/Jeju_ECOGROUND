@@ -2,7 +2,7 @@ import React from "react";
 import ProductInfo from "../ProductInfo";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Slider from "components/Slider";
+import SliderSet from "components/SliderSet";
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ const FeedProduct = styled.div`
   position: relative;
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
-  margin-bottom: 60px;
+  margin-bottom: 70px;
   &:last-child {
     margin-bottom: 0;
   }
@@ -93,12 +93,15 @@ const MakersFeed = props => {
                       D_day={D_day}
                       description={description}
                       tokenId={tokenId}
+                      price={price}
                     />
                   </InfoContainer>
-                  <Slider
+                  <SliderSet
                     targetKlay={targetKlay}
                     price={price}
                     status={status}
+                    D_day={D_day}
+                    tokenId={tokenId}
                   />
                 </FeedProduct>
               );

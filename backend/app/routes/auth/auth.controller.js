@@ -87,10 +87,10 @@ exports.login = (req, res) => {
                 const p = new Promise((resolve, reject) => {
                     jwt.sign(
                         {
-                            _id: user._id,
+                            _id: user.id,
                             email: user.email,
                             admin: user.admin
-                        }, 
+                        },
                         secret, 
                         {
                             expiresIn: '7d',

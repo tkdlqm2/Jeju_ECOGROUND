@@ -33,41 +33,6 @@ const updateFeed = tokenId => (dispatch, getState) => {
     });
 };
 
-// API functions
-
-// export const getMakersState = (tokenId) => (dispatchEvent) => {
-//   MakersContract.methods.checkMakersStatus(tokenId).call()
-//     .then(newState => {
-//       const {
-//         state: { MakersState }
-//       } = getState();
-//       const MakersState = [stateParser(newState), ...MakersState];
-//       dispatch(setState(newState));
-//     })
-// }
-
-// export const getDonation = (tokenId) => (dispatch) => {
-//   MakersContract.methods.parentStateMakers(tokenId).call()
-//     .then(newDonation => {
-//       const {
-//         invests: { donation }
-//       } = getState();
-//       const donation = [donationParser(newDonation), ...donation];
-//       dispatch(setDonation(newDonation));
-//     })
-// };
-
-// export const getMakersPrice = (tokenId) => (dispatch) => {
-//   MakersContract.methods.showMakersPrice(tokenId).call()
-//     .then(newMakersPrice => {
-//       const {
-//         prices: { makersPrice }
-//       } = getState();
-//       const makersPrice = [priceParser(newMakersPrice), ...makersPrice];
-//       dispatch(MakersPrice(newMakersPrice));
-//     })
-// }
-
 export const getFeed = () => dispatch => {
   MakersContract.methods
     .getTotalMakersCount()
@@ -82,17 +47,17 @@ export const getFeed = () => dispatch => {
         const product = MakersContract.methods.getMakers(i).call();
         feed.push(product);
       }
-      console.log(feed);
       return Promise.all(feed);
     })
-    .then(feed => dispatch(setFeed(feedParser(feed))));
+    .then(feed => {
+      dispatch(setFeed(feedParser(feed)));
+    });
 };
 
 // --------------------------------------------------
 //  MyMakers 확인
 // --------------------------------------------------
 export const _showMyMakers = addressId => dispatch => {
-
   MakersContract.methods
     .showMyMakers(addressId)
     .call()
@@ -102,9 +67,9 @@ export const _showMyMakers = addressId => dispatch => {
         return [];
       }
       const feed = [];
-      for (let i = totalMyMakers.length; i > 0; i--) {
+      for (let i = totalMyMakers.length - 1; i > 0; i--) {
         const product = MakersContract.methods
-          .getMakers(totalMyMakers[i].tokenId)
+          .getMakers(totalMyMakers[i])
           .call();
         feed.push(product);
       }
@@ -192,7 +157,7 @@ export const uploadItem = (
       .uploadMakers(hexString, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
-        gas: "200000000"
+        gas: "20000000"
       })
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);
@@ -212,11 +177,12 @@ export const uploadItem = (
         const tokenId = receipt.events.MakersUploaded.returnValues[0];
         console.log("-----------------");
         console.log("tokenId: ", tokenId);
-        console.log("-----------------");
+        console.log("————————");
 
         dispatch(updateFeed(tokenId));
       })
       .once("error", error => {
+        console.log(error);
         ui.showToast({
           status: "error",
           message: error.toString()

@@ -5,11 +5,12 @@ const createError = require('http-errors');
 const cors        = require('cors');
 const path        = require('path');
 const logger      = require('morgan');
-const bodyParser  = require('body-parser')
+const bodyParser  = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const indexRouter  = require('./app/routes');
-const usersRouter  = require('./app/routes/auth/');
+const userRouter   = require('./app/routes/auth/');
+const makerRouter  = require('./app/routes/maker/');
 const commonRouter = require('./app/routes/common');
 
 const app = express();
@@ -31,7 +32,8 @@ app.use(express.static(path.join(__dirname, 'assets/public')));
 
 app.use('/'      , indexRouter);
 app.use('/api/'      , indexRouter);
-app.use('/api/user'  , usersRouter);
+app.use('/api/user'  , userRouter);
+app.use('/api/maker' , makerRouter);
 app.use('/api/common', commonRouter);
 
 // catch 404 and forward to error handler
