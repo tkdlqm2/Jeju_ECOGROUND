@@ -83,7 +83,7 @@ const HashBox = styled.div`
   float:left;
   font-size: 16px;
   padding: 8px;
-  color: #CCCCCC;
+  color: #999999;
 `
 
 const transactionsList = [

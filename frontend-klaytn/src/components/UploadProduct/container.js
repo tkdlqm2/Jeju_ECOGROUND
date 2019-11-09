@@ -6,32 +6,21 @@ import useInput from "hooks/useInput";
 import makerApi  from '../../api/maker';
 
 const Container = props => {
-  const title = useInput("");
   const title       = useInput("");
   const description = useInput("");
-  const targetKlay = useInput("");
-
-  const price = useInput("");
-  const D_day = useInput("");
-
   const targetKlay  = useInput("");
   const price    = useInput("");
   const D_day    = useInput("");
   // const filePath = useInput("");
   const { uploadItem } = props;
-
   const [isCompressing, setIsCompressing] = useState(false);
 
-  const [file, setFile] = useState("");
   const [filePath, setFilePath] = useState("");
   const [file, setFile]         = useState("");
   const [fileName, setFileName] = useState("");
 
-  const MAX_IMAGE_SIZE = 30000; // 30KB
   const MAX_IMAGE_SIZE    = 30000; // 30KB
   const MAX_IMAGE_SIZE_MB = 0.03; // 30KB
-
-  const hack = {url : ''};
 
   // TODO: 이미지 임시저장
   const handleFileChange = e => {
@@ -44,45 +33,32 @@ const Container = props => {
                           setFile(file);
                           setFileName(file.name);
                           setFilePath(data);
-
-    if (file.size > MAX_IMAGE_SIZE) {
-      setIsCompressing(true);
-      return compressImage(file);
-    }
-                          hack.url = data;
-                          console.log("hack : " + hack.url);
                        });
 
-    setFile(file);
-    setFileName(file.name);
   };
 
-  const handleSubmit = e => {
-    const titleValue = title.value;
   const handleSubmit = e =>  {
     e.preventDefault();
 
     const titleValue       = title.value;
     const descriptionValue = description.value;
-    const targetKlayValue = targetKlay.value;
     const targetKlayValue  = targetKlay.value;
     const priceValue = price.value;
     const D_dayValue = D_day.value;
 
-    e.preventDefault();
     makerApi.register({
       title      : titleValue ,
       description: descriptionValue ,
       price      : priceValue,
       targetKlay : targetKlayValue,
       DDay       : D_dayValue,
-      imgArr     : hack.url
+      imgArr     : [filePath]
     });
 
     // TODO: 상품 등록 - 피드
     uploadItem(
       file,
-      hack.url,
+      filePath,
       titleValue,
       descriptionValue,
       targetKlayValue,
@@ -100,8 +76,6 @@ const Container = props => {
         MAX_IMAGE_SIZE_MB
       );
       setIsCompressing(false);
-      setFile(compressedFile);
-      setFileName(compressedFile.name);
       
       const tempImg = await makerApi.tempSave(file);
 
