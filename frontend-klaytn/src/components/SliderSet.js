@@ -28,7 +28,7 @@ export default ({ tokenId, price, status, D_day }) => {
 
   const dayGap = new Date(D_day) - new Date();
   const daySeconds = 24 * 60 * 60 * 1000;
-  const dateGap = parseInt(dayGap/daySeconds) + 1;
+  const dateGap = parseInt(dayGap / daySeconds) + 1;
 
   const _showTargetKlay = tokenId => {
     MakersContract.methods
@@ -55,11 +55,6 @@ export default ({ tokenId, price, status, D_day }) => {
         setDonate(donate);
       });
   };
-
-  useEffect(() => {
-    _showTargetKlay(tokenId);
-    _checkDonate(tokenId);
-  }, []);
 
   return (
     <>

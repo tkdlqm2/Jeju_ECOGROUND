@@ -157,7 +157,7 @@ export const uploadItem = (
       .uploadMakers(hexString, title, description, targetKlay, D_day, price)
       .send({
         from: getWallet().address,
-        gas: "20000000"
+        gas: "200000000"
       })
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);
