@@ -1,15 +1,24 @@
 import React from "react";
-import ProductInfo from "./ProductInfo";
+import styled from "styled-components";
 
-export default ({ tokenId, description, title, D_day }) => {
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${props => props.theme.maxCardWidth};
+`;
+
+const Description = styled.p`
+  width: 96%;
+  font-size: 16px;
+  margin-bottom: 18px;
+  font-weight: 100;
+  line-height: 160%;
+`;
+
+export default ({ description }) => {
   return (
-    <div>
-      <ProductInfo
-        title={title}
-        D_day={D_day}
-        description={description}
-        tokenId={tokenId}
-      />
-    </div>
+    <Container>
+      <Description>{description}</Description>
+    </Container>
   );
 };

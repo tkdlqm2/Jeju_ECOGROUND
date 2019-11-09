@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -24,11 +23,9 @@ const TargetInfo = ({ D_day, tokenId }) => {
   
   return(
   <Container>
-    <Link to={`/makers/${tokenId}`}>
       <Description>{dateGap}일 남음</Description>
       <Description>{tokenId}% 달성</Description>
-      <Description>{tokenId}Klay 펀딩</Description>
-    </Link>
+      <Description>{tokenId}KLAY 펀딩</Description>
   </Container>)
 
 }
