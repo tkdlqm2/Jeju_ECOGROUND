@@ -18,9 +18,9 @@ contract EcoToken {
     using SafeMath for uint256;
 
 
-   constructor(uint256 total) public {  
+   constructor(uint256 total, address _address) public {  
 	totalSupply_ = total;
-	balances[msg.sender] = totalSupply_;
+	balances[_address] = totalSupply_; // 지갑주소 하드코딩 mapping
     }  
 
     function totalSupply() public view returns (uint256) {

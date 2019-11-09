@@ -7,6 +7,7 @@ import ui from "utils/ui";
 import MakersContract from "klaytn/MakersContract";
 import cav from "klaytn/caver";
 import * as makersActions from "redux/actions/makers";
+import EcoTokenContract from "klaytn/EcoTokenContract";
 
 const Container = styled.main`
   width: 100%;
@@ -175,7 +176,7 @@ const _removeMakers = tokenId => {
           .then(price => {
             if (!price) {
               return 0;
-            }
+            } // getTransactionReceipt _
             MakersContract.methods.showInvestor(tokenId).call()
               .then(buyer => {
                 if (!buyer) {
@@ -184,12 +185,14 @@ const _removeMakers = tokenId => {
                 } else {
                   console.log("buyer수 :  ", buyer.length);
                   console.log("returnKlay 함수 호출");
+
                   for (let i = 0; i < buyer.length; i++) {
                     MakersContract.methods.returnklay(buyer[i])
                       .send({
                         from: getWallet().address,
                         gas: "20000000",
-                        value: cav.utils.toPeb(price.toString(), "KLAY")
+                        value: cav.utils.toPeb(price.toString(), "KLAY"),
+                        // nonce: getAccount().address.account.nonce + i
                       })
                       .once("transactionHash", txHash => {
                         console.log("txHash:", txHash);
@@ -333,6 +336,19 @@ const prohibitMakers = e => {
 };
 
 
+// ------------------------------------------------------------------------------------
+//                        Eco Toekn Logic (ERC20)
+// ------------------------------------------------------------------------------------
+
+const _showMyToken = addressId => {
+  console.log("_showMyToken 호출");
+
+  EcoTokenContract.methods.balanceOf(addressId).call()
+    .then(result => {
+      console.log("총 보유 Eco Token : ", result);
+    });
+}
+
 
 
 
@@ -349,6 +365,12 @@ const test = (props) => {
     console.log(Makers)
     _check_master(Makers);
   }
+
+  const showMyToken = e => {
+    const showMyToken_value = e.target.value;
+    console.log(showMyToken_value);
+    _showMyToken(showMyToken_value);
+  };
 
   return (
     <Container>
@@ -376,6 +398,9 @@ const test = (props) => {
       </Button>
       <Button onClick={prohibitMakers} value={TokenId}>
         prohibitMakers
+      </Button>
+      <Button onClick={showMyToken} value={props.userAddress}>
+        ERC20_showMyToken
       </Button>
 
     </Container>
