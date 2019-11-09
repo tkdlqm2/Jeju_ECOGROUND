@@ -1,10 +1,12 @@
-import React         from "react";
-import styled        from "styled-components";
-import SubInfo       from "components/SubInfo";
-import SliderSet     from "components/SliderSet";
-import MakersDesc    from "components/MakersDesc";
-import OrderButton   from "components/OrderButton";
-import DeleteButton  from "components/DeleteButton";
+import React from "react";
+import styled from "styled-components";
+import MakersDesc from "components/MakersDesc";
+import SubInfo from "components/SubInfo";
+import SliderSet from "components/SliderSet";
+import OrderButton from "components/OrderButton";
+import DeleteButton from "components/DeleteButton";
+import MoreButton from "components/MoreButton";
+
 
 const Container = styled.div`
   position: relative;
@@ -76,11 +78,19 @@ const Title = styled.div`
   margin-bottom: 20px;
 `;
 
-const Price = styled.div`
+const PriceLine = styled.div``;
+
+const Price = styled.span`
   font-size: 20px;
   font-weight: 600;
+  margin-right: 20px;
 `;
 
+const EcoPower = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  color: #03A87C;
+`
 const MakersProduct = ({
   userAddress,
   isLoading,
@@ -120,7 +130,10 @@ const MakersProduct = ({
       </ImageContainer>
       <TitleAndPrice>
         <Title>{title}</Title>
-        <Price>{price} KLAY</Price>
+        <PriceLine>
+          <Price>{price} KLAY</Price>
+          <EcoPower>{price*10} ECO</EcoPower>
+        </PriceLine>
       </TitleAndPrice>
 
       <ColoredLine />
@@ -152,6 +165,8 @@ const MakersProduct = ({
           D_day={D_day}
         />
       </InfoContainer>
+
+      <MoreButton />
 
       <DeleteButton tokenId={tokenId} />
 
