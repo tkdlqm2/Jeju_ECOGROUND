@@ -22,8 +22,6 @@ const Container = props => {
   const MAX_IMAGE_SIZE    = 30000; // 30KB
   const MAX_IMAGE_SIZE_MB = 0.03; // 30KB
 
-  const hack = {url : ''};
-
   // TODO: 이미지 임시저장
   const handleFileChange = e => {
     const file = e.target.files[0];
@@ -35,9 +33,6 @@ const Container = props => {
                           setFile(file);
                           setFileName(file.name);
                           setFilePath(data);
-
-                          hack.url = data;
-                          console.log("hack : " + hack.url);
                        });
 
   };
@@ -57,13 +52,13 @@ const Container = props => {
       price      : priceValue,
       targetKlay : targetKlayValue,
       DDay       : D_dayValue,
-      imgArr     : hack.url
+      imgArr     : [filePath]
     });
 
     // TODO: 상품 등록 - 피드
     uploadItem(
       file,
-      hack.url,
+      filePath,
       titleValue,
       descriptionValue,
       targetKlayValue,

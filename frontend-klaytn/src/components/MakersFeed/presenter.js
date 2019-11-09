@@ -93,9 +93,7 @@ const MakersFeed = props => {
                   <Link to={`/makers/${tokenId}`}>
                     <ImageContainer>
                       <img
-                        src={
-                          "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
-                        }
+                        src={photo}
                         alt={title}
                       />
                     </ImageContainer>
