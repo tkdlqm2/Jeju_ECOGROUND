@@ -1,13 +1,17 @@
 import { axios, path } from '../config'
 
 
-const importer = {
+const dealService = {
     registerGood: (txHash) => {
-        return axios.post(`${path}/deal/register`, { txHash })
-            .then(res => {
-                return res.status == 200 ? true : false;
-            })
-    }
-}
+        const param = txHash;
+        const jwt = sessionStorage.getItem('jwt');
+        if(!jwt) return false;
 
-export default importer;
+        return axios.post(`${path}/deal/register`, param, {
+                    header: {'x-access-token' : jwt}
+                }).then(res => {
+                    return res.status === 200;
+                })
+    }
+};
+export default dealService;

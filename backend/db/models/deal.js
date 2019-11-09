@@ -2,7 +2,7 @@
 
 const tableConfig = (sequelize) => {
   return {
-    tableName: 'Maker',
+    tableName: 'Deal',
     sequelize,
     imestamps: true,
     paranoid: true,
