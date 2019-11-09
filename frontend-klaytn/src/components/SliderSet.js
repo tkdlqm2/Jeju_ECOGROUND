@@ -10,7 +10,7 @@ const SliderInfo = styled.div`
 const BoldText = styled.span`
   font-size: 18px;
   font-weight: 700;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 const GreyText = styled.span`
   font-size: 14px;
@@ -18,9 +18,19 @@ const GreyText = styled.span`
   color: ${props => props.theme.brownGrey};
 `;
 const First = styled.div`
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
 `;
 const Second = styled.div``;
+
+const GreenText = styled.span`
+  font-size: 20px;
+  font-weight: 700;
+  color: ${props => props.theme.lightGreen};
+  margin-right: 25px;
+`;
 
 class SliderSet extends Component {
   state = {
@@ -68,6 +78,10 @@ class SliderSet extends Component {
   render() {
     const { tokenId, price, status, D_day } = this.props;
 
+    const currentValue = Math.floor(
+      (this.state.donate / this.state.targetKlay) * 100
+    ).toString();
+
     const dayGap = new Date(D_day) - new Date();
     const daySeconds = 24 * 60 * 60 * 1000;
     const dateGap = parseInt(dayGap / daySeconds) + 1;
@@ -75,8 +89,11 @@ class SliderSet extends Component {
       <>
         <SliderInfo>
           <First>
-            <BoldText>{this.state.donate} KLAY 달성</BoldText>
-            <GreyText>목표금액 {this.state.targetKlay}KLAY</GreyText>
+            <span>
+              <BoldText>{this.state.donate} KLAY 달성</BoldText>
+              <GreyText>목표금액 {this.state.targetKlay}KLAY</GreyText>
+            </span>
+            <GreenText>{currentValue}%</GreenText>
           </First>
           <Second>
             <BoldText>{dateGap} 일 남음</BoldText>
@@ -89,6 +106,7 @@ class SliderSet extends Component {
             price={price}
             status={status}
             donate={this.state.donate}
+            currentValue={currentValue}
           />
         )}
       </>

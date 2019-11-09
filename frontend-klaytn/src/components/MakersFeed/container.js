@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MakersFeed from "./presenter";
 
 const Container = props => {
-  const { feed, userAddress, getFeed } = props;
+  const { feed, userAddress, getFeed, index } = props;
   const [isLoading, setIsLoading] = useState(true); //
 
   useEffect(() => {
@@ -14,7 +14,12 @@ const Container = props => {
   }, [feed, getFeed]); // return
 
   return (
-    <MakersFeed feed={feed} userAddress={userAddress} isLoading={isLoading} />
+    <MakersFeed
+      feed={feed}
+      userAddress={userAddress}
+      isLoading={isLoading}
+      index={index}
+    />
   );
 };
 

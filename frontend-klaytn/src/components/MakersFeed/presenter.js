@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductInfo from "../ProductInfo";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -56,26 +56,24 @@ const FeedContainer = styled.div`
 `;
 
 const MakersFeed = props => {
-  const { feed } = props;
-  console.log(feed);
+  const { feed, index } = props;
 
-  const statusOneFeed = [];
+  const homeFeed = [];
 
   {
     feed !== null &&
       feed.map(item => {
-        if (item.status == 1) {
-          statusOneFeed.push(item);
+        if (item.status == index) {
+          homeFeed.push(item);
         }
       });
   }
 
-  console.log("statusOneFeed: ", statusOneFeed);
   return (
     <Container>
       <FeedContainer>
-        {statusOneFeed !== null ? (
-          statusOneFeed.map(
+        {homeFeed &&
+          homeFeed.map(
             ({
               tokenId,
               buyer,
@@ -114,10 +112,7 @@ const MakersFeed = props => {
                 </FeedProduct>
               );
             }
-          )
-        ) : (
-          <FeedEmpty>Loading...</FeedEmpty>
-        )}
+          )}
       </FeedContainer>
     </Container>
   );

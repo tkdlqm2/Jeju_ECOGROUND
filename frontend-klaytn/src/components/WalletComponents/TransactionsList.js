@@ -34,14 +34,14 @@ const LeftBox = styled.div`
   height: 100%;
   float: left;
   box-sizing: border-box;
-`
+`;
 
 const RightBox = styled.div`
   width: 82%;
   height: 100%;
   float: right;
   box-sizing: border-box;
-`
+`;
 
 const TXtypeBox = styled.div`
   ${props => props.theme.whiteBox};
@@ -49,8 +49,8 @@ const TXtypeBox = styled.div`
   height: 100%;
   float: left;
   box-sizing: border-box;
-  background: #FAFAFA;
-`
+  background: #fafafa;
+`;
 
 const BlockBox = styled.div`
   width: 70%;
@@ -59,9 +59,9 @@ const BlockBox = styled.div`
   box-sizing: border-box;
   font-size: 24px;
   padding: 8px;
-  color: #17202E;
+  color: #17202e;
   font-weight: bold;
-`
+`;
 
 const ValueBox = styled.div`
   width: 30%;
@@ -71,46 +71,46 @@ const ValueBox = styled.div`
   font-size: 24px;
   padding: 8px;
   text-align: center;
-  color:#03A87C;
+  color: #03a87c;
   font-weight: bold;
-`
+`;
 
 const HashBox = styled.div`
   width: 100%;
   height: 40%;
   box-sizing: border-box;
-  clear:both;
-  float:left;
+  clear: both;
+  float: left;
   font-size: 16px;
   padding: 8px;
-  color: #999999;
-`
+  color: #cccccc;
+`;
 
 const transactionsList = [
   {
     TXType: "Value Transfer",
     Block: "11663906",
     Value: "0.5",
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7"
   },
   {
     TXType: "Value Transfer",
     Block: 11663905,
     Value: 0.5,
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd1",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd1"
   },
   {
     TXType: "Legacy",
     Block: 11663904,
     Value: 0.5,
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd2",
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd2"
   },
   {
     TXType: "Contract Execution",
     Block: 11663903,
     Value: 0.5,
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd3",
-  },
+    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd3"
+  }
 ];
 
 // const TXIcons = (TXType) => {
@@ -137,7 +137,12 @@ export default () => {
             <>
               <Transaction>
                 <LeftBox>
-                  <TXtypeBox><img src="https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg" width="68" height="68" />
+                  <TXtypeBox>
+                    <img
+                      src="https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+                      width="68"
+                      height="68"
+                    />
                     {/* <TXIcons /> */}
                   </TXtypeBox>
                 </LeftBox>

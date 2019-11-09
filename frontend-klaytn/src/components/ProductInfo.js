@@ -6,6 +6,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: ${props => props.theme.maxCardWidth};
+  padding: 0 20px;
 `;
 
 const Title = styled.h2`
