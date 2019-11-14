@@ -34,7 +34,7 @@ Because of Demo version, Id's values and Password's valuse are possible using ev
 
 ![version1](./images/Makers.png) <br><br>
 
-The feeds are made by ERC721. but picture is not working because of unconnect S3_address.<br><br>
+The feeds are made by ERC721. but picture is not working because of unconnect S3_address.<br><br><br>
 
 # Connect
 If you have a question, send email to tkdlqm2@likelion.org. 
