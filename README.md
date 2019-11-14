@@ -4,7 +4,9 @@ This service is a green product platform based on klaytn. klaytn is pulic blockC
 # Klaytn Network<br>
 ![version1](./images/network.png) <br><br>
 
-Makers made ERC721 tokens and Eco Token made ERC20 tocons. <br><br>
+Makers made ERC721 tokens and Eco Token made ERC20 tocons. If you do economic activity on this service, the eco power Token using ERC20 are sended by master address. These tokens can be used as a token of environmental contribution and mileage. Makers utilize smart contracts, and if the target klay is not reached or the period is over, the klay will be automatically refunded.
+
+<br><br>
 
 # Requirement<br>
 
