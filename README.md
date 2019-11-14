@@ -17,7 +17,16 @@ Makers made ERC721 tokens and Eco Token made ERC20 tocons. <br><br>
 First, git clone and command like this. <br><br>
 
 - truffle migrate --compile-all --reset --network klaytn  <br><br>
-It is a command to deploy to klaytn network. Then, Four file is update. (deployedABI, deployedABI2, deployedAddress, deployedAddress2). The files are used to connect klaytn network. So we must match the contents of each files where klaytn/MakersContract.js. 
+It is a command to deploy to klaytn network. Then, Four file is update. (deployedABI, deployedABI2, deployedAddress, deployedAddress2). The files are used to connect klaytn network. So we must match the contents of each files where klaytn/MakersContract.js. <br>
+
+![version1](./images/result.png) <br>
+This picture is the result of the command.<br>
+![version1](./images/address.png) <br>
+So the contents of results are written like this. Why copy and write is that our member using window OS doesn't use webpack. so It is impossible that call smart contract functions using webpack. 
+
+
+
+
 
 - yarn install <br>
 - yarn start <br>
