@@ -23,12 +23,18 @@ It is a command to deploy to klaytn network. Then, Four file is update. (deploye
 This picture is the result of the command.<br><br>
 ![version1](./images/address.png) <br><br>
 So the contents of results are written like this. Why copy and write is that our member using window OS doesn't use webpack. so It is impossible that call smart contract functions using webpack. 
-
-
-
-
-
 - yarn install <br>
 - yarn start <br>
 
 This command is how to start server.
+
+![version1](./images/mainPage.png) <br><br>
+
+Because of Demo version, Id's values and Password's valuse are possible using every values. Next part, You can only access the address baobab network address. You can get the address in baobab.net.<br><br>
+
+![version1](./images/Makers.png) <br><br>
+
+The feeds are made by ERC721. but picture is not working because of unconnect S3_address.<br><br>
+
+# Connect
+If you have a question, send email to tkdlqm2@likelion.org. 
