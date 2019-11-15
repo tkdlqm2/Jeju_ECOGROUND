@@ -9,7 +9,6 @@ import cav from "klaytn/caver";
 import EcoTokenContract from "klaytn/EcoTokenContract";
 import * as makersActions from "redux/actions/makers";
 import dealService from "../api/deal";
-import DatePicker from "../components/DatePicker";
 
 const Container = styled.main`
   width: 100%;
@@ -608,8 +607,6 @@ const test = props => {
   return (
     <Container>
       <MakersHeader />
-
-      <DatePicker />
       <Button onClick={remove} value={TokenId}>
         refund
       </Button>

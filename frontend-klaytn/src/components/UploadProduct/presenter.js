@@ -4,7 +4,18 @@ import InputFile from "components/InputFile";
 import Button from "components/Button";
 import styled from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
-import DatePicker from "../DatePicker";
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+
+const StyledKeyboardDatePicker = styled(KeyboardDatePicker)`
+  font-weight: 500;
+  width: 100%;
+`;
 
 const Container = styled.div``;
 
@@ -21,7 +32,7 @@ const Textarea = styled(TextareaAutosize)`
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.bgColor};
   min-height: 150px;
-  max-height: 250px;
+  max-height: 200px;
   font-size: 15px;
   padding: 15px;
   width: 100%;
@@ -57,7 +68,7 @@ const KlayInput = styled(Input)`
   text-align: right;
   font-weight: 600;
   font-size: 18px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 const UploadProduct = ({
@@ -71,7 +82,9 @@ const UploadProduct = ({
   description,
   targetKlay,
   price,
-  D_day
+  D_day,
+  selectedDate,
+  handleDateChange
 }) => {
   return (
     <Container>
@@ -85,7 +98,23 @@ const UploadProduct = ({
           <KlayInput label="목표 금액" placeholder={"0"} {...targetKlay} />
           <Klay>KLAY</Klay>
         </PriceWrapper>
-        <DatePicker />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="left">
+            <StyledKeyboardDatePicker
+              className="D_day"
+              disableToolbar
+              format="yyyy년 MM월 dd일"
+              margin="normal"
+              id="date-picker-dialog"
+              label="마감일을 선택해주세요"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date"
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
 
         <InputFile
           className="UploadPhoto__file"

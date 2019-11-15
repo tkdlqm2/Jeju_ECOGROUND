@@ -3,14 +3,14 @@ import UploadProduct from "./presenter";
 import imageCompression from "utils/imageCompression";
 import ui from "utils/ui";
 import useInput from "hooks/useInput";
-import makerApi from '../../api/maker';
+import makerApi from "../../api/maker";
 
 const Container = props => {
   const title = useInput("");
   const description = useInput("");
   const targetKlay = useInput("");
   const price = useInput("");
-  const D_day = useInput("");
+
   // const filePath = useInput("");
   const { uploadItem } = props;
   const [isCompressing, setIsCompressing] = useState(false);
@@ -18,6 +18,7 @@ const Container = props => {
   const [filePath, setFilePath] = useState("");
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
+  const [D_day, setD_day] = useState("");
 
   const MAX_IMAGE_SIZE = 30000; // 30KB
   const MAX_IMAGE_SIZE_MB = 0.03; // 30KB
@@ -25,7 +26,8 @@ const Container = props => {
   // TODO: 이미지 임시저장
   const handleFileChange = e => {
     const file = e.target.files[0];
-    let data = makerApi.tempSave(file)
+    let data = makerApi
+      .tempSave(file)
       .then(data => {
         return data[0].location;
       })
@@ -36,21 +38,50 @@ const Container = props => {
       });
   };
 
+  const today = new Date();
+
+  const [selectedDate, setSelectedDate] = React.useState(today);
+
+  const handleDateChange = date => {
+    const yearValue = date.getYear() + 1900;
+    const monthValue = date.getMonth() + 1;
+    const dateValue = date.getDate();
+
+    if (monthValue >= 10 && dateValue >= 10) {
+      const selectedValue = `${yearValue}-${monthValue}-${dateValue}`;
+      setSelectedDate(selectedValue);
+      console.log("Selected date: ", selectedValue);
+    } else if (monthValue >= 10 && dateValue < 10) {
+      const selectedValue = `${yearValue}-${monthValue}-0${dateValue}`;
+      setSelectedDate(selectedValue);
+      console.log("Selected date: ", selectedValue);
+    } else if (monthValue < 10 && dateValue >= 10) {
+      const selectedValue = `${yearValue}-0${monthValue}-${dateValue}`;
+      setSelectedDate(selectedValue);
+      console.log("Selected date: ", selectedValue);
+    } else if (monthValue < 10 && dateValue < 10) {
+      const selectedValue = `${yearValue}-0${monthValue}-0${dateValue}`;
+      setSelectedDate(selectedValue);
+      console.log("Selected date: ", selectedValue);
+    }
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
+
+    console.log("event:::", e);
 
     const titleValue = title.value;
     const descriptionValue = description.value;
     const targetKlayValue = targetKlay.value;
     const priceValue = price.value;
-    const D_dayValue = D_day.value;
 
     makerApi.register({
       title: titleValue,
       description: descriptionValue,
       price: priceValue,
       targetKlay: targetKlayValue,
-      DDay: D_dayValue,
+      DDay: D_day,
       imgArr: [filePath]
     });
 
@@ -61,7 +92,7 @@ const Container = props => {
       titleValue,
       descriptionValue,
       targetKlayValue,
-      D_dayValue,
+      selectedDate,
       priceValue
     );
 
@@ -98,7 +129,9 @@ const Container = props => {
       targetKlay={targetKlay}
       price={price}
       isCompressing={isCompressing}
-      D_day={D_day}
+      D_day={selectedDate}
+      handleDateChange={handleDateChange}
+      selectedDate={selectedDate}
     />
   );
 };

@@ -7,10 +7,10 @@ const InputFileContainer = styled.div`
   font-size: 14px;
   border: 1px solid ${props => props.theme.lightGrey};
   border-radius: 5px;
-  margin-top: 70px;
+  margin-top: 60px;
   height: 50px;
   &--err {
-    border-color: $alert-red;
+    border-color: ${props => props.theme.alertRed};
   }
 `;
 const Label = styled.p`
@@ -19,7 +19,7 @@ const Label = styled.p`
   font-size: 12px;
   font-weight: bold;
   line-height: 1;
-  color: ${props => props.theme.brownGrey};
+  color: ${props => props.theme.black};
 `;
 
 const InputButton = styled.label`
@@ -51,10 +51,11 @@ const FileName = styled.div`
   float: left;
   padding: 16px 18px;
   text-align: left;
-  color: ${props => props.theme.middleGrey};
+  color: ${props => props.theme.brownGrey};
+  font-size: 12px;
 
   &--empty {
-    color: ${props => props.theme.middleGrey};
+    color: ${props => props.theme.brownGrey};
   }
 `;
 const Err = styled.p`
