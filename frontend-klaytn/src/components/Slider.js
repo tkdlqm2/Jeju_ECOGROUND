@@ -44,7 +44,8 @@ const theme = createMuiTheme({
 const StyledSlider = withStyles({
   root: {
     color: "#17202E",
-    height: 8
+    height: 8,
+    cursor: "auto"
   },
   thumb: {
     height: 20,

@@ -4,17 +4,22 @@ import ui from "../utils/ui";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: 650px;
+  width: 100%;
   height: 100%;
   position: fixed;
-  top: 60px;
+  top: 0;
+  left: 0;
   z-index: 200;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const ModalDiv = styled.div`
   width: 100%;
   max-width: ${props => props.theme.maxCardWidth};
+  background-color: white;
+
+  ${props => props.theme.fixedCenter};
+  ${props => props.theme.cardBox};
 `;
 
 const ModalHeader = styled.h2`

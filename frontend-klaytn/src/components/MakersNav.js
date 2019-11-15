@@ -17,8 +17,8 @@ const Root = styled(Paper)`
   flex-grow: 0;
   width: ${props => props.theme.maxCardWidth};
   min-height: 100%;
-  border: 0 none;
   background-color: ${props => props.theme.bgColor};
+  box-shadow: none;
 `;
 
 const StyledTabs = styled(Tabs)`
@@ -33,24 +33,24 @@ const StyledTab = styled(Tab)`
 `;
 
 const StyledBox = styled(Box)`
-  border: 0 none;
   background-color: ${props => props.theme.bgColor};
 `;
 
-const StyledTypo = styled(Typography)`
-  border: 0 none;
-`;
+const StyledTypo = styled(Typography)``;
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    border: 0
+    border: 0,
+    boxShadow: "none"
+  },
+  elevation1: {
+    boxShadow: "none"
   }
 }));
 
 function TabPanel(props) {
-  const classes = useStyles();
   const { children, value, index, theme, ...other } = props;
 
   return (
@@ -118,7 +118,11 @@ export default function SimpleTabs() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Root>
+      <Root
+        classes={{
+          elevation1: classes.elevation1
+        }}
+      >
         <AppBar position="relative">
           <StyledTabs
             value={value}

@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import GlobalStyles from "./styles/GlobalStyles";
 import Theme from "./styles/Theme";
 import Routes from "./Routes";
+import Modal from "components/Modal";
 
 import * as authActions from "./redux/actions/auth";
 
@@ -53,6 +54,7 @@ class App extends Component {
           <Router>
             <>
               <Wrapper>
+                <Modal />
                 <Routes isLoggedIn={isLoggedIn} />
               </Wrapper>
             </>
