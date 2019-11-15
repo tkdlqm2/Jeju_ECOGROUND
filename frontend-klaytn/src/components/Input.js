@@ -8,7 +8,7 @@ const Container = styled.input`
   border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.bgColor};
   height: 50px;
-  font-size: 12px;
+  font-size: 14px;
   padding: 0px 15px;
   width: 100%;
   margin-bottom: 15px;

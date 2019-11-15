@@ -13,7 +13,7 @@ const Container = styled.div`
   justify-content: flex-end;
   width: ${props => props.theme.maxCardWidth};
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
 `;
 const theme = createMuiTheme({
   palette: {

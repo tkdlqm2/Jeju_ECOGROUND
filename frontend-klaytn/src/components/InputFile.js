@@ -7,7 +7,7 @@ const InputFileContainer = styled.div`
   font-size: 14px;
   border: 1px solid ${props => props.theme.lightGrey};
   border-radius: 5px;
-  margin-top: 40px;
+  margin-top: 70px;
   height: 50px;
   &--err {
     border-color: $alert-red;

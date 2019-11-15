@@ -8,7 +8,8 @@ import MakersContract from "klaytn/MakersContract";
 import cav from "klaytn/caver";
 import EcoTokenContract from "klaytn/EcoTokenContract";
 import * as makersActions from "redux/actions/makers";
-import dealService from '../api/deal';
+import dealService from "../api/deal";
+import DatePicker from "../components/DatePicker";
 
 const Container = styled.main`
   width: 100%;
@@ -27,57 +28,49 @@ const Button = styled.button`
   width: 100px;
 `;
 
-
-
-
-
 // TODO: Mysql 호출을 통해서 txAddress 값을 불러와야함.
 // --------------------------------------------------
-//  마이페이지 - 구매목록 호출 
+//  마이페이지 - 구매목록 호출
 // --------------------------------------------------
 
 // TODO: 여기 41번 라인에서 txArray가 529번 에서 DB에서 뽑은 TxArray를 넣어줘야함
 
 const _showTracking = data => {
-
   // [1] sesstion storag에 있는 JWT로 조회
 
   console.log("_showTracking 호출");
   console.log(data);
-  console.log("-----------------------")
+  console.log("-----------------------");
   console.log(data[0]);
   console.log(data[0].Deals[0].id);
   console.log("data.length: ", data.length);
   for (let i = 0; i < data.length; i++) {
     cav.klay.getTransactionReceipt(data[i].Deals[i].hash).then(result => {
       var resultList = new Array();
-      resultList[0] = result.type.toString();         // tx타입
-      resultList[1] = result.blockNumber.toString();  // 블록번호
-      resultList[2] = result.value.toString();        // value 값 (가격)
-      resultList[3] = data[i].Deals[i].hash;           // tx주소값
+      resultList[0] = result.type.toString(); // tx타입
+      resultList[1] = result.blockNumber.toString(); // 블록번호
+      resultList[2] = result.value.toString(); // value 값 (가격)
+      resultList[3] = data[i].Deals[i].hash; // tx주소값
 
       console.log(resultList);
       return resultList;
     });
   }
-}
-
-
-
-
+};
 
 // --------------------------------------------------
-//  친환경 제품 구매 
+//  친환경 제품 구매
 // --------------------------------------------------
 
-const _purchaseGoods = (price) => {
+const _purchaseGoods = price => {
   console.log("_purchaseGoods 호출");
   console.log("price : ", price);
 
   // TODO: param1 값을 상품 주인의 값에 하드 코딩.
 
   getCount(getWallet().address).then(cnt => {
-    MakersContract.methods.purchaseToken("0xc4b83caa6a8c07168cec216bae6813f1a165ee2f", price)
+    MakersContract.methods
+      .purchaseToken("0xc4b83caa6a8c07168cec216bae6813f1a165ee2f", price)
       .send({
         from: getWallet().address,
         gas: "200000000",
@@ -110,7 +103,8 @@ const _purchaseGoods = (price) => {
     console.log("rewardToken 호출");
     console.log("---------------------------");
 
-    EcoTokenContract.methods.transfer(getWallet().address, 5)
+    EcoTokenContract.methods
+      .transfer(getWallet().address, 5)
       .send({
         from: getWallet().address,
         gas: "200000000",
@@ -131,15 +125,9 @@ const _purchaseGoods = (price) => {
           message: error.toString()
         });
       });
-
   });
   // TODO: 구매 완료 후  구매완료 alert 창을 띄우고 나서 그 창을 확인 했을 때 지급 하는 식으로 해야할듯.
-
-}
-
-
-
-
+};
 
 // --------------------------------------------------
 // Makers 목표 금액 확인
@@ -161,24 +149,22 @@ const _showTargetKlay = tokenId => {
     });
 };
 
-
-
-
-
 // --------------------------------------------------
 // 메이커스 강제 종료
 // --------------------------------------------------
 //
 
 const _prohibitMakers = tokenId => {
-
-  MakersContract.methods.showMakersState(tokenId).call()
+  MakersContract.methods
+    .showMakersState(tokenId)
+    .call()
     .then(result => {
       if (result == 0) {
         console.log("이미 종료된 Makers 입니다.");
         return 0;
       } else {
-        MakersContract.methods.forcedClosure(tokenId)
+        MakersContract.methods
+          .forcedClosure(tokenId)
           .send({
             from: getWallet().address,
             gas: "200000000"
@@ -206,12 +192,8 @@ const _prohibitMakers = tokenId => {
             });
           });
       }
-    })
-}
-
-
-
-
+    });
+};
 
 // --------------------------------------------------
 //  MyMakers 확인 (master)
@@ -220,33 +202,9 @@ const _prohibitMakers = tokenId => {
 const _checkMyMakers = addressId => {
   console.log("checkMyMakers 호출");
 
-  MakersContract.methods.showMyMakers_cutsomer(addressId).call()
-    .then(Makers => {
-      if (Makers.length == 0) {
-        console.log("해당되는 Makers가 없습니다.");
-        return 0;
-      }
-      console.log("-----------------------------")
-      for (let i = Makers.length; i > 0; i--) {
-        console.log(MakersContract.methods.getMakers(i));
-      }
-      console.log("-----------------------------")
-
-    });
-}
-
-
-
-
-
-// --------------------------------------------------
-// MyMakers 확인 (운영진)
-// --------------------------------------------------
-
-const _check_master = addressId => {
-  console.log("_check_master 호출 됨");
-
-  MakersContract.methods.showMyMakers(addressId).call()
+  MakersContract.methods
+    .showMyMakers_cutsomer(addressId)
+    .call()
     .then(Makers => {
       if (Makers.length == 0) {
         console.log("해당되는 Makers가 없습니다.");
@@ -256,13 +214,32 @@ const _check_master = addressId => {
       for (let i = Makers.length; i > 0; i--) {
         console.log(MakersContract.methods.getMakers(i));
       }
-      console.log("-----------------------------")
+      console.log("-----------------------------");
     });
-}
+};
 
+// --------------------------------------------------
+// MyMakers 확인 (운영진)
+// --------------------------------------------------
 
+const _check_master = addressId => {
+  console.log("_check_master 호출 됨");
 
-
+  MakersContract.methods
+    .showMyMakers(addressId)
+    .call()
+    .then(Makers => {
+      if (Makers.length == 0) {
+        console.log("해당되는 Makers가 없습니다.");
+        return 0;
+      }
+      console.log("-----------------------------");
+      for (let i = Makers.length; i > 0; i--) {
+        console.log(MakersContract.methods.getMakers(i));
+      }
+      console.log("-----------------------------");
+    });
+};
 
 // --------------------------------------------------
 // Makers 상태 확인함수.
@@ -271,15 +248,13 @@ const _check_master = addressId => {
 const _showState = tokenId => {
   console.log("showState 함수 호출");
 
-  MakersContract.methods.checkMakersStatus(tokenId).call()
+  MakersContract.methods
+    .checkMakersStatus(tokenId)
+    .call()
     .then(state => {
       console.log("state: ", state);
     });
 };
-
-
-
-
 
 // --------------------------------------------------
 //  Makers 현재 모금액 확인
@@ -301,32 +276,34 @@ const _checkDonate = tokenId => {
     });
 };
 
-
-
-
 // --------------------------------------------------
 //  Makers 임의 종료 (투자한 Klay 환불 처리.)
 // --------------------------------------------------
 
 async function getCount(address) {
-  const cnt = await cav.klay.getTransactionCount(address)
-  return cnt
+  const cnt = await cav.klay.getTransactionCount(address);
+  return cnt;
 }
-
 
 const _removeMakers = tokenId => {
   console.log("refund 함수 호출");
   console.log("showMakersState 함수 호출");
 
-  MakersContract.methods.showMakersState(tokenId).call()
+  MakersContract.methods
+    .showMakersState(tokenId)
+    .call()
     .then(result => {
       if (result == 0) {
-        MakersContract.methods.showMakersPrice(tokenId).call()
+        MakersContract.methods
+          .showMakersPrice(tokenId)
+          .call()
           .then(price => {
             if (!price) {
               return 0;
             } // getTransactionReceipt _
-            MakersContract.methods.showInvestor(tokenId).call()
+            MakersContract.methods
+              .showInvestor(tokenId)
+              .call()
               .then(buyer => {
                 if (!buyer) {
                   console.log("투자자가 없어서 환불 처리는 없습니다.");
@@ -336,7 +313,8 @@ const _removeMakers = tokenId => {
                   console.log("returnKlay 함수 호출");
                   getCount(getWallet().address).then(cnt => {
                     for (let i = 0; i < buyer.length; i++) {
-                      MakersContract.methods.returnklay(buyer[i])
+                      MakersContract.methods
+                        .returnklay(buyer[i])
                         .send({
                           from: getWallet().address,
                           gas: "20000000",
@@ -344,7 +322,6 @@ const _removeMakers = tokenId => {
                           nonce: cnt + i
                         })
                         .once("transactionHash", txHash => {
-
                           // TODO : param1 : txHash
                           // TODO : 여기
                           dealService.registerDeal(txHash);
@@ -373,54 +350,50 @@ const _removeMakers = tokenId => {
                           });
                         });
                     }
-
                   });
-
-
                 }
-              })
-          })
+              });
+          });
       } else {
         console.log("종료된 Makers가 아니라 환불 처리가 불가능합니다.");
       }
     });
-}
-
-
-
-
+};
 
 // --------------------------------------------------
-//  Makers 공동구매 
+//  Makers 공동구매
 // --------------------------------------------------
 
 const _investMakers = tokenId => {
   console.log("invest", tokenId);
 
-
-  MakersContract.methods.showMakersState(tokenId).call()
+  MakersContract.methods
+    .showMakersState(tokenId)
+    .call()
     .then(result => {
-      if ((result === 0) || (result === 2)) {
+      if (result === 0 || result === 2) {
         console.log("종료된 메이커스 입니다.");
         return 0;
       } else {
-
-        MakersContract.methods.prohibitOverlap(tokenId).call()
+        MakersContract.methods
+          .prohibitOverlap(tokenId)
+          .call()
           .then(result2 => {
             if (result2 == false) {
               console.log("이미 참여한 Makers 입니다.");
               return 0;
             } else {
-
-              MakersContract.methods.showMakersPrice(tokenId).call()
+              MakersContract.methods
+                .showMakersPrice(tokenId)
+                .call()
                 .then(price => {
                   if (!price) {
                     return 0;
                   }
 
                   getCount(getWallet().address).then(cnt => {
-
-                    MakersContract.methods.investMakers(tokenId)
+                    MakersContract.methods
+                      .investMakers(tokenId)
                       .send({
                         from: getWallet().address,
                         gas: "200000000",
@@ -433,7 +406,6 @@ const _investMakers = tokenId => {
                         // TODO : param1 : txHash
                         // TODO : 여기!
                         dealService.registerDeal(txHash);
-
 
                         ui.showToast({
                           status: "pending",
@@ -456,17 +428,18 @@ const _investMakers = tokenId => {
                           message: error.toString()
                         });
                       });
-                  })
+                  });
                 });
 
               console.log("------------------------------------");
               console.log("reward Eco power");
               console.log("------------------------------------");
 
-              EcoTokenContract.methods.transfer(getWallet().address, 3)
+              EcoTokenContract.methods
+                .transfer(getWallet().address, 3)
                 .send({
                   from: getWallet().address,
-                  gas: "200000000",
+                  gas: "200000000"
                 })
                 .once("receipt", receipt => {
                   console.log("Eco power 영수증");
@@ -482,20 +455,24 @@ const _investMakers = tokenId => {
                     status: "error",
                     message: error.toString()
                   });
-                })
-
+                });
             }
-          })
+          });
       }
     });
 };
 
 const price = 1;
 const TokenId = 1;
-const txAddress = "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
+const txAddress =
+  "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
 const txArray = [
-  { data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444" },
-  { data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444" },
+  {
+    data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444"
+  },
+  {
+    data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444"
+  },
   { data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444" }
 ];
 
@@ -511,7 +488,6 @@ const remove = e => {
   _removeMakers(remove_value);
 };
 
-
 // TokenID로 하드코딩 되어 있어서, 해당 Makers 의 TokenID 값을 불러와서 이 함수 불러와주면 됨.
 const checkDonate = e => {
   const checkDonate_value = e.target.value;
@@ -523,7 +499,7 @@ const showTargetKlay = e => {
   const showTarget_value = e.target.value;
   console.log(showTarget_value);
   _showTargetKlay(showTarget_value);
-}
+};
 
 const showState = e => {
   const state_value = e.target.value;
@@ -538,11 +514,9 @@ const prohibitMakers = e => {
   _prohibitMakers(prohibit_value);
 };
 
-
 // ------------------------------------------------------------------------------------
 //                        Eco Toekn Logic (ERC20)
 // ------------------------------------------------------------------------------------
-
 
 // ----------------------
 // 보유한 Eco Token 확인
@@ -551,11 +525,13 @@ const prohibitMakers = e => {
 const _showMyToken = addressId => {
   console.log("_showMyToken 호출");
 
-  EcoTokenContract.methods.balanceOf(addressId).call()
+  EcoTokenContract.methods
+    .balanceOf(addressId)
+    .call()
     .then(result => {
       console.log("총 보유 Eco Token : ", result);
     });
-}
+};
 
 // ----------------------
 // Eco Token 보상
@@ -564,10 +540,11 @@ const _showMyToken = addressId => {
 const _rewardToken = addressId => {
   console.log("_rewardToken 호출");
 
-  EcoTokenContract.methods.transfer(addressId, 10)
+  EcoTokenContract.methods
+    .transfer(addressId, 10)
     .send({
       from: getWallet().address,
-      gas: "200000000",
+      gas: "200000000"
     })
     .once("receipt", receipt => {
       ui.showToast({
@@ -583,11 +560,10 @@ const _rewardToken = addressId => {
         status: "error",
         message: error.toString()
       });
-    })
+    });
+};
 
-}
-
-const test = (props) => {
+const test = props => {
   const check_customer = e => {
     // props._showMyMakers(props.userAddress);
     const checkMyMakers = e.target.value;
@@ -597,9 +573,9 @@ const test = (props) => {
 
   const check_master = e => {
     const Makers = e.target.value;
-    console.log(Makers)
+    console.log(Makers);
     _check_master(Makers);
-  }
+  };
 
   const showMyToken = e => {
     const showMyToken_value = e.target.value;
@@ -618,7 +594,7 @@ const test = (props) => {
   const rewardToken = e => {
     const reward_value = e.target.value;
     console.log("reward_value : ", reward_value);
-    _rewardToken(reward_value)
+    _rewardToken(reward_value);
   };
 
   const purchaseGoods = e => {
@@ -627,12 +603,13 @@ const test = (props) => {
     _purchaseGoods(purchaseGoods_value);
   };
 
-
   // TODO: 529번 라인에서 txArray 에 DB 저장된 값이 들어가야함.
 
   return (
     <Container>
       <MakersHeader />
+
+      <DatePicker />
       <Button onClick={remove} value={TokenId}>
         refund
       </Button>
@@ -669,7 +646,6 @@ const test = (props) => {
       <Button onClick={purchaseGoods} value={price}>
         Buy_Goods
       </Button>
-
     </Container>
   );
 };

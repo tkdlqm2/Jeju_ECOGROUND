@@ -40,10 +40,7 @@ const StyledTypo = styled(Typography)``;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    border: 0,
-    boxShadow: "none"
+    zIndex: 1
   },
   elevation1: {
     boxShadow: "none"
@@ -123,7 +120,12 @@ export default function SimpleTabs() {
           elevation1: classes.elevation1
         }}
       >
-        <AppBar position="relative">
+        <AppBar
+          position="relative"
+          classes={{
+            root: classes.root
+          }}
+        >
           <StyledTabs
             value={value}
             onChange={handleChange}
