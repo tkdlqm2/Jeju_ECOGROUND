@@ -90,18 +90,10 @@ const EcoPower = styled.span`
   font-weight: 600;
   color: #03a87c;
 `;
-const MakersProduct = ({
-  userAddress,
-  isLoading,
-  likeCount,
-  isLiked,
-  setIsLiked,
-  setLikeCount,
-  currentItem,
-  toggleLike,
-  product
-}) => {
-  console.log("product!!! : ", product);
+const MakersProduct = ({ userAddress, product }) => {
+  {
+    product && console.log("makers product: ", product);
+  }
   const { ...item } = product;
   const {
     tokenId,
@@ -119,7 +111,15 @@ const MakersProduct = ({
   return (
     <Container>
       <ImageContainer>
-        <Image key={tokenId} src={photo} showing={true} />
+        <Image
+          key={tokenId}
+          src={
+            photo &&
+            photo &&
+            "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+          }
+          showing={true}
+        />
       </ImageContainer>
       <TitleAndPrice>
         <Title>{title}</Title>
@@ -133,19 +133,24 @@ const MakersProduct = ({
 
       <InfoContainer>
         {/* <TargetInfo tokenId={tokenId} description={description} D_day={D_day} /> */}
-        <SliderSet
-          targetKlay={targetKlay}
-          price={price}
-          status={status}
-          D_day={D_day}
-          tokenId={tokenId}
-        />
+
+        {product && (
+          <SliderSet
+            targetKlay={targetKlay}
+            price={price}
+            status={status}
+            D_day={D_day}
+            tokenId={tokenId}
+          />
+        )}
       </InfoContainer>
 
       <ColoredLine />
 
       <InfoContainer>
-        <SubInfo tokenId={tokenId} D_day={D_day} targetKlay={targetKlay} />
+        {product && (
+          <SubInfo tokenId={tokenId} D_day={D_day} targetKlay={targetKlay} />
+        )}
       </InfoContainer>
 
       <ColoredLine />

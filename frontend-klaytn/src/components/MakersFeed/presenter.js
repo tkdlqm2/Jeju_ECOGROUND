@@ -76,21 +76,26 @@ const MakersFeed = props => {
           homeFeed.map(
             ({
               tokenId,
-              buyer,
               photo,
               title,
               description,
               targetKlay,
               price,
               D_day,
-              status,
-              timestamp
+              status
             }) => {
               return (
                 <FeedProduct key={tokenId}>
                   <Link to={`/makers/${tokenId}`}>
                     <ImageContainer>
-                      <img src={photo} alt={title} />
+                      <img
+                        src={
+                          photo &&
+                          photo &&
+                          "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
+                        }
+                        alt={title}
+                      />
                     </ImageContainer>
                   </Link>
                   <InfoContainer>
@@ -116,6 +121,11 @@ const MakersFeed = props => {
       </FeedContainer>
     </Container>
   );
+};
+
+MakersFeed.defaultProps = {
+  photo:
+    "https://1.bp.blogspot.com/-y1m-3XnfuPg/XcEykIQLkNI/AAAAAAAAAB0/R3q6WDU_9zwbLtwEoeyqehUH_PPz3SdogCLcBGAsYHQ/s1600/Repurposed%2Bvinyl%2Bwallet.png"
 };
 
 export default MakersFeed;

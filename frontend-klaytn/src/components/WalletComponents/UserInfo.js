@@ -4,8 +4,11 @@ import AccountCard from "./AccountCard";
 import Avatar from "components/Avatar";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Tooltip from "@material-ui/core/Tooltip";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 const Container = styled.div`
   background-color: ${props => props.theme.headerColor};
@@ -67,6 +70,25 @@ export default ({ address, balance }) => {
     }
   });
 
+  const LightTooltip = withStyles(theme => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: "rgba(0, 0, 0, 0.87)",
+      boxShadow: theme.shadows[1],
+      fontSize: 11
+    }
+  }))(Tooltip);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -79,7 +101,9 @@ export default ({ address, balance }) => {
             />
             <Avatar
               size={"md"}
-              url={"https://material-ui.com/static/images/avatar/1.jpg"}
+              url={
+                "https://s.gravatar.com/avatar/b5f8dac7526f9ef941d739a78a5ed1fb?d=mm"
+              }
             />
           </RightCol>
         </Wrapper>
@@ -87,9 +111,26 @@ export default ({ address, balance }) => {
           <WalletAddress>Wallet Address</WalletAddress>
           {address}
           <Span />
-          <CopyContainer>
-            <FileCopyIcon fontSize={"small"} />
-          </CopyContainer>
+          <ClickAwayListener onClickAway={handleTooltipClose}>
+            <LightTooltip
+              placement="right"
+              PopperProps={{
+                disablePortal: true
+              }}
+              onClose={handleTooltipClose}
+              open={open}
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+              title="Copied!"
+            >
+              <CopyToClipboard text={address}>
+                <CopyContainer onClick={handleTooltipOpen}>
+                  <FileCopyIcon style={{ fontSize: 20 }} />
+                </CopyContainer>
+              </CopyToClipboard>
+            </LightTooltip>
+          </ClickAwayListener>
         </Address>
         <AccountCard address={address} balance={balance} />
       </Container>
