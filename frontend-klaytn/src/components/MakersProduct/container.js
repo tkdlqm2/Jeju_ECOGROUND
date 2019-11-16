@@ -49,7 +49,7 @@ export default withRouter(
       } else {
         setIsLoading(false);
       }
-    }, [feed]);
+    }, [feed, getFeed]);
 
     const { ...feedData } = feed;
 

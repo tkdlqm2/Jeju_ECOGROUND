@@ -162,16 +162,15 @@ export const uploadItem = (
   reader.readAsArrayBuffer(file);
   reader.onloadend = () => {
     console.log("onloadend");
-    const buffer = Buffer.from(reader.result);
+    // const buffer = Buffer.from(reader.result);
     /**
      * Add prefix `0x` to hexString
      * to recognize hexString as bytes by contract
      */
-    const hexString = "0x" + buffer.toString("hex");
-    console.log("hexString");
+    // const hexString = "0x" + buffer.toString("hex");
 
     //.uploadMakers(hexString /* URL */, title, description, targetKlay, D_day, price)
-    // TODO: 
+    // TODO:
     MakersContract.methods
       .uploadMakers(filePath, title, description, targetKlay, D_day, price)
       .send({
@@ -181,7 +180,7 @@ export const uploadItem = (
       .once("transactionHash", txHash => {
         console.log("txHash:", txHash);
         ui.showToast({
-          status: "pending", 
+          status: "pending",
           message: `Sending a transaction... (uploadMakers)`,
           txHash
         });

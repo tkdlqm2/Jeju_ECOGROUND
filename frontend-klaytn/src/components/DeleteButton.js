@@ -25,7 +25,7 @@ const _prohibitMakers = tokenId => {
     .showMakersState(tokenId)
     .call()
     .then(result => {
-      if (result == 0) {
+      if (result === 0) {
         console.log("이미 종료된 Makers 입니다.");
         return 0;
       } else {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Slider from "@material-ui/core/Slider";
 import styled from "styled-components";
 import { createMuiTheme } from "@material-ui/core/styles";

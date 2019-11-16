@@ -91,9 +91,6 @@ const EcoPower = styled.span`
   color: #03a87c;
 `;
 const MakersProduct = ({ userAddress, product }) => {
-  {
-    product && console.log("makers product: ", product);
-  }
   const { ...item } = product;
   const {
     tokenId,
@@ -105,8 +102,6 @@ const MakersProduct = ({ userAddress, product }) => {
     D_day,
     price
   } = item;
-
-  const deleteMakers = e => {};
 
   return (
     <Container>

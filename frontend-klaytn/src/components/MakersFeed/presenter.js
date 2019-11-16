@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ProductInfo from "../ProductInfo";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -40,11 +40,6 @@ const InfoContainer = styled.div`
   padding: 24px 24px 24px 10px;
 `;
 
-const FeedEmpty = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-`;
-
 const FeedContainer = styled.div`
   position: relative;
   width: 100%;
@@ -60,14 +55,12 @@ const MakersFeed = props => {
 
   const homeFeed = [];
 
-  {
-    feed !== null &&
-      feed.map(item => {
-        if (item.status == index) {
-          homeFeed.push(item);
-        }
-      });
-  }
+  feed !== null &&
+    feed.map(item => {
+      const indexString = JSON.stringify(index);
+      if (item.status === indexString) homeFeed.push(item);
+      return null;
+    });
 
   return (
     <Container>

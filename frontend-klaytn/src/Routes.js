@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Auth from "pages/Auth";
-import Home from "pages/Home";
 import Makers from "pages/Makers";
 import Wallet from "pages/Wallet";
 import MakersDetail from "pages/MakersDetail";

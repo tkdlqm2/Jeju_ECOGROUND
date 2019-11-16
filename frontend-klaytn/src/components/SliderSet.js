@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { Component } from "react";
 import Slider from "components/Slider";
 import styled from "styled-components";
 import MakersContract from "klaytn/MakersContract";
@@ -53,8 +53,6 @@ class SliderSet extends Component {
   };
 
   _checkDonate = tokenId => {
-    console.log("checkNodate 호출");
-
     MakersContract.methods
       .parentStateMakers(tokenId)
       .call()
@@ -76,7 +74,7 @@ class SliderSet extends Component {
   }
 
   render() {
-    const { tokenId, price, status, D_day } = this.props;
+    const { price, status, D_day } = this.props;
 
     const currentValue = Math.floor(
       (this.state.donate / this.state.targetKlay) * 100

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import CardGiftcardRoundedIcon from "@material-ui/icons/CardGiftcardRounded";
 import CachedIcon from "@material-ui/icons/Cached";
@@ -80,8 +80,6 @@ class AccountCard extends Component {
     ecoPower: 0
   };
   _showMyToken = addressId => {
-    console.log("_showMyToken 호출", addressId);
-
     EcoTokenContract.methods
       .balanceOf(addressId)
       .call()
@@ -100,7 +98,7 @@ class AccountCard extends Component {
   }
 
   render() {
-    const { balance, ecoPower } = this.props;
+    const { balance } = this.props;
     const balanceFloor = Math.floor(balance * 10000) / 10000;
 
     return (

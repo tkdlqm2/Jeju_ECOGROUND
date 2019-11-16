@@ -11,7 +11,7 @@ const Container = props => {
     } else {
       setIsLoading(false);
     }
-  }, [feed, getFeed]); // return
+  }, [feed, getFeed]);
 
   return (
     <MakersFeed

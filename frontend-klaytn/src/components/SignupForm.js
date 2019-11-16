@@ -4,7 +4,7 @@ import Input from "./Input";
 import Button from "./Button";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
-import userApi  from '../api/user';
+import userApi from "../api/user";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,14 +24,15 @@ const SignupButton = styled(Button)`
 `;
 
 const LogoImage = styled.img.attrs({
-  src: "https://1.bp.blogspot.com/-Y4N0BKHt0x0/XcURWNtr-XI/AAAAAAAAADY/EIrCmxnBMB4y9u_rVOc6bjq8_TJgfXgdACLcBGAsYHQ/s1600/Long%2BLogo.png"
+  src:
+    "https://1.bp.blogspot.com/-Y4N0BKHt0x0/XcURWNtr-XI/AAAAAAAAADY/EIrCmxnBMB4y9u_rVOc6bjq8_TJgfXgdACLcBGAsYHQ/s1600/Long%2BLogo.png"
 })`
   width: 304px;
   height: 60px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 30px;
-`
+`;
 
 export default () => {
   const [privateKey, setPrivateKey] = useState(null);
@@ -48,27 +49,25 @@ export default () => {
     e.preventDefault();
 
     if (email.value !== "" && username.value !== "" && password.value !== "") {
-      
       const param = {
-        email    : email.value,
-        name     : username.value,
-        password : password.value
-      }
-      
-      if(userApi.signup(param)) {
+        email: email.value,
+        name: username.value,
+        password: password.value
+      };
+
+      if (userApi.signup(param)) {
         // TODO: 회원가입 성공액션
         return true;
       } else {
         // TODO: 회원가입 실패액션
         return false;
       }
-      console.log(email.value, username.value, password.value);
     }
   };
 
   return (
     <Wrapper>
-      <LogoImage/>
+      <LogoImage />
       <form onSubmit={onSubmit}>
         <Input
           label="Create new account"
@@ -76,7 +75,7 @@ export default () => {
           {...username}
         />
         <Input placeholder={"Password"} {...password} type="password" />
-        <Input placeholder={"Email"} {...email} type="email"          />
+        <Input placeholder={"Email"} {...email} type="email" />
         <br />
         <br />
         <SignupInput

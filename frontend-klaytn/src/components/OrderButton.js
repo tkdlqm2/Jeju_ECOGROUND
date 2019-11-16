@@ -6,8 +6,7 @@ import cav from "klaytn/caver";
 import ui from "utils/ui";
 import { getWallet } from "utils/crypto";
 import EcoTokenContract from "klaytn/EcoTokenContract";
-import * as makersActions from "redux/actions/makers";
-import dealService from '../api/deal';
+import dealService from "../api/deal";
 
 const Container = styled.div`
   position: relative;
@@ -70,37 +69,41 @@ const OrderButton = styled.button`
 `;
 
 async function getCount(address) {
-  const cnt = await cav.klay.getTransactionCount(address)
-  return cnt
+  const cnt = await cav.klay.getTransactionCount(address);
+  return cnt;
 }
 
 export default ({ userAddress, tokenId }) => {
   const _investMakers = tokenId => {
     console.log("invest", tokenId);
 
-    MakersContract.methods.showMakersState(tokenId).call()
+    MakersContract.methods
+      .showMakersState(tokenId)
+      .call()
       .then(result => {
-        if ((result === 0) || (result === 2)) {
+        if (result === 0 || result === 2) {
           console.log("종료된 메이커스 입니다.");
           return 0;
         } else {
-
-          MakersContract.methods.prohibitOverlap(tokenId).call()
+          MakersContract.methods
+            .prohibitOverlap(tokenId)
+            .call()
             .then(result2 => {
-              if (result2 == false) {
+              if (result2 === false) {
                 console.log("이미 참여한 Makers 입니다.");
                 return 0;
               } else {
-
-                MakersContract.methods.showMakersPrice(tokenId).call()
+                MakersContract.methods
+                  .showMakersPrice(tokenId)
+                  .call()
                   .then(price => {
                     if (!price) {
                       return 0;
                     }
 
                     getCount(getWallet().address).then(cnt => {
-
-                      MakersContract.methods.investMakers(tokenId)
+                      MakersContract.methods
+                        .investMakers(tokenId)
                         .send({
                           from: getWallet().address,
                           gas: "200000000",
@@ -113,7 +116,6 @@ export default ({ userAddress, tokenId }) => {
                           // TODO : param1 : txHash
                           // TODO : 여기!
                           dealService.registerDeal(txHash);
-
 
                           ui.showToast({
                             status: "pending",
@@ -136,17 +138,18 @@ export default ({ userAddress, tokenId }) => {
                             message: error.toString()
                           });
                         });
-                    })
+                    });
                   });
 
                 console.log("------------------------------------");
                 console.log("reward Eco power");
                 console.log("------------------------------------");
 
-                EcoTokenContract.methods.transfer(getWallet().address, 3)
+                EcoTokenContract.methods
+                  .transfer(getWallet().address, 3)
                   .send({
                     from: getWallet().address,
-                    gas: "200000000",
+                    gas: "200000000"
                   })
                   .once("receipt", receipt => {
                     console.log("Eco power 영수증");
@@ -162,10 +165,9 @@ export default ({ userAddress, tokenId }) => {
                       status: "error",
                       message: error.toString()
                     });
-                  })
-
+                  });
               }
-            })
+            });
         }
       });
   };

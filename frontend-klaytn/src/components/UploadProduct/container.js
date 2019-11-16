@@ -18,15 +18,15 @@ const Container = props => {
   const [filePath, setFilePath] = useState("");
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
-  const [D_day, setD_day] = useState("");
+  const [D_day] = useState("");
 
-  const MAX_IMAGE_SIZE = 30000; // 30KB
+  // const MAX_IMAGE_SIZE = 30000; // 30KB
   const MAX_IMAGE_SIZE_MB = 0.03; // 30KB
 
   // TODO: 이미지 임시저장
   const handleFileChange = e => {
     const file = e.target.files[0];
-    let data = makerApi
+    makerApi
       .tempSave(file)
       .then(data => {
         return data[0].location;
@@ -101,13 +101,10 @@ const Container = props => {
 
   const compressImage = async imageFile => {
     try {
-      const compressedFile = await imageCompression(
-        imageFile,
-        MAX_IMAGE_SIZE_MB
-      );
+      await imageCompression(imageFile, MAX_IMAGE_SIZE_MB);
       setIsCompressing(false);
 
-      const tempImg = await makerApi.tempSave(file);
+      await makerApi.tempSave(file);
 
       setFile(file);
       setFileName(file.name);

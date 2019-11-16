@@ -82,7 +82,6 @@ const UploadProduct = ({
   description,
   targetKlay,
   price,
-  D_day,
   selectedDate,
   handleDateChange
 }) => {

@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
-import cav from "klaytn/caver";
-import dealService from "../../api/deal";
 
 const Container = styled.div`
   /* background-color: ${props => props.theme.lightGrey}; */
@@ -194,6 +192,7 @@ export default () => {
                       src="https://1.bp.blogspot.com/-m45An_Kv8oA/XccT8A41ldI/AAAAAAAAAEQ/kZM4WEqwd8UwEAdRd2mqwl79J-zIcqKbQCLcBGAsYHQ/s1600/T.png"
                       width="68"
                       height="68"
+                      alt={tx.Block}
                     />
 
                     {/* <TXIcons /> */}
