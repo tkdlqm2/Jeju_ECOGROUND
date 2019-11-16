@@ -7,16 +7,19 @@ import Makers from "pages/Makers";
 import Wallet from "pages/Wallet";
 import MakersDetail from "pages/MakersDetail";
 import Test from "pages/Test";
+import ScrollToTop from "components/ScrollToTop";
 
 const LoggedInRoutes = () => (
-  <Switch>
-    <Route exact path="/" component={Makers} />
-    <Route path="/makers/:tokenId" component={MakersDetail} />
-    <Route path="/makers" component={Makers} />
-    <Route path="/wallet" component={Wallet} />
-    <Route path="/test" component={Test} />
-    <Redirect from="*" to="/" />
-  </Switch>
+  <ScrollToTop>
+    <Switch>
+      <Route exact path="/" component={Makers} />
+      <Route path="/makers/:tokenId" component={MakersDetail} />
+      <Route path="/makers" component={Makers} />
+      <Route path="/wallet" component={Wallet} />
+      <Route path="/test" component={Test} />
+      <Redirect from="*" to="/" />
+    </Switch>
+  </ScrollToTop>
 );
 
 const LoggedOutRoutes = () => (

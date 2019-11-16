@@ -76,7 +76,4 @@ const mapDispatchToProps = dispatch => ({
   removeWallet: () => dispatch(authActions.removeWallet())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

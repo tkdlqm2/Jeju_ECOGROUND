@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import MakersFeed from "components/MakersFeed";
 import MakersNav from "components/MakersNav";
 import MakersHeader from "components/MakersHeader";
 import UploadButton from "components/UploadButton";
-// import Modal from "components/Modal";
 
 const Container = styled.main`
   width: 100%;

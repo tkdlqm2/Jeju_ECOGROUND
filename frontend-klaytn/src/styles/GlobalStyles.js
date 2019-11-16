@@ -22,4 +22,7 @@ export default createGlobalStyle`
     input:focus{
         outline:none;
     }
+    &::-webkit-scrollbar {
+        display: none !important;
+    }
 `;

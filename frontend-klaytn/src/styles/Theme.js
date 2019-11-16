@@ -1,4 +1,4 @@
-const BOX_BORDER = "1px solid #eaeaea";
+const BOX_BORDER = "1.5px solid #eaeaea";
 const BORDER_RADIUS = "20px";
 
 export default {

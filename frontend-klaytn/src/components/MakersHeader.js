@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
+import Drawers from "components/Drawers";
 
 const Header = styled.header`
   width: ${props => props.theme.maxCardWidth};
@@ -103,7 +104,7 @@ export default withRouter(({ history }) => {
       <HeaderWrapper>
         <LeftColumn>
           <Ground>
-            <Link to="/">Eco Ground</Link>
+            <Drawers />
           </Ground>
         </LeftColumn>
         <MiddleColumn>
