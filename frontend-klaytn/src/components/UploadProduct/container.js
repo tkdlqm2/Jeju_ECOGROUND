@@ -50,26 +50,20 @@ const Container = props => {
     if (monthValue >= 10 && dateValue >= 10) {
       const selectedValue = `${yearValue}-${monthValue}-${dateValue}`;
       setSelectedDate(selectedValue);
-      console.log("Selected date: ", selectedValue);
     } else if (monthValue >= 10 && dateValue < 10) {
       const selectedValue = `${yearValue}-${monthValue}-0${dateValue}`;
       setSelectedDate(selectedValue);
-      console.log("Selected date: ", selectedValue);
     } else if (monthValue < 10 && dateValue >= 10) {
       const selectedValue = `${yearValue}-0${monthValue}-${dateValue}`;
       setSelectedDate(selectedValue);
-      console.log("Selected date: ", selectedValue);
     } else if (monthValue < 10 && dateValue < 10) {
       const selectedValue = `${yearValue}-0${monthValue}-0${dateValue}`;
       setSelectedDate(selectedValue);
-      console.log("Selected date: ", selectedValue);
     }
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    console.log("event:::", e);
 
     const titleValue = title.value;
     const descriptionValue = description.value;

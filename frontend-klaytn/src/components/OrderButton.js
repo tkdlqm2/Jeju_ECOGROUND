@@ -225,7 +225,7 @@ export default ({ userAddress, tokenId }) => {
   //         }
   //       });
   //   };
-  const onClick = e => {
+  const onClick = tokenId => {
     console.log("click!!", tokenId, userAddress);
     _investMakers(tokenId);
   };
@@ -238,7 +238,7 @@ export default ({ userAddress, tokenId }) => {
           <LikeText>좋아요</LikeText>
         </LikeButton>
         <OrderButton>
-          <OrderText onClick={onClick}>신청하기</OrderText>
+          <OrderText onClick={() => onClick(tokenId)}>신청하기</OrderText>
         </OrderButton>
       </Order>
     </Container>

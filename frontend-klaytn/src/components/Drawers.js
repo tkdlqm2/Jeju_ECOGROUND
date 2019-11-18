@@ -32,6 +32,9 @@ const useStyles = makeStyles({
   },
   fullList: {
     width: "auto"
+  },
+  root: {
+    backgroundColor: "red"
   }
 });
 

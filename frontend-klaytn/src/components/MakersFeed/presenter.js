@@ -51,32 +51,14 @@ const FeedContainer = styled.div`
 `;
 
 const MakersFeed = props => {
-  const { feed, index } = props;
-
-  const homeFeed = [];
-
-  feed !== null &&
-    feed.map(item => {
-      const indexString = JSON.stringify(index);
-      if (item.status === indexString) homeFeed.push(item);
-      return null;
-    });
+  const { feed } = props;
 
   return (
     <Container>
       <FeedContainer>
-        {homeFeed &&
-          homeFeed.map(
-            ({
-              tokenId,
-              photo,
-              title,
-              description,
-              targetKlay,
-              price,
-              D_day,
-              status
-            }) => {
+        {feed &&
+          feed.map(
+            ({ tokenId, photo, title, description, price, D_day, status }) => {
               return (
                 <FeedProduct key={tokenId}>
                   <Link to={`/makers/${tokenId}`}>
@@ -100,13 +82,15 @@ const MakersFeed = props => {
                       price={price}
                     />
                   </InfoContainer>
-                  <SliderSet
-                    targetKlay={targetKlay}
-                    price={price}
-                    status={status}
-                    D_day={D_day}
-                    tokenId={tokenId}
-                  />
+
+                  {tokenId && (
+                    <SliderSet
+                      price={price}
+                      status={status}
+                      D_day={D_day}
+                      tokenId={tokenId}
+                    />
+                  )}
                 </FeedProduct>
               );
             }

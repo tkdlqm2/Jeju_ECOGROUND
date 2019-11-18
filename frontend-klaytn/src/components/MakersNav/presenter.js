@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -81,9 +81,24 @@ function a11yProps(index) {
   };
 }
 
-export default function SimpleTabs() {
+export default props => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+
+  const { feed } = props;
+
+  const homeFeed = [];
+  const FinishedFeed = [];
+
+  feed &&
+    feed.map(item => {
+      if (item.status === "1") {
+        homeFeed.push(item);
+      } else if (item.status === "0") {
+        FinishedFeed.push(item);
+      }
+      return null;
+    });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -140,18 +155,18 @@ export default function SimpleTabs() {
           </StyledTabs>
         </AppBar>
         <TabPanel value={value} index={0} theme={theme}>
-          <MakersFeed index={1} />
+          <MakersFeed tabFeed={homeFeed} />
         </TabPanel>
         <TabPanel value={value} index={1} theme={theme}>
-          <MakersFeed index={2} />
+          <MakersFeed tabFeed={homeFeed} />
         </TabPanel>
         <TabPanel value={value} index={2} theme={theme}>
-          <MakersFeed index={3} />
+          <MakersFeed tabFeed={homeFeed} />
         </TabPanel>
         <TabPanel value={value} index={3} theme={theme}>
-          <MakersFeed index={0} />
+          <MakersFeed tabFeed={FinishedFeed} />
         </TabPanel>
       </Root>
     </ThemeProvider>
   );
-}
+};

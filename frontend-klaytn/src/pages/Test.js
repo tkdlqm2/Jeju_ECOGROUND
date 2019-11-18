@@ -45,7 +45,7 @@ const _showTracking = data => {
   console.log("data.length: ", data.length);
   for (let i = 0; i < data.length; i++) {
     cav.klay.getTransactionReceipt(data[i].Deals[i].hash).then(result => {
-      var resultList = new Array();
+      var resultList = [];
       resultList[0] = result.type.toString(); // tx타입
       resultList[1] = result.blockNumber.toString(); // 블록번호
       resultList[2] = result.value.toString(); // value 값 (가격)
@@ -158,7 +158,7 @@ const _prohibitMakers = tokenId => {
     .showMakersState(tokenId)
     .call()
     .then(result => {
-      if (result == 0) {
+      if (result === 0) {
         console.log("이미 종료된 Makers 입니다.");
         return 0;
       } else {
@@ -205,7 +205,7 @@ const _checkMyMakers = addressId => {
     .showMyMakers_cutsomer(addressId)
     .call()
     .then(Makers => {
-      if (Makers.length == 0) {
+      if (Makers.length === 0) {
         console.log("해당되는 Makers가 없습니다.");
         return 0;
       }
@@ -228,7 +228,7 @@ const _check_master = addressId => {
     .showMyMakers(addressId)
     .call()
     .then(Makers => {
-      if (Makers.length == 0) {
+      if (Makers.length === 0) {
         console.log("해당되는 Makers가 없습니다.");
         return 0;
       }
@@ -292,7 +292,7 @@ const _removeMakers = tokenId => {
     .showMakersState(tokenId)
     .call()
     .then(result => {
-      if (result == 0) {
+      if (result === 0) {
         MakersContract.methods
           .showMakersPrice(tokenId)
           .call()
@@ -378,7 +378,7 @@ const _investMakers = tokenId => {
           .prohibitOverlap(tokenId)
           .call()
           .then(result2 => {
-            if (result2 == false) {
+            if (result2 === false) {
               console.log("이미 참여한 Makers 입니다.");
               return 0;
             } else {
@@ -463,8 +463,8 @@ const _investMakers = tokenId => {
 
 const price = 1;
 const TokenId = 1;
-const txAddress =
-  "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
+// const txAddress =
+//   "0xa1df269a769a164f11f334f3402257735b3a8766f9d593a56a8c47d0a4e3d67c";
 const txArray = [
   {
     data: "0x111baf1bf63462563663047899f9bbfef2d00dc1329615fec269a7d1afd97444"
@@ -656,7 +656,4 @@ const mapDispatchToProps = dispatch => ({
   _showMyMakers: addressId => dispatch(makersActions._showMyMakers(addressId))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(test);
+export default connect(mapStateToProps, mapDispatchToProps)(test);

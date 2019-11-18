@@ -1,25 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MakersFeed from "./presenter";
 
 const Container = props => {
-  const { feed, userAddress, getFeed, index } = props;
-  const [isLoading, setIsLoading] = useState(true); //
-
-  useEffect(() => {
-    if (!feed) {
-      getFeed();
-    } else {
-      setIsLoading(false);
-    }
-  }, [feed, getFeed]);
+  const { tabFeed, userAddress, status } = props;
 
   return (
-    <MakersFeed
-      feed={feed}
-      userAddress={userAddress}
-      isLoading={isLoading}
-      index={index}
-    />
+    <MakersFeed feed={tabFeed} userAddress={userAddress} status={status} />
   );
 };
 

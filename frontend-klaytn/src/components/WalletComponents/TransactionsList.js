@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import cav from "klaytn/caver";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const Container = styled.div`
   /* background-color: ${props => props.theme.lightGrey}; */
@@ -82,6 +84,7 @@ const HashBox = styled.div`
   font-size: 16px;
   padding: 8px;
   color: #cccccc;
+  cursor: pointer;
 `;
 
 const Klay = styled.span`
@@ -90,32 +93,32 @@ const Klay = styled.span`
   margin-left: 5px;
 `;
 
-const transactionsList = [
-  {
-    TXType: "Value Transfer",
-    Block: "11663906",
-    Value: "0.5",
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7"
-  },
-  {
-    TXType: "Value Transfer",
-    Block: 11663905,
-    Value: 0.5,
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd1"
-  },
-  {
-    TXType: "Legacy",
-    Block: 11663904,
-    Value: 0.5,
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd2"
-  },
-  {
-    TXType: "Contract Execution",
-    Block: 11663903,
-    Value: 0.5,
-    txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd3"
-  }
-];
+// const transactionsList = [
+//   {
+//     TXType: "Value Transfer",
+//     Block: "11663906",
+//     Value: "0.5",
+//     txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd7"
+//   },
+//   {
+//     TXType: "Value Transfer",
+//     Block: 11663905,
+//     Value: 0.5,
+//     txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd1"
+//   },
+//   {
+//     TXType: "Legacy",
+//     Block: 11663904,
+//     Value: 0.5,
+//     txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd2"
+//   },
+//   {
+//     TXType: "Contract Execution",
+//     Block: 11663903,
+//     Value: 0.5,
+//     txHash: "0x312c0bef09770e0b845f5d51643aa19317ff0cd3"
+//   }
+// ];
 // const real_result
 
 // const showTracking = e => {
@@ -177,39 +180,78 @@ const transactionsList = [
 //   }
 // }
 
-export default () => {
-  return (
-    <Container>
-      <Label>Transactions list</Label>
-      <ListContainer>
-        {transactionsList.map(tx => {
-          return (
-            <>
-              <Transaction>
-                <LeftBox>
-                  <TXtypeBox>
-                    <img
-                      src="https://1.bp.blogspot.com/-m45An_Kv8oA/XccT8A41ldI/AAAAAAAAAEQ/kZM4WEqwd8UwEAdRd2mqwl79J-zIcqKbQCLcBGAsYHQ/s1600/T.png"
-                      width="68"
-                      height="68"
-                      alt={tx.Block}
-                    />
+class TransactionsList extends React.Component {
+  transactionsArray = [];
 
-                    {/* <TXIcons /> */}
-                  </TXtypeBox>
-                </LeftBox>
-                <RightBox>
-                  <BlockBox>#{tx.Block}</BlockBox>
-                  <ValueBox>
-                    {tx.Value} <Klay>KLAY</Klay>
-                  </ValueBox>
-                  <HashBox>{tx.txHash}</HashBox>
-                </RightBox>
-              </Transaction>
-            </>
-          );
-        })}
-      </ListContainer>
-    </Container>
-  );
-};
+  _showTracking = () => {
+    console.log("_showTracking");
+    const resultList = [];
+
+    cav.klay
+      .getTransactionReceipt(
+        "0x46e46e99554a1f6651b9cb655dd161a280ed30573e4e547a81f3e79ab01ce610"
+      )
+      .then(result => {
+        resultList[0] = result.type.toString(); // tx타입
+        resultList[1] = result.blockNumber.toString(); // 블록번호
+        resultList[2] = result.value.toString(); // value 값 (가격)
+        resultList[3] =
+          "0x46e46e99554a1f6651b9cb655dd161a280ed30573e4e547a81f3e79ab01ce610"; // tx주소값
+
+        console.log("resultList", resultList);
+        this.transactionsArray.push({ ...resultList });
+        console.log("transactionsArray", this.transactionsArray);
+      });
+  };
+
+  constructor(props) {
+    super(props);
+    this._showTracking();
+  }
+
+  render() {
+    return (
+      <Container>
+        <Label>Transactions list</Label>
+        <ListContainer>
+          {this.transactionsArray &&
+            this.transactionsArray.map(tx => {
+              console.log("tx");
+              return (
+                <>
+                  <Transaction>
+                    <LeftBox>
+                      <TXtypeBox>
+                        <img
+                          src="https://1.bp.blogspot.com/-m45An_Kv8oA/XccT8A41ldI/AAAAAAAAAEQ/kZM4WEqwd8UwEAdRd2mqwl79J-zIcqKbQCLcBGAsYHQ/s1600/T.png"
+                          width="68"
+                          height="68"
+                          alt={tx[1]}
+                        />
+
+                        {/* <TXIcons /> */}
+                      </TXtypeBox>
+                    </LeftBox>
+                    <RightBox>
+                      <BlockBox>#{tx[1]}</BlockBox>
+                      <ValueBox>
+                        {1} <Klay>KLAY</Klay>
+                      </ValueBox>
+                      <Tooltip title={tx[3]} placement="bottom">
+                        <HashBox>
+                          {tx[3].slice(0, 38)}
+                          <span>. . .</span>
+                        </HashBox>
+                      </Tooltip>
+                    </RightBox>
+                  </Transaction>
+                </>
+              );
+            })}
+        </ListContainer>
+      </Container>
+    );
+  }
+}
+
+export default TransactionsList;
