@@ -8,6 +8,8 @@ import GlobalStyles from "./styles/GlobalStyles";
 import Theme from "./styles/Theme";
 import Routes from "./Routes";
 import Modal from "components/Modal";
+import Toast from "components/Toast";
+import ui from "utils/ui";
 
 import * as authActions from "./redux/actions/auth";
 
@@ -55,6 +57,7 @@ class App extends Component {
             <>
               <Wrapper>
                 <Modal />
+                <Toast />
                 <Routes isLoggedIn={isLoggedIn} />
               </Wrapper>
             </>

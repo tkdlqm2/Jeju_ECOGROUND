@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
 import Drawers from "components/Drawers";
+import ui from "utils/ui";
 
 const Header = styled.header`
   width: ${props => props.theme.maxCardWidth};
