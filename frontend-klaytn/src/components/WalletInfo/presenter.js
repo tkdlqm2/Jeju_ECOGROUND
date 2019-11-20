@@ -22,7 +22,7 @@ export default ({ address, balance }) => {
 
       <Menu />
       <Divider />
-      <TransactionsList />
+      <TransactionsList address={address} />
     </Container>
   );
 };

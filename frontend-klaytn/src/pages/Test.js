@@ -643,6 +643,19 @@ const test = props => {
       <Button onClick={purchaseGoods} value={price}>
         Buy_Goods
       </Button>
+      <Button
+        onClick={() =>
+          ui.showToast({
+            status: "pending",
+            message: `Received receipt! It means your transaction is
+        in klaytn block (#322231) (uploadPhoto)`,
+            link: "linklinklinklink",
+            txHash: "dkjfkds"
+          })
+        }
+      >
+        Toast test
+      </Button>
     </Container>
   );
 };

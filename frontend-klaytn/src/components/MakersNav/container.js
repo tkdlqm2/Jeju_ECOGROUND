@@ -9,7 +9,6 @@ const Container = props => {
   useEffect(() => {
     if (!feed) {
       getFeed();
-      console.log(targetKlay);
     } else {
       setIsLoading(false);
     }
