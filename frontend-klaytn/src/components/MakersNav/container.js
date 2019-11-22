@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MakersNav from "./presenter";
 
 const Container = props => {
-  const { feed, userAddress, getFeed, status, targetKlay } = props;
+  const { feed, userAddress, getFeed, status } = props;
 
   const [isLoading, setIsLoading] = useState(true);
 

@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import cav from "klaytn/caver";
 import Tooltip from "@material-ui/core/Tooltip";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   /* background-color: ${props => props.theme.lightGrey}; */
@@ -17,7 +16,7 @@ const LabelWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const Label = styled.div`
   font-size: 16px;
@@ -103,7 +102,7 @@ const Klay = styled.span`
 const KlaytnscopeLink = styled.span`
   cursor: pointer;
   margin-right: 50px;
-`
+`;
 
 // const transactionsList = [
 //   {
@@ -167,35 +166,35 @@ const KlaytnscopeLink = styled.span`
 //   }
 // }
 
-const TXIcons = (TXType) => {
+// const TXIcons = (TXType) => {
 
-  const txTypeList = [
-    "TxTypeSmartContractExecution", "TxTypeValueTransfer"
-  ]
+//   const txTypeList = [
+//     "TxTypeSmartContractExecution", "TxTypeValueTransfer"
+//   ]
 
-  const T = styled.div`
-    img src:"https://1.bp.blogspot.com/-N4t_kyWaVYI/Xcah33kQj7I/AAAAAAAAADk/nCQesMFLZjMx8ZTuz8rG4jUrPu1VzwWAgCLcBGAsYHQ/s1600/ValueTransfer.png";
-    width: 68;
-    height: 68;
-  `
-  const L = styled.div`
-    img src:"https://1.bp.blogspot.com/-qtS-uZNAMFk/Xcah3xtliUI/AAAAAAAAADo/r5XuH-6LSp0HWJHQeE12TtQbXnBDdFWjQCLcBGAsYHQ/s1600/Legacy.png";
-    width: 68;
-    height: 68;
-  `
-  const CE = styled.div`
-    img src:"https://1.bp.blogspot.com/-fJOx3fNnbJE/Xcalff3U1SI/AAAAAAAAAD8/VLVu3XXp4mYjzm8HLh4A3TVv_O7GaX5lQCLcBGAsYHQ/s1600/ContractExecution.jpg";
-    width: 68;
-    height: 68;
-  `
-  if (TXType === "Value Transfer") {
-    return T
-  } else if (TXType === "Legacy") {
-    return L
-  } else {
-    return CE
-  }
-}
+//   const T = styled.div`
+//     img src:"https://1.bp.blogspot.com/-N4t_kyWaVYI/Xcah33kQj7I/AAAAAAAAADk/nCQesMFLZjMx8ZTuz8rG4jUrPu1VzwWAgCLcBGAsYHQ/s1600/ValueTransfer.png";
+//     width: 68;
+//     height: 68;
+//   `
+//   const L = styled.div`
+//     img src:"https://1.bp.blogspot.com/-qtS-uZNAMFk/Xcah3xtliUI/AAAAAAAAADo/r5XuH-6LSp0HWJHQeE12TtQbXnBDdFWjQCLcBGAsYHQ/s1600/Legacy.png";
+//     width: 68;
+//     height: 68;
+//   `
+//   const CE = styled.div`
+//     img src:"https://1.bp.blogspot.com/-fJOx3fNnbJE/Xcalff3U1SI/AAAAAAAAAD8/VLVu3XXp4mYjzm8HLh4A3TVv_O7GaX5lQCLcBGAsYHQ/s1600/ContractExecution.jpg";
+//     width: 68;
+//     height: 68;
+//   `
+//   if (TXType === "Value Transfer") {
+//     return T
+//   } else if (TXType === "Legacy") {
+//     return L
+//   } else {
+//     return CE
+//   }
+// }
 
 const txArray = [
   {
@@ -211,7 +210,6 @@ const txArray = [
 ];
 
 class TransactionsList extends React.Component {
-
   transactionsArray = [];
 
   _showTracking = () => {
@@ -220,26 +218,31 @@ class TransactionsList extends React.Component {
     txArray.map(txHash => {
       console.log(txHash.data);
 
-      cav.klay
-        .getTransactionReceipt(txHash.data)
-        .then(result => {
-          const HexToDecimal = parseInt(result.value.toString().toString(10), 16) / 1000000000000000000;
-          console.log("result: ", result)
-          resultList[0] = result.type.toString(); // tx타입
-          resultList[1] = result.blockNumber.toString(); // 블록번호
-          resultList[2] = HexToDecimal; // value 값 (가격)
-          resultList[3] = result.senderTxHash.toString(); // tx주소값
+      cav.klay.getTransactionReceipt(txHash.data).then(result => {
+        const HexToDecimal =
+          parseInt(result.value.toString().toString(10), 16) /
+          1000000000000000000;
+        console.log("result: ", result);
+        resultList[0] = result.type.toString(); // tx타입
+        resultList[1] = result.blockNumber.toString(); // 블록번호
+        resultList[2] = HexToDecimal; // value 값 (가격)
+        resultList[3] = result.senderTxHash.toString(); // tx주소값
 
-          console.log("resultList", resultList);
-          this.transactionsArray.push({ ...resultList });
-          console.log("transactionsArray", this.transactionsArray);
-        });
-    })
+        console.log("resultList", resultList);
+        this.transactionsArray.push({ ...resultList });
+        console.log("transactionsArray", this.transactionsArray);
+      });
+
+      return null;
+    });
   };
 
   _Klaytnscope = () => {
-    window.open(`https://baobab.scope.klaytn.com/account/${this.props.address}`, '_blank');
-  }
+    window.open(
+      `https://baobab.scope.klaytn.com/account/${this.props.address}`,
+      "_blank"
+    );
+  };
 
   constructor(props) {
     super(props);
@@ -251,7 +254,9 @@ class TransactionsList extends React.Component {
       <Container>
         <LabelWrapper>
           <Label>Transactions list</Label>
-          <KlaytnscopeLink onClick={this._Klaytnscope}>Klaytnscope ></KlaytnscopeLink>
+          <KlaytnscopeLink onClick={this._Klaytnscope}>
+            Klaytnscope >
+          </KlaytnscopeLink>
         </LabelWrapper>
         <ListContainer>
           {this.transactionsArray &&

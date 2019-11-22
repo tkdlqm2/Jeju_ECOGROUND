@@ -9,6 +9,7 @@ import cav from "klaytn/caver";
 import EcoTokenContract from "klaytn/EcoTokenContract";
 import * as makersActions from "redux/actions/makers";
 import dealService from "../api/deal";
+import { toast } from "react-toastify";
 
 const Container = styled.main`
   width: 100%;
@@ -648,13 +649,22 @@ const test = props => {
           ui.showToast({
             status: "pending",
             message: `Received receipt! It means your transaction is
-        in klaytn block (#322231) (uploadPhoto)`,
+          in klaytn block (#322231) (uploadPhoto)`,
             link: "linklinklinklink",
             txHash: "dkjfkds"
           })
         }
       >
         Toast test
+      </Button>
+      <Button
+        onClick={() =>
+          toast.success(`
+          거래에 성공하였습니다 (#322231) ${"/n"} txHash: ${props.userAddress}
+          `)
+        }
+      >
+        toastify test
       </Button>
     </Container>
   );

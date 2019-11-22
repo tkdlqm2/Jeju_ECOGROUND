@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import * as authActions from "../redux/actions/auth";
 import useInput from "../hooks/useInput";
-import userApi  from '../api/user';
+import userApi from "../api/user";
 
 const Container = styled.div`
   display: flex;
@@ -36,26 +36,23 @@ const PwdInput = styled(Input)`
 const LoginButton = styled(Button)`
   margin-top: 10px;
   color: white;
-  /* @include breakpoint("max-card") {
-  margin-bottom: 30px;
-  }; */
 `;
 
 const LoginForm = ({ login }) => {
   const [warningMessage, setWarningMessage] = useState("");
 
-  const privateKey    = useInput("");
-  const emailInput    = useInput("");
+  const privateKey = useInput("");
+  const emailInput = useInput("");
   const passwordInput = useInput("");
 
   const handleLogin = () => {
     const privateKeyValue = privateKey.value;
-    const email      = emailInput.value;
-    const password   = passwordInput.value;
+    const email = emailInput.value;
+    const password = passwordInput.value;
 
     // TODO: log in --DEPRECATED
-    userApi.login({email, password});
-    
+    userApi.login({ email, password });
+
     // 클레이튼 로그인
     if (email && password) {
       isValidPrivateKey(privateKeyValue)
@@ -101,7 +98,4 @@ const mapDispatchToProps = dispatch => ({
   login: privateKey => dispatch(authActions.login(privateKey))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(LoginForm);
+export default connect(null, mapDispatchToProps)(LoginForm);

@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { HeartFull } from "./Icons";
 import MakersContract from "klaytn/MakersContract";
 import cav from "klaytn/caver";
-import ui from "utils/ui";
 import { getWallet } from "utils/crypto";
 import EcoTokenContract from "klaytn/EcoTokenContract";
 import dealService from "../api/deal";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   position: relative;
@@ -81,8 +81,9 @@ export default ({ userAddress, tokenId }) => {
       .showMakersState(tokenId)
       .call()
       .then(result => {
-        if (result === 0 || result === 2) {
-          console.log("종료된 메이커스 입니다.");
+        if (result === "0" || result === "2") {
+          console.log("신청 종료된 상품입니다.");
+          toast.error("신청 종료된 상품입니다.");
           return 0;
         } else {
           MakersContract.methods
@@ -90,7 +91,8 @@ export default ({ userAddress, tokenId }) => {
             .call()
             .then(result2 => {
               if (result2 === false) {
-                console.log("이미 참여한 Makers 입니다.");
+                console.log("이미 신청한 상품입니다.");
+                toast.error("이미 신청한 상품입니다.");
                 return 0;
               } else {
                 MakersContract.methods
@@ -117,26 +119,20 @@ export default ({ userAddress, tokenId }) => {
                           // TODO : 여기!
                           dealService.registerDeal(txHash);
 
-                          ui.showToast({
-                            status: "pending",
-                            message: `Sending a transaction... (uploadPhoto)`,
-                            txHash
-                          });
+                          toast.info("처리중입니다.");
                         })
                         .once("receipt", receipt => {
-                          ui.showToast({
-                            status: receipt.status ? "success" : "fail",
-                            message: `Received receipt! It means your transaction is in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-                            link: receipt.transactionHash
-                          });
+                          receipt.status
+                            ? toast.success("신청 성공하였습니다") &&
+                              toast.success(
+                                `TX Hash: '${receipt.transactionHash}'`
+                              )
+                            : toast.error("신청 실패하였습니다");
                         })
                         .once("error", error => {
                           console.log("_Invest Error");
                           console.log(error);
-                          ui.showToast({
-                            status: "error",
-                            message: error.toString()
-                          });
+                          toast.error(`실패하였습니다 ${error.toString()}`);
                         });
                     });
                   });
@@ -153,81 +149,17 @@ export default ({ userAddress, tokenId }) => {
                   })
                   .once("receipt", receipt => {
                     console.log("Eco power 영수증");
-                    ui.showToast({
-                      status: receipt.status ? "success" : "fail",
-                      message: `Received receipt! It means your transaction isin klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-                      link: receipt.transactionHash
-                    });
+                    toast.success(`에코파워가 지급되었습니다.`);
+                    toast.success(`${receipt.transactionHash}`);
                   })
                   .once("error", error => {
                     console.log(error);
-                    ui.showToast({
-                      status: "error",
-                      message: error.toString()
-                    });
+                    toast.success(`에코파워 지급에 실패하였습니다.`);
                   });
               }
             });
         }
       });
-  };
-  //   const _investMakers = tokenId => {
-  //     console.log("invest token id: ", tokenId);
-  //     // var price = MakersContract.methods.getPriceMakers(tokenId);
-  //     // var price = MakersContract._MakerList[tokenId].price;
-
-  //     MakersContract.methods
-  //       .successMakers(tokenId)
-  //       .call()
-  //       .then(result => {
-  //         if (result === true) {
-  //           console.log("모금액을 모두 달성하여서 참여 불가능함.");
-  //           return 0;
-  //         } else {
-  //           MakersContract.methods
-  //             .showMakersPrice(tokenId)
-  //             .call()
-  //             .then(price => {
-  //               if (!price) {
-  //                 return 0;
-  //               }
-  //               // -------------------
-  //               MakersContract.methods
-  //                 .investMakers(tokenId)
-  //                 .send({
-  //                   from: getWallet().address,
-  //                   gas: "200000000",
-  //                   value: cav.utils.toPeb(price.toString(), "KLAY")
-  //                 })
-  //                 .once("transactionHash", txHash => {
-  //                   console.log("txHash:", txHash);
-  //                   ui.showToast({
-  //                     status: "pending",
-  //                     message: `Sending a transaction... (uploadPhoto)`,
-  //                     txHash
-  //                   });
-  //                 })
-  //                 .once("receipt", receipt => {
-  //                   ui.showToast({
-  //                     status: receipt.status ? "success" : "fail",
-  //                     message: `Received receipt! It means your transaction is
-  //                         in klaytn block (#${receipt.blockNumber}) (uploadPhoto)`,
-  //                     link: receipt.transactionHash
-  //                   });
-  //                 })
-  //                 .once("error", error => {
-  //                   ui.showToast({
-  //                     status: "error",
-  //                     message: error.toString()
-  //                   });
-  //                 });
-  //             });
-  //         }
-  //       });
-  //   };
-  const onClick = tokenId => {
-    console.log("click!!", tokenId, userAddress);
-    _investMakers(tokenId);
   };
 
   return (
@@ -237,8 +169,8 @@ export default ({ userAddress, tokenId }) => {
           <HeartFull />
           <LikeText>좋아요</LikeText>
         </LikeButton>
-        <OrderButton>
-          <OrderText onClick={() => onClick(tokenId)}>신청하기</OrderText>
+        <OrderButton onClick={() => _investMakers(tokenId)}>
+          <OrderText>신청하기</OrderText>
         </OrderButton>
       </Order>
     </Container>

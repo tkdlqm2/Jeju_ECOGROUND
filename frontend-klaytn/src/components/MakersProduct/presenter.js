@@ -5,7 +5,6 @@ import SubInfo from "components/SubInfo";
 import SliderSet from "components/SliderSet";
 import OrderButton from "components/OrderButton";
 import DeleteButton from "components/DeleteButton";
-import MoreButton from "components/MoreButton";
 
 const Container = styled.div`
   position: relative;
@@ -34,7 +33,7 @@ const InfoContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 40px 10px;
+  padding-top: 40px;
 `;
 
 const Image = styled.div`
@@ -48,14 +47,6 @@ const Image = styled.div`
   opacity: ${props => (props.showing ? 1 : 0)};
   transition: opacity 0.2s linear;
 `;
-
-// const SlideButton = styled.div`
-//   cursor: pointer;
-//   position: absolute;
-//   top: 50%;
-//   ${props => (props.type === "prev" ? "left: 10px" : "right: 10px")};
-//   opacity: 0.7;
-// `;
 
 const ColoredLine = styled.hr`
   border: 0.5px solid ${props => props.theme.lightGrey};
@@ -158,8 +149,6 @@ const MakersProduct = ({ userAddress, product }) => {
           D_day={D_day}
         />
       </InfoContainer>
-
-      <MoreButton />
 
       <DeleteButton tokenId={tokenId} />
 
