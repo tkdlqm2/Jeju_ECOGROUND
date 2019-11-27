@@ -18,12 +18,25 @@ const Container = styled.div`
 `;
 
 const KlayBalance = styled.div`
-  height: 70px;
+  height: 50px;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 90px;
+  padding-left: 75px;
+  padding-right: 75px;
+`;
+
+const BeanPower = styled.div`
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 50px;
+  padding-left: 75px;
+  padding-right: 75px;
 `;
 
 const Span = styled.span`
@@ -32,7 +45,7 @@ const Span = styled.span`
 `;
 
 const EcoData = styled.div`
-  height: 240px;
+  height: 220px;
   width: 95%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -55,7 +68,7 @@ const IconDescContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 15px;
 `;
 
 const IconDesc = styled.div`
@@ -72,6 +85,11 @@ const Balance = styled.div`
 
 const GreenText = styled.span`
   color: ${props => props.theme.lightGreen};
+  font-size: 28px;
+`;
+
+const BrownText = styled.span`
+  color: ${props => props.theme.darkBrown};
   font-size: 28px;
 `;
 
@@ -104,19 +122,24 @@ class AccountCard extends Component {
     return (
       <Container>
         <KlayBalance>
-          <Span>My Total Balance</Span>
+          <Span>KLAY Balance</Span>
           <Span>
             <GreenText>{balanceFloor} </GreenText> KLAY
           </Span>
         </KlayBalance>
+        <BeanPower>
+          <Span>Bean Power</Span>
+          <Span>
+            <BrownText>{this.state.ecoPower} </BrownText> BEAN
+          </Span>
+        </BeanPower>
         <EcoData>
           <Item>
             <IconContainer>
               <CardGiftcardRoundedIcon style={{ fontSize: 40 }} />
             </IconContainer>
             <IconDescContainer>
-              <IconDesc>Eco Power</IconDesc>
-              <Balance>{this.state.ecoPower} ECO</Balance>
+              <IconDesc>Bean Power</IconDesc>
             </IconDescContainer>
           </Item>
           <Item>
@@ -125,7 +148,6 @@ class AccountCard extends Component {
             </IconContainer>
             <IconDescContainer>
               <IconDesc>Card</IconDesc>
-              <Balance>100ECO</Balance>
             </IconDescContainer>
           </Item>
           <Item>
@@ -134,7 +156,6 @@ class AccountCard extends Component {
             </IconContainer>
             <IconDescContainer>
               <IconDesc>Reward</IconDesc>
-              <Balance>200ECO</Balance>
             </IconDescContainer>
           </Item>
         </EcoData>

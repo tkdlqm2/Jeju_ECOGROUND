@@ -149,9 +149,9 @@ export default props => {
             centered
           >
             <StyledTab label="홈" {...a11yProps(0)} />
-            <StyledTab label="인기상품" {...a11yProps(1)} />
-            <StyledTab label="마감임박" {...a11yProps(2)} />
-            <StyledTab label="종료상품" {...a11yProps(3)} />
+            <StyledTab label="신상품" {...a11yProps(1)} />
+            <StyledTab label="베스트" {...a11yProps(2)} />
+            <StyledTab label="타임세일" {...a11yProps(3)} />
           </StyledTabs>
         </AppBar>
         <TabPanel value={value} index={0} theme={theme}>

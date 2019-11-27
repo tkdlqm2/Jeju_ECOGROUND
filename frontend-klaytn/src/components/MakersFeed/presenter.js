@@ -53,6 +53,8 @@ const FeedContainer = styled.div`
 const MakersFeed = props => {
   const { feed } = props;
 
+  console.log(feed);
+
   return (
     <Container>
       <FeedContainer>
@@ -63,14 +65,7 @@ const MakersFeed = props => {
                 <FeedProduct key={tokenId}>
                   <Link to={`/makers/${tokenId}`}>
                     <ImageContainer>
-                      <img
-                        src={
-                          photo &&
-                          photo &&
-                          "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
-                        }
-                        alt={title}
-                      />
+                      <img src={photo} alt={title} />
                     </ImageContainer>
                   </Link>
                   <InfoContainer>
@@ -82,15 +77,6 @@ const MakersFeed = props => {
                       price={price}
                     />
                   </InfoContainer>
-
-                  {tokenId && (
-                    <SliderSet
-                      price={price}
-                      status={status}
-                      D_day={D_day}
-                      tokenId={tokenId}
-                    />
-                  )}
                 </FeedProduct>
               );
             }

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { HeartFull } from "./Icons";
+import { HeartFull, HeartEmpty } from "./Icons";
 import MakersContract from "klaytn/MakersContract";
 import cav from "klaytn/caver";
 import { getWallet } from "utils/crypto";
@@ -162,11 +162,18 @@ export default ({ userAddress, tokenId }) => {
       });
   };
 
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    console.log(isLiked);
+  };
+
   return (
     <Container>
       <Order>
-        <LikeButton>
-          <HeartFull />
+        <LikeButton onClick={handleLike}>
+          {isLiked ? <HeartFull /> : <HeartEmpty />}
           <LikeText>좋아요</LikeText>
         </LikeButton>
         <OrderButton onClick={() => _investMakers(tokenId)}>

@@ -5,6 +5,7 @@ import MakersContract from "klaytn/MakersContract";
 
 const SliderInfo = styled.div`
   width: 97%;
+  margin-bottom: 50px;
 `;
 
 const BoldText = styled.span`

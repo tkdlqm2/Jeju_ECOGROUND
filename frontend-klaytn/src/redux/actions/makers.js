@@ -5,6 +5,7 @@ import { feedParser } from "../../utils/misc";
 import { SET_FEED } from "./actionTypes";
 // import { makersFeed } from "data";
 import Makers from "../../pages/Makers";
+import { toast } from "react-toastify";
 
 // Action creators
 
@@ -136,7 +137,6 @@ export const removeMakers = tokenId => dispatch => {
 // ----------------------------------------------------------------
 
 export const uploadItem = (
-  file,
   filePath,
   title,
   description,
@@ -146,7 +146,6 @@ export const uploadItem = (
 ) => dispatch => {
   console.log(
     `
-    file       : ${file} 
     filepath   : ${filePath} 
     title      : ${title}
     description: ${description}
@@ -156,55 +155,43 @@ export const uploadItem = (
     `
   );
 
-  // TODO: upload image file logic
-  // 179 ~ 189 번 까지 기존 업로드 로직.
-  const reader = new window.FileReader();
-  reader.readAsArrayBuffer(file);
-  reader.onloadend = () => {
-    console.log("onloadend");
-    // const buffer = Buffer.from(reader.result);
-    /**
-     * Add prefix `0x` to hexString
-     * to recognize hexString as bytes by contract
-     */
-    // const hexString = "0x" + buffer.toString("hex");
+  MakersContract.methods
+    .uploadMakers(filePath, title, description, targetKlay, D_day, price)
+    .send({
+      from: getWallet().address,
+      gas: "200000000"
+    })
+    .once("transactionHash", txHash => {
+      console.log("txHash:", txHash);
+      // ui.showToast({
+      //   status: "pending",
+      //   message: `Sending a transaction... (uploadMakers)`,
+      //   txHash
+      // });
+      toast.success("Sending a transaction...");
+    })
+    .once("receipt", receipt => {
+      // ui.showToast({
+      //   status: receipt.status ? "success" : "fail",
+      //   message: `Received receipt! It means your transaction is
+      //     in klaytn block (#${receipt.blockNumber}) (uploadMakers)`,
+      //   link: receipt.transactionHash
+      // });
+      toast.success("Received receipt!");
+      const tokenId = receipt.events.MakersUploaded.returnValues[0];
+      console.log("-----------------");
+      console.log("tokenId: ", tokenId);
+      console.log("————————");
 
-    //.uploadMakers(hexString /* URL */, title, description, targetKlay, D_day, price)
-    // TODO:
-    MakersContract.methods
-      .uploadMakers(filePath, title, description, targetKlay, D_day, price)
-      .send({
-        from: getWallet().address,
-        gas: "200000000"
-      })
-      .once("transactionHash", txHash => {
-        console.log("txHash:", txHash);
-        ui.showToast({
-          status: "pending",
-          message: `Sending a transaction... (uploadMakers)`,
-          txHash
-        });
-      })
-      .once("receipt", receipt => {
-        ui.showToast({
-          status: receipt.status ? "success" : "fail",
-          message: `Received receipt! It means your transaction is
-          in klaytn block (#${receipt.blockNumber}) (uploadMakers)`,
-          link: receipt.transactionHash
-        });
-        const tokenId = receipt.events.MakersUploaded.returnValues[0];
-        console.log("-----------------");
-        console.log("tokenId: ", tokenId);
-        console.log("————————");
+      sessionStorage.setItem("txList", receipt.transactionHash);
 
-        dispatch(updateFeed(tokenId));
-      })
-      .once("error", error => {
-        console.log(error);
-        ui.showToast({
-          status: "error",
-          message: error.toString()
-        });
+      dispatch(updateFeed(tokenId));
+    })
+    .once("error", error => {
+      console.log(error);
+      ui.showToast({
+        status: "error",
+        message: error.toString()
       });
-  };
+    });
 };

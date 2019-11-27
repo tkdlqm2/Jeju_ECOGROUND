@@ -111,15 +111,13 @@ const MakersProduct = ({ userAddress, product }) => {
         <Title>{title}</Title>
         <PriceLine>
           <Price>{price} KLAY</Price>
-          <EcoPower>{price * 10} ECO</EcoPower>
+          <EcoPower>{price * 10} Bean</EcoPower>
         </PriceLine>
       </TitleAndPrice>
 
-      <ColoredLine />
+      {/* <ColoredLine />
 
       <InfoContainer>
-        {/* <TargetInfo tokenId={tokenId} description={description} D_day={D_day} /> */}
-
         {product && (
           <SliderSet
             targetKlay={targetKlay}
@@ -131,13 +129,13 @@ const MakersProduct = ({ userAddress, product }) => {
         )}
       </InfoContainer>
 
-      <ColoredLine />
-
+      <ColoredLine /> */}
+      {/* 
       <InfoContainer>
         {product && (
           <SubInfo tokenId={tokenId} D_day={D_day} targetKlay={targetKlay} />
         )}
-      </InfoContainer>
+      </InfoContainer> */}
 
       <ColoredLine />
 
@@ -150,7 +148,9 @@ const MakersProduct = ({ userAddress, product }) => {
         />
       </InfoContainer>
 
-      <DeleteButton tokenId={tokenId} />
+      {userAddress === "0xb080c3403565f1d4dad3f705796f8f994d1c2105" && (
+        <DeleteButton tokenId={tokenId} />
+      )}
 
       <OrderButton userAddress={userAddress} tokenId={tokenId} />
     </Container>

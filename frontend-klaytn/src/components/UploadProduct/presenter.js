@@ -73,11 +73,7 @@ const KlayInput = styled(Input)`
 
 const UploadProduct = ({
   handleSubmit,
-  handleFileChange,
-  isCompressing,
-  file,
   filePath,
-  fileName,
   title,
   description,
   targetKlay,
@@ -114,8 +110,9 @@ const UploadProduct = ({
             />
           </Grid>
         </MuiPickersUtilsProvider>
+        <Input label="image" placeholder={"image"} {...filePath} />
 
-        <InputFile
+        {/* <InputFile
           className="UploadPhoto__file"
           name="file"
           label="Search file"
@@ -123,7 +120,7 @@ const UploadProduct = ({
           onChange={handleFileChange}
           accept=".png, .jpg, .jpeg"
           required
-        />
+        /> */}
         <StyledButton onClick={handleSubmit}>Upload</StyledButton>
       </Form>
     </Container>

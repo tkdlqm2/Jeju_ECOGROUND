@@ -26,14 +26,15 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.4.0",
     "styled-reset": "^4.0.3",
-    "truffle-hdwallet-provider-klaytn": "^1.0.13-a"
+    "truffle-hdwallet-provider-klaytn": "^1.0.13-a",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build --config webpack.config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "webpack-dev-server --config webpack.dev.js"
+    "dev": "webpack-dev-server"
   },
   "eslintConfig": {
     "extends": "react-app"

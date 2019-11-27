@@ -45,7 +45,8 @@ const StyledSlider = withStyles({
   root: {
     color: "#17202E",
     height: 8,
-    cursor: "auto"
+    cursor: "auto",
+    pointerEvents: "none"
   },
   thumb: {
     height: 20,
@@ -53,7 +54,8 @@ const StyledSlider = withStyles({
   },
   active: {},
   valueLabel: {
-    left: "calc(-50% + 4px)"
+    left: "calc(-50% + 4px)",
+    content: " %"
   },
   track: {
     height: 8,
@@ -94,11 +96,12 @@ export default ({ targetKlay, price, status, donate, currentValue }) => {
         <Margin />
         {currentValue && (
           <StyledSlider
+            className="PrivateValueLabel"
             defaultValue={currentValue}
             getAriaValueText={valuetext}
             step={price}
             marks={marks}
-            valueLabelDisplay="auto"
+            valueLabelDisplay="on"
             textColor="secondary"
             classes={{
               mark: classes.mark

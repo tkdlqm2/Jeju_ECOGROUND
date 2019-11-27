@@ -16,16 +16,17 @@ const SignupInput = styled(Input)`
 `;
 
 const PKButton = styled(Button)`
-  background-color: #17202e;
+  background-color: ${props => props.theme.darkBrown};
 `;
 
 const SignupButton = styled(Button)`
   margin-top: 40px;
+  background-color: #17202e;
 `;
 
 const LogoImage = styled.img.attrs({
   src:
-    "https://1.bp.blogspot.com/-Y4N0BKHt0x0/XcURWNtr-XI/AAAAAAAAADY/EIrCmxnBMB4y9u_rVOc6bjq8_TJgfXgdACLcBGAsYHQ/s1600/Long%2BLogo.png"
+    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FSLVsC%2Fbtqz4LHsAH7%2F74SG5iB0IgJsKnk5H3lfN1%2Fimg.png"
 })`
   width: 304px;
   height: 60px;

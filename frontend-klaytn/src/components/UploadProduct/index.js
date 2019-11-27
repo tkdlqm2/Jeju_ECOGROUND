@@ -3,10 +3,9 @@ import Container from "./container";
 import * as makersActions from "../../redux/actions/makers";
 
 const mapDispatchToProps = dispatch => ({
-  uploadItem: (file, filePath,title, description, targetKlay, D_day, price) =>
+  uploadItem: (filePath, title, description, targetKlay, D_day, price) =>
     dispatch(
       makersActions.uploadItem(
-        file,
         filePath,
         title,
         description,
@@ -17,7 +16,4 @@ const mapDispatchToProps = dispatch => ({
     )
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Container);
+export default connect(null, mapDispatchToProps)(Container);

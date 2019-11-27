@@ -110,7 +110,7 @@ export default withRouter(({ history }) => {
         <MiddleColumn>
           <Makers>
             <Link to="/makers">
-              eco<FatText>makers</FatText>
+              block<FatText>Coffee</FatText>
             </Link>
           </Makers>
         </MiddleColumn>
