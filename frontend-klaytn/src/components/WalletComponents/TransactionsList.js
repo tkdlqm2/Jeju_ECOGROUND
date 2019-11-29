@@ -198,15 +198,18 @@ const KlaytnscopeLink = styled.span`
 
 const txArray = [
   {
-    data: "0xaf538c9e39ef07533a768af4c4d074198fb94114505dd2460a4a0d30ab350852"
+    data: "0xd655dae3f0f6299d779eb2318de99385deef7a6c5a1233bad532d2707580007d"
   },
   {
-    data: "0x227598f61a9e469c7c7c9c8ec2062e3e1ae2ed7851469bc5c36c1039fcd68bd3"
+    data: "0x4535b457fd954a6f5ca8b47094ca331a1a9bf42a005666c4b6715309a47ddded"
   },
   {
-    data: "0xa46b826ef49e56a4315e15e75ad6ac120327087db0934a5ab7db82c5d18412a3"
+    data: "0x18be18f1feb2973a08e47def2ed341dd5d21a8e0fdc8889f2a5708e1b5baf700"
   },
-  { data: "0xc2b379a29bb66e62f4ea3486beb92055de1d28e3a51b24dca00939e50e9cad71" }
+  {
+    data: "0x97ad0fa0756a4f313c1541533a38716db091ee1faa3896f36e7474b1605195e1"
+  },
+  { data: "0x045c2c02200bd3768b9a0780d71fb8644582073db2518f5d8ff216fe9b0df784" }
 ];
 
 class TransactionsList extends React.Component {

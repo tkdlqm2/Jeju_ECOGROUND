@@ -177,7 +177,7 @@ export default ({ userAddress, tokenId }) => {
           <LikeText>좋아요</LikeText>
         </LikeButton>
         <OrderButton onClick={() => _investMakers(tokenId)}>
-          <OrderText>신청하기</OrderText>
+          <OrderText>구매하기</OrderText>
         </OrderButton>
       </Order>
     </Container>

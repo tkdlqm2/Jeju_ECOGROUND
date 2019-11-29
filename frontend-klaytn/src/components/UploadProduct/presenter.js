@@ -90,8 +90,8 @@ const UploadProduct = ({
         <PriceWrapper>
           <KlayInput label="상품 가격" placeholder={"0"} {...price} />
           <Klay>KLAY</Klay>
-          <KlayInput label="목표 금액" placeholder={"0"} {...targetKlay} />
-          <Klay>KLAY</Klay>
+          <KlayInput label="수량" placeholder={"0"} {...targetKlay} />
+          <Klay>EA</Klay>
         </PriceWrapper>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="left">
@@ -101,7 +101,7 @@ const UploadProduct = ({
               format="yyyy년 MM월 dd일"
               margin="normal"
               id="date-picker-dialog"
-              label="마감일을 선택해주세요"
+              label="상품 등록일"
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{

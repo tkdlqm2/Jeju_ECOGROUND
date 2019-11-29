@@ -97,15 +97,7 @@ const MakersProduct = ({ userAddress, product }) => {
   return (
     <Container>
       <ImageContainer>
-        <Image
-          key={tokenId}
-          src={
-            photo &&
-            photo &&
-            "https://1.bp.blogspot.com/-asYYjf83Gno/XcEyk217XrI/AAAAAAAAAB8/hiwnkFubUfMAQdG7OaghUG5B1DELPs1qACLcBGAsYHQ/s1600/paper%2Bcosmetics.jpg"
-          }
-          showing={true}
-        />
+        <Image key={tokenId} src={photo} showing={true} />
       </ImageContainer>
       <TitleAndPrice>
         <Title>{title}</Title>

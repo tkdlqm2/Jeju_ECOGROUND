@@ -49,6 +49,8 @@ export default () => {
   const onSubmit = async e => {
     e.preventDefault();
 
+    alert("가입되었습니다.");
+
     if (email.value !== "" && username.value !== "" && password.value !== "") {
       const param = {
         email: email.value,
